@@ -1,14 +1,11 @@
 package main;
 
-import database.DatabaseConnector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import tests.Tests;
 
 public class Main extends Application {
 
@@ -19,9 +16,9 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-        var db = DatabaseConnector.getInstance();
-        PreparedStatement ps = db.prepareStatement("SELECT * FROM appointments");
-        ResultSet rs = ps.executeQuery();
+        // Uncomment to run tests
+        var tests = new Tests();
+        tests.runAll();
     }
 
 

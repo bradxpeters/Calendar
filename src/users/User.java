@@ -1,18 +1,11 @@
 package users;
-
 import java.sql.Timestamp;
 
 /**
  * The type User.
  */
 public class User {
-//      `User_ID` int(10) NOT NULL AUTO_INCREMENT,
-//  `User_Name` varchar(50) DEFAULT NULL,
-//  `Password` text,
-//        `Create_Date` datetime DEFAULT CURRENT_TIMESTAMP,
-//        `Created_By` varchar(50) DEFAULT NULL,
-//  `Last_Update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//        `Last_Updated_By` varchar(50) DEFAULT NULL,
+
     private Integer userId;
 
     private String userName;
@@ -26,6 +19,20 @@ public class User {
     private Timestamp lastUpdate;
 
     private String lastUpdatedBy;
+
+    public User(Integer userId, String userName, String password, Timestamp createDate,
+        String createdBy, Timestamp lastUpdate, String lastUpdatedBy)
+    {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public User() {}
 
     /**
      * Gets user id.
@@ -151,5 +158,18 @@ public class User {
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "userId=" + userId +
+            ", userName='" + userName + '\'' +
+            ", password='" + password + '\'' +
+            ", createDate=" + createDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastUpdate=" + lastUpdate +
+            ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+            '}';
     }
 }
