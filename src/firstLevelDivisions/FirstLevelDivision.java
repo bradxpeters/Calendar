@@ -146,4 +146,17 @@ public class FirstLevelDivision {
     public void setCountryId(Integer countryId) {
         this.countryId = countryId;
     }
+
+    @Override
+    public String toString() {
+        return "FirstLevelDivision{" +
+            "divisionId=" + divisionId +
+            ", division='" + division + '\'' +
+            ", createDate=" + createDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastUpdate=" + lastUpdate +
+            ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+            ", countryId=" + countryId +
+            '}';
+    }
 }

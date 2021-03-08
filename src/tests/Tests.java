@@ -1,5 +1,7 @@
 package tests;
 
+import firstLevelDivisions.FirstLevelDivision;
+import firstLevelDivisions.FirstLevelDivisionRepository;
 import users.User;
 import users.UserRepository;
 
@@ -9,6 +11,7 @@ public class Tests {
 
     public void runAll() {
         testFetchUserById();
+        testFetchFirstLevelDivisionById();
     }
 
     public void testFetchUserById() {
@@ -28,8 +31,32 @@ public class Tests {
 
         if (testUser == null) {
             System.out.println("No user found with id " + testId);
+        } else {
+            System.out.println(testUser.toString());
+            System.out.println("testFetchUserById passed!");
+        }
+    }
+
+    public void testFetchFirstLevelDivisionById() {
+
+        System.out.println("Testing FirstLevelDivision by id...");
+
+        var testId = 10;
+        var fldRepo = new FirstLevelDivisionRepository();
+        FirstLevelDivision testFld = null;
+
+        try {
+            testFld = fldRepo.fetchFirstLevelDivisionById(testId);
+        } catch (SQLException exception) {
+            System.out.println("FirstLevelDivision failed");
+            exception.printStackTrace();
         }
 
-        System.out.println("testFetchUserById passed!");
+        if (testFld == null) {
+            System.out.println("No FirstLevelDivision found with id " + testId);
+        } else {
+            System.out.println(testFld.toString());
+            System.out.println("FirstLevelDivision passed!");
+        }
     }
 }
