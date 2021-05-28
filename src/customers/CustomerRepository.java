@@ -1,11 +1,13 @@
 package customers;
 
 import database.DatabaseConnector;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class CustomerRepository {
     private Connection db;
@@ -28,17 +30,20 @@ public class CustomerRepository {
         return this.fetchRsIntoCustomer(rs);
     }
 
-    public List<Customer> fetchAll() throws SQLException {
-        var customers = new ArrayList<Customer>();
+    public ObservableList<Customer> fetchAll() {
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
 
-        var ps = this.getDb().prepareStatement(
-            "SELECT * FROM customers"
-        );
+        try {
+            var ps = this.getDb().prepareStatement(
+                "SELECT * FROM customers"
+            );
 
-        var rs = ps.executeQuery();
-        while (rs.next()) {
-            System.out.println(rs.toString());
-            customers.add(this.fetchRsIntoCustomer(rs));
+            var rs = ps.executeQuery();
+            while (rs.next()) {
+                customers.add(this.fetchRsIntoCustomer(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
         return customers;
@@ -57,7 +62,7 @@ public class CustomerRepository {
         customer.setCreateDate(rs.getTimestamp("Last_Update"));
         customer.setLastUpdatedBy(rs.getString("Last_Updated_By"));
         customer.setDivisionId(rs.getInt("Division_ID"));
-        
+
         if (customer.getCustomerId() == null) {
             return null;
         }

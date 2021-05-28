@@ -1,6 +1,7 @@
 package baseInterface;
 
 import appointments.Appointment;
+import appointments.AppointmentRepository;
 import contacts.Contact;
 import customers.Customer;
 import customers.CustomerRepository;
@@ -12,11 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
@@ -24,38 +25,55 @@ public class BaseInterfaceController implements Initializable {
 
     @FXML
     private TableView<Customer> customerTableView;
+
     @FXML
     private TableColumn<Customer, Integer> customerIdColumn;
+
     @FXML
-    private TableColumn<Customer, String> Cus_Name;
+    private TableColumn<Customer, String> customerNameColumn;
+
     @FXML
-    private TableColumn<Customer, String> Cus_Address;
+    private TableColumn<Customer, String> customerAddressColumn;
+
     @FXML
-    private TableColumn<Customer, FirstLevelDivision> Cus_Division;
+    private TableColumn<Customer, FirstLevelDivision> customerDivisionColumn;
+
     @FXML
-    private TableColumn<Customer, String> Cus_Postal;
+    private TableColumn<Customer, String> customerPostalCodeColumn;
+
     @FXML
-    private TableColumn<Customer, String> Cus_Phone;
+    private TableColumn<Customer, String> customerPhoneColumn;
+
     @FXML
-    private TableView<Customer> Appointment_Table;
+    private TableView<Appointment> appointmentTableView;
+
     @FXML
-    private TableColumn<Appointment, Integer> AppointmentCol;
+    private TableColumn<Appointment, Integer> appointmentIdColumn;
+
     @FXML
-    private TableColumn<Appointment, String> TitleCol;
+    private TableColumn<Appointment, String> appointmentTitleColumn;
+
     @FXML
-    private TableColumn<Appointment, String> DescriptionCol;
+    private TableColumn<Appointment, String> appointmentDescColumn;
+
     @FXML
-    private TableColumn<Appointment, String> LocationCol;
+    private TableColumn<Appointment, String> appointmentLocationColumn;
+
     @FXML
-    private TableColumn<Appointment, Contact> ContactCol;
+    private TableColumn<Appointment, Contact> appointmentContactColumn;
+
     @FXML
-    private TableColumn<Appointment, String> TypeCol;
+    private TableColumn<Appointment, String> appointmentTypeColumn;
+
     @FXML
-    private TableColumn<Appointment, String> StartCol;
+    private TableColumn<Appointment, String> appointmentStartColumn;
+
     @FXML
-    private TableColumn<Appointment, String> EndCol;
+    private TableColumn<Appointment, String> appointmentEndColumn;
+
     @FXML
-    private TableColumn<Appointment, Customer> CustomerCol;
+    private TableColumn<Appointment, Customer> appointmentCustomerColumn;
+
     @FXML
     private ToggleGroup ViewPeriod;
     @FXML
@@ -93,7 +111,31 @@ public class BaseInterfaceController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        // Populate customer table
+        var customerRepository = new CustomerRepository();
+        customerTableView.setItems(customerRepository.fetchAll());
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        customerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        // Populate appointment table
+        var appointmentRepository = new AppointmentRepository();
+        var appointments = appointmentRepository.fetchAll();
+        appointmentTableView.setItems(appointments);
+        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentDescColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory("contactId"));
+        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+
         //Update all lists
 //            System.out.println("Updating Country List...");
 //            mysql.database.updateCountriesList();
@@ -118,36 +160,6 @@ public class BaseInterfaceController implements Initializable {
 
 //        if(Appointments.appointmentList.size() > 0) NextAppointment.setText("Id: "+ Appointments.appointmentList.get(0).getApointmentID() + " Appointment: " + Appointments.appointmentList.get(0).getTitle() + " Starts at: " + Appointments.appointmentList.get(0).getStartTime());
 //        else NextAppointment.setText("There are no appointments soon.");
-//
-//        //Setup table and columns for customer list
-//        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-//        Cus_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        Cus_Address.setCellValueFactory(new PropertyValueFactory<>("address"));
-//        Cus_Division.setCellValueFactory(new PropertyValueFactory<>("division"));
-//        Cus_Postal.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-//        Cus_Phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-//        customerTableView.setItems(Customer.customerList);
-        var customerRepository = new CustomerRepository();
-        try {
-            var customers = customerRepository.fetchAll();
-            customers.forEach(
-                System.out::println
-            );
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-//
-//        //Setup table and column for appointment list
-//        AppointmentCol.setCellValueFactory(new PropertyValueFactory<>("apointmentID"));
-//        TitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-//        DescriptionCol.setCellValueFactory(new PropertyValueFactory("description"));
-//        LocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-//        ContactCol.setCellValueFactory(new PropertyValueFactory("contact"));
-//        TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-//        CustomerCol.setCellValueFactory(new PropertyValueFactory<>("customer"));
-//        StartCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-//        EndCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-//        Appointment_Table.setItems(Appointments.appointmentList);
 //
 //        //Fire teh week filter to prefil the appointments list and preselect filter
 //        weekRadio.fire();
@@ -239,7 +251,7 @@ public class BaseInterfaceController implements Initializable {
     //Get the selected appointment and send it to appointment menu with prefill funtion
     @FXML
     private void appointmentUpdate(ActionEvent event) {
-//        Appointments selected = Appointment_Table.getSelectionModel().getSelectedItem();
+//        Appointments selected = appointmentTableView.getSelectionModel().getSelectedItem();
 //        if(selected == null) return;//don't finish function if nothing is selected
 //
 //        try {
@@ -268,7 +280,7 @@ public class BaseInterfaceController implements Initializable {
      */
     @FXML
     private void appointmentDelete(ActionEvent event) {
-//        Appointment selected = Appointment_Table.getSelectionModel().getSelectedItem();
+//        Appointment selected = appointmentTableView.getSelectionModel().getSelectedItem();
 //
 //        if(selected == null) return;
 //

@@ -27,17 +27,17 @@
                     <content>
                         <BorderPane>
                             <center>
-                                <TableView fx:id="Appointment_Table" prefHeight="200.0" prefWidth="200.0">
+                                <TableView fx:id="appointmentTableView" prefHeight="200.0" prefWidth="200.0">
                                     <columns>
-                                        <TableColumn fx:id="AppointmentCol" prefWidth="100.0" text="Appointment ID" />
-                                        <TableColumn fx:id="TitleCol" prefWidth="100.0" text="Title" />
-                                        <TableColumn fx:id="DescriptionCol" prefWidth="100.0" text="Description" />
-                                        <TableColumn fx:id="LocationCol" prefWidth="100.0" text="Location" />
-                                        <TableColumn fx:id="ContactCol" prefWidth="100.0" text="Contact" />
-                                        <TableColumn fx:id="TypeCol" prefWidth="100.0" text="Type" />
-                                        <TableColumn fx:id="StartCol" prefWidth="100.0" text="Start" />
-                                        <TableColumn fx:id="EndCol" prefWidth="100.0" text="End" />
-                                        <TableColumn fx:id="CustomerCol" prefWidth="100.0" text="Customer ID" />
+                                        <TableColumn fx:id="appointmentIdColumn" prefWidth="100.0" text="Appointment ID" />
+                                        <TableColumn fx:id="appointmentTitleColumn" prefWidth="100.0" text="Title" />
+                                        <TableColumn fx:id="appointmentDescColumn" prefWidth="100.0" text="Description" />
+                                        <TableColumn fx:id="appointmentLocationColumn" prefWidth="100.0" text="Location" />
+                                        <TableColumn fx:id="appointmentContactColumn" prefWidth="100.0" text="Contact" />
+                                        <TableColumn fx:id="appointmentTypeColumn" prefWidth="100.0" text="Type" />
+                                        <TableColumn fx:id="appointmentStartColumn" prefWidth="100.0" text="Start" />
+                                        <TableColumn fx:id="appointmentEndColumn" prefWidth="100.0" text="End" />
+                                        <TableColumn fx:id="appointmentCustomerColumn" prefWidth="100.0" text="Customer ID" />
                                     </columns>
                                     <columnResizePolicy>
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -81,11 +81,11 @@
                                 <TableView fx:id="customerTableView" prefHeight="200.0" prefWidth="200.0">
                                     <columns>
                                         <TableColumn fx:id="customerIdColumn" editable="false" prefWidth="75.0" text="Customer ID" />
-                                        <TableColumn fx:id="Cus_Name" prefWidth="75.0" text="Customer Name" />
-                                        <TableColumn fx:id="Cus_Address" prefWidth="75.0" text="Address" />
-                                        <TableColumn fx:id="Cus_Division" prefWidth="75.0" text="First Division" />
-                                        <TableColumn fx:id="Cus_Postal" prefWidth="75.0" text="Postal Code" />
-                                        <TableColumn fx:id="Cus_Phone" prefWidth="75.0" text="Phone" />
+                                        <TableColumn fx:id="customerNameColumn" prefWidth="75.0" text="Customer Name" />
+                                        <TableColumn fx:id="customerAddressColumn" prefWidth="75.0" text="Address" />
+                                        <TableColumn fx:id="customerDivisionColumn" prefWidth="75.0" text="First Division" />
+                                        <TableColumn fx:id="customerPostalCodeColumn" prefWidth="75.0" text="Postal Code" />
+                                        <TableColumn fx:id="customerPhoneColumn" prefWidth="75.0" text="Phone" />
                                     </columns>
                                     <columnResizePolicy>
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
