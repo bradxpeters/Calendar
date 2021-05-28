@@ -240,17 +240,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-            "customerId=" + customerId +
-            ", customerName='" + customerName + '\'' +
-            ", address='" + address + '\'' +
-            ", postalCode='" + postalCode + '\'' +
-            ", phone='" + phone + '\'' +
-            ", createDate=" + createDate +
-            ", createdBy='" + createdBy + '\'' +
-            ", lastUpdate=" + lastUpdate +
-            ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
-            ", divisionId=" + divisionId +
-            '}';
+        return customerName;
     }
 }

@@ -247,7 +247,7 @@ public class BaseInterfaceController implements Initializable {
             Parent root = loader.load();
             var scene = new Scene(root);
             var stage = new Stage();
-            stage.setTitle("Add Or Update Customer");
+            stage.setTitle("Add Or Update Appointment");
             stage.setScene(scene);
             stage.show();
 

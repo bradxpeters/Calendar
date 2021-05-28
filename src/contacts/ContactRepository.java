@@ -25,7 +25,9 @@ public class ContactRepository {
             ps.setInt(1, id);
 
             var rs = ps.executeQuery();
-            contact = this.fetchRsIntoContact(rs);
+            while (rs.next()) {
+                contact = this.fetchRsIntoContact(rs);
+            }
         } catch (SQLException e) {
             System.out.println("Error getting contact by id");
             System.out.println(e.getMessage());

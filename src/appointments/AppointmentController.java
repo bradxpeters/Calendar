@@ -5,6 +5,7 @@ import contacts.ContactList;
 import contacts.ContactRepository;
 import customers.Customer;
 import customers.CustomerList;
+import customers.CustomerRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,21 +67,16 @@ public class AppointmentController implements Initializable {
     @FXML
     private Button cancelButton;
 
-    private boolean update = false;
+    private boolean isUpdatingAppointment = false;
 
     private AppointmentRepository appointmentRepository;
 
     private ContactRepository contactRepository;
 
+    private CustomerRepository customerRepository;
 
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        appointmentCustomerComboBox.setItems(CustomerList.getInstance().getCustomerList());
 
         //Make an observable list with 0-23 hour options
         ObservableList<Integer> hr = FXCollections.observableArrayList();
@@ -106,6 +102,7 @@ public class AppointmentController implements Initializable {
 
         this.setAppointmentRepository(new AppointmentRepository());
         this.setContactRepository(new ContactRepository());
+        this.setCustomerRepository(new CustomerRepository());
 
         this.setupContactComboBox();
         this.setupAppointmentCustomerComboBox();
@@ -143,27 +140,25 @@ public class AppointmentController implements Initializable {
         appointmentCustomerComboBox.setButtonCell(factory.call(null));
     }
 
-    public void prefill (Appointment app) {                                         //PreFill all Customer info
-        update = true;
+    public void prefill (Appointment app) {
+        isUpdatingAppointment = true;
 
-//        appointmentIdTextField.setText(String.valueOf(app.getAppointmentId()));
-//        appointmentTitleTextField.setText(app.getTitle());
-//        appointmentDescriptionTextField.setText(app.getDescription());
-//        appointmentLocationTextField.setText(app.getLocation());
-//        appointmentContactComboBox.setValue(this.contactRepository.fetchContactById(app.getContactId()));
-//        appointmentTypeTextField.setText(app.getType());
-//        ZonedDateTime convertedStart = app.getStartTimeObj().withZoneSameInstant(ZoneId.systemDefault());
-//        appointmentStartDatePicker.setValue(convertedStart.toLocalDate());
-//        appointmentStartHourComboBox.setValue(convertedStart.getHour());
-//        appointmentStartMinuteComboBox.setValue(convertedStart.getMinute());
-//        ZonedDateTime convertedEnd = app.getEndTimeObj().withZoneSameInstant(ZoneId.systemDefault());
-//        appointmentEndDatePicker.setValue(convertedEnd.toLocalDate());
-//        appointmentEndHourComboBox.setValue(convertedEnd.getHour());
-//        appointmentEndMinuteComboBox.setValue(convertedEnd.getMinute());
-//        appointmentCustomerComboBox.setValue(app.getCustomer());
+        appointmentIdTextField.setText(String.valueOf(app.getAppointmentId()));
+        appointmentTitleTextField.setText(app.getTitle());
+        appointmentDescriptionTextField.setText(app.getDescription());
+        appointmentLocationTextField.setText(app.getLocation());
+        appointmentContactComboBox.setValue(this.contactRepository.fetchContactById(app.getContactId()));
+        appointmentTypeTextField.setText(app.getType());
+        appointmentStartDatePicker.setValue(app.getStart().toLocalDate());
+        appointmentStartHourComboBox.setValue(app.getStart().getHour());
+        appointmentStartMinuteComboBox.setValue(app.getStart().getMinute());
+        appointmentEndDatePicker.setValue(app.getEnd().toLocalDate());
+        appointmentEndHourComboBox.setValue(app.getEnd().getHour());
+        appointmentEndMinuteComboBox.setValue(app.getEnd().getMinute());
+        appointmentCustomerComboBox.setValue(this.customerRepository.fetchCustomerById(app.getCustomerId()));
     }
 
-    //function runs when the submit button is pressed if update true send appointment to update if not make an appointment
+    //function runs when the submit button is pressed if isUpdatingAppointment true send appointment to isUpdatingAppointment if not make an appointment
     /**
      * This function runs when the submit button is pressed. <p>It collects all the information from the
      * form and compiles it into a appointment object. It uses the isBusinessHours function to check
@@ -176,7 +171,7 @@ public class AppointmentController implements Initializable {
 //        String tmp;
 //        tmp = appointmentIdTextField.getText();
 //        int ID = 0;
-//        if(update) ID = Integer.parseInt(tmp);
+//        if(isUpdatingAppointment) ID = Integer.parseInt(tmp);
 //
 //        String title = appointmentTitleTextField.getText();
 //        String des = appointmentDescriptionTextField.getText();
@@ -218,7 +213,7 @@ public class AppointmentController implements Initializable {
 //        }
 //
 //        try {
-//            if(update) mysql.database.updateAppointment(app);
+//            if(isUpdatingAppointment) mysql.database.updateAppointment(app);
 //            else mysql.database.addAppointment(app);
 //
 //        }
@@ -317,5 +312,9 @@ public class AppointmentController implements Initializable {
 
     public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
+    }
+
+    public void setCustomerRepository(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 }

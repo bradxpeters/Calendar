@@ -2,10 +2,8 @@ package customers;
 
 import authorization.AuthorizedState;
 import database.DatabaseConnector;
-import users.User;
 
 import java.sql.*;
-import java.util.Arrays;
 
 public class CustomerRepository {
     private Connection db;
@@ -18,14 +16,29 @@ public class CustomerRepository {
         }
     }
 
-    public Customer fetchCustomerById(Integer id) throws SQLException {
-        var ps = this.getDb().prepareStatement("SELECT * FROM customers WHERE Customer_ID = ?");
-        ps.setInt(1, id);
-        ps.setMaxRows(1);
+    public Customer fetchCustomerById(Integer id) {
 
-        var rs = ps.executeQuery();
+        var customer = new Customer();
 
-        return this.fetchRsIntoCustomer(rs);
+        try {
+            var ps = this.getDb().prepareStatement("" +
+                "SELECT customers.*, fld.Division AS divisionName, c.Country as countryName " +
+                "FROM customers " +
+                "JOIN first_level_divisions fld ON customers.Division_ID = fld.Division_ID " +
+                "JOIN countries c ON c.Country_ID = fld.COUNTRY_ID " +
+                "WHERE customers.Customer_ID = ?"
+            );
+            ps.setInt(1, id);
+
+            var rs = ps.executeQuery();
+            while (rs.next()) {
+                customer = this.fetchRsIntoCustomer(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting customer by id");
+            System.out.println(e.getMessage());
+        }
+        return customer;
     }
 
     public void fetchAll() {
