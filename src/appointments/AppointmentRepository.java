@@ -147,6 +147,22 @@ public class AppointmentRepository {
 
         this.fetchAll();
     }
+
+    public void deleteAppointment(Appointment appointment) {
+        try {
+            var ps = this.getDb().prepareStatement(
+                "DELETE FROM appointments WHERE Appointment_ID = ?"
+            );
+            ps.setInt(1, appointment.getAppointmentId());
+            ps.setMaxRows(1);
+            ps.executeUpdate();
+
+            this.fetchAll();
+        } catch (SQLException e) {
+            System.out.println("Error deleting appointment by id: " + appointment.getAppointmentId());
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
 

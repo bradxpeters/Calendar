@@ -261,34 +261,20 @@ public class BaseInterfaceController implements Initializable {
         }
     }
 
-
-    /**
-     * When the appointment delete button is pressed this function will run
-     * <p>This function will pull the appointment that is selected and make sure an appointment
-     * was selected. It will start a new thread to confirm if the user wants to delete the appointment with
-     * a popup. Once the popup was confirmed then it will pass the selected appointment to
-     * mysql.deleteAppointment() to remove it from the database.
-     */
     @FXML
-    private void appointmentDelete(ActionEvent event) {
-//        Appointment selected = appointmentTableView.getSelectionModel().getSelectedItem();
-//
-//        if(selected == null) return;
-//
-//        //AppDeleteRun ADRun = new AppDeleteRun(selected);
-//        //new Thread(ADRun).start();
-//
-//        Runnable ADRun =
-//            () -> { if (!ConfirmAppointmentDelete(selected)) return;
-//
-//                try {
-//                    mysql.database.deleteAppointment(selected);
-//                }
-//                catch (SQLException e) {
-//                    System.out.println("SQL ERROR!!!" + e);
-//                } };
-//        Thread thread = new Thread(ADRun);
-//        thread.start();
+    private void handleDeleteButton(ActionEvent event) {
+        var selected = appointmentTableView.getSelectionModel().getSelectedItem();
+        if( selected == null) return;
+
+        var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "
+            + selected.getTitle() + "?");
+        alert.setHeaderText("Confirmation");
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            var appointmentRepository = new AppointmentRepository();
+            appointmentRepository.deleteAppointment(selected);
+        }
     }
 
     //On radio button change update the timeline

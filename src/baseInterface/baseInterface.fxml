@@ -68,7 +68,7 @@
                                  <children>
                                               <Button fx:id="AppointmentAddButton" mnemonicParsing="false" onAction="#handleAddOrUpdateAppointmentButton" prefWidth="70.0" text="Add" />
                                               <Button fx:id="AppointmentUpdateButton" mnemonicParsing="false" onAction="#handleAddOrUpdateAppointmentButton" prefWidth="70.0" text="Update" />
-                                              <Button fx:id="AppointmentDeleteButton" mnemonicParsing="false" onAction="#appointmentDelete" prefWidth="70.0" text="Delete" />
+                                              <Button fx:id="AppointmentDeleteButton" mnemonicParsing="false" onAction="#handleDeleteButton" prefWidth="70.0" text="Delete" />
                                         <MenuBar prefWidth="80.0">
                                             <menus>
                                                 <Menu mnemonicParsing="false" text="Reports">
