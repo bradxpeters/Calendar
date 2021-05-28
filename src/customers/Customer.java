@@ -27,6 +27,10 @@ public class Customer {
 
     private Integer divisionId;
 
+    private String divisionName;
+
+    private String countryName;
+
     public Customer() {}
 
     public Customer(Integer customerId, String customerName, String address, String postalCode, String phone, Integer divisionId) {
@@ -216,6 +220,22 @@ public class Customer {
      */
     public void setDivisionId(Integer divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public String getDivisionName() {
+        return divisionName;
+    }
+
+    public void setDivisionName(String divisionName) {
+        this.divisionName = divisionName;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     @Override

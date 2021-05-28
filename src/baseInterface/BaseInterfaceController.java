@@ -3,6 +3,7 @@ package baseInterface;
 import appointments.Appointment;
 import appointments.AppointmentRepository;
 import contacts.Contact;
+import countries.Country;
 import customers.AddCustomerFormController;
 import customers.Customer;
 import customers.CustomerList;
@@ -38,7 +39,13 @@ public class BaseInterfaceController implements Initializable {
     private TableColumn<Customer, String> customerAddressColumn;
 
     @FXML
-    private TableColumn<Customer, FirstLevelDivision> customerDivisionColumn;
+    private TableColumn<Customer, Customer> customerDivisionIdColumn;
+
+    @FXML
+    private TableColumn<Customer, Customer> customerDivisionNameColumn;
+
+    @FXML
+    private TableColumn<Customer, Country> customerCountryColumn;
 
     @FXML
     private TableColumn<Customer, String> customerPostalCodeColumn;
@@ -171,9 +178,11 @@ public class BaseInterfaceController implements Initializable {
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        customerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        customerDivisionIdColumn.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        customerDivisionNameColumn.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
         customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        customerCountryColumn.setCellValueFactory(new PropertyValueFactory<>("countryName"));
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));

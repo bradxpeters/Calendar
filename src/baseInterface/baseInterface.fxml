@@ -100,9 +100,11 @@
                                         <TableColumn fx:id="customerIdColumn" editable="false" prefWidth="75.0" text="Customer ID" />
                                         <TableColumn fx:id="customerNameColumn" prefWidth="75.0" text="Customer Name" />
                                         <TableColumn fx:id="customerAddressColumn" prefWidth="75.0" text="Address" />
-                                        <TableColumn fx:id="customerDivisionColumn" prefWidth="75.0" text="First Division" />
+                              <TableColumn fx:id="customerDivisionNameColumn" prefWidth="75.0" text="Fist Division" />
+                              <TableColumn fx:id="customerCountryColumn" prefWidth="75.0" text="Country" />
                                         <TableColumn fx:id="customerPostalCodeColumn" prefWidth="75.0" text="Postal Code" />
                                         <TableColumn fx:id="customerPhoneColumn" prefWidth="75.0" text="Phone" />
+                                        <TableColumn fx:id="customerDivisionIdColumn" prefWidth="75.0" text="First Division ID" />
                                     </columns>
                                     <columnResizePolicy>
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

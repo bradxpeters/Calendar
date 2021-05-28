@@ -32,7 +32,10 @@ public class CustomerRepository {
 
         try {
             var ps = this.getDb().prepareStatement(
-                "SELECT * FROM customers"
+                "SELECT customers.*, fld.Division AS divisionName, c.Country as countryName " +
+                    "FROM customers " +
+                    "JOIN first_level_divisions fld ON customers.Division_ID = fld.Division_ID " +
+                    "JOIN countries c ON c.Country_ID = fld.COUNTRY_ID"
             );
 
             var rs = ps.executeQuery();
@@ -58,6 +61,8 @@ public class CustomerRepository {
         customer.setCreateDate(rs.getTimestamp("Last_Update"));
         customer.setLastUpdatedBy(rs.getString("Last_Updated_By"));
         customer.setDivisionId(rs.getInt("Division_ID"));
+        customer.setDivisionName(rs.getString("divisionName"));
+        customer.setCountryName(rs.getString("countryName"));
 
         if (customer.getCustomerId() == null) {
             return null;
