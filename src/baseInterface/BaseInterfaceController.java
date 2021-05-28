@@ -76,35 +76,46 @@ public class BaseInterfaceController implements Initializable {
 
     @FXML
     private ToggleGroup ViewPeriod;
+
     @FXML
     private RadioButton weekRadio;
+
     @FXML
     private RadioButton monthRadio;
+
     @FXML
     private Label viewLabel;
+
     @FXML
     private Label NextAppointment;
+
     @FXML
     private Button AppointmentAddButton;
+
     @FXML
     private Button AppointmentUpdateButton;
+
     @FXML
     private Button AppointmentDeleteButton;
+
     @FXML
     private Button leftButton;
+
     @FXML
     private Button rightButton;
+
     @FXML
     private Button customerAddButton;
+
     @FXML
     private Button customerUpdateButton;
+
     @FXML
     private Button customerDeleteButton;
 
-
     public static ZonedDateTime startView;
-    public static ZonedDateTime endView;
 
+    public static ZonedDateTime endView;
 
     /**
      * Initializes the controller class.
@@ -112,29 +123,8 @@ public class BaseInterfaceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        // Populate customer table
-        var customerRepository = new CustomerRepository();
-        customerTableView.setItems(customerRepository.fetchAll());
-        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        customerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
-        customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
-        // Populate appointment table
-        var appointmentRepository = new AppointmentRepository();
-        var appointments = appointmentRepository.fetchAll();
-        appointmentTableView.setItems(appointments);
-        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        appointmentDescColumn.setCellValueFactory(new PropertyValueFactory("description"));
-        appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory("contactId"));
-        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        this.setUpTableColumns();
+        this.populateInitialData();
 
         //Update all lists
 //            System.out.println("Updating Country List...");
@@ -165,17 +155,44 @@ public class BaseInterfaceController implements Initializable {
 //        weekRadio.fire();
     }
 
+    private void populateInitialData() {
+        // Populate customer table
+        var customerRepository = new CustomerRepository();
+        customerTableView.setItems(customerRepository.fetchAll());
+
+        // Populate appointment table
+        var appointmentRepository = new AppointmentRepository();
+        appointmentTableView.setItems(appointmentRepository.fetchAll());
+    }
+
+    private void setUpTableColumns() {
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        customerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentDescColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory("contactId"));
+        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+    }
+
     //When add customer button is presssed cutomer menu opens to add new customer to database
     @FXML
     private void customerAdd(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Customer_Menu.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("CalenDo - Add Customer");
-            stage.setScene(scene);
-            stage.show();
+            Parent loader = FXMLLoader.load(Customer.class.getResource("addCustomerForm.fxml"));
+            var newStage = new Stage();
+            newStage.setTitle("Add Customer");
+            newStage.setScene(new Scene(loader, 1200, 600));
+            newStage.show();
         }
         catch(IOException e) {
             System.out.println("SQL ERROR!!! " + e);

@@ -7,7 +7,7 @@ import java.sql.*;
  */
 public class DatabaseConnector {
 
-    private static final String connectionUrl = "jdbc:mysql://wgudb.ucertify.com/WJ07T8l";
+    private static final String connectionUrl = "jdbc:mysql://wgudb.ucertify.com/WJ07T8l?autoReconnect=true";
 
     private static final String username = "U07T8l";
 

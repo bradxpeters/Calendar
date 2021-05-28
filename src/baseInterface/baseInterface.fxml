@@ -110,11 +110,15 @@
                                 </TableView>
                             </center>
                             <bottom>
-                                <AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
+                                <AnchorPane maxHeight="64.0" minHeight="50.0" prefHeight="64.0" prefWidth="1052.0" BorderPane.alignment="CENTER">
                                     <children>
-                                        <Button fx:id="customerAddButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#customerAdd" text="Add" AnchorPane.leftAnchor="14.0" />
-                                        <Button fx:id="customerUpdateButton" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#customerUpdate" text="Update" AnchorPane.leftAnchor="76.0" />
-                                        <Button fx:id="customerDeleteButton" layoutX="921.0" layoutY="10.0" mnemonicParsing="false" onAction="#customerDelete" text="Delete" AnchorPane.rightAnchor="14.0" />
+                              <HBox alignment="CENTER" layoutX="11.0" layoutY="8.0" prefHeight="42.0" prefWidth="338.0" spacing="19.0">
+                                 <children>
+                                              <Button fx:id="customerAddButton" mnemonicParsing="false" onAction="#customerAdd" prefWidth="80.0" text="Add" />
+                                              <Button fx:id="customerUpdateButton" mnemonicParsing="false" onAction="#customerUpdate" prefWidth="80.0" text="Update" />
+                                              <Button fx:id="customerDeleteButton" mnemonicParsing="false" onAction="#customerDelete" prefWidth="80.0" text="Delete" />
+                                 </children>
+                              </HBox>
                                     </children>
                                 </AnchorPane>
                             </bottom>

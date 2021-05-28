@@ -45,12 +45,7 @@ public class Tests {
         var fldRepo = new FirstLevelDivisionRepository();
         FirstLevelDivision testFld = null;
 
-        try {
-            testFld = fldRepo.fetchFirstLevelDivisionById(testId);
-        } catch (SQLException exception) {
-            System.out.println("FirstLevelDivision failed");
-            exception.printStackTrace();
-        }
+        testFld = fldRepo.fetchFirstLevelDivisionById(testId);
 
         if (testFld == null) {
             System.out.println("No FirstLevelDivision found with id " + testId);

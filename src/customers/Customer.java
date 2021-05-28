@@ -27,6 +27,17 @@ public class Customer {
 
     private Integer divisionId;
 
+    public Customer() {}
+
+    public Customer(Integer customerId, String customerName, String address, String postalCode, String phone, Integer divisionId) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+    }
+
     /**
      * Gets customer id.
      *
