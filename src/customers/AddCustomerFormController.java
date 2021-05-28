@@ -99,10 +99,6 @@ public class AddCustomerFormController implements Initializable {
 
     }
 
-    /**
-     * Prefills the customer menu to allow an user to edit a customer
-     * @param cus the customer object to fill the table
-     */
     public void prefill (Customer cus) {
         isUpdatingCustomer = true;
 

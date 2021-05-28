@@ -151,4 +151,40 @@ public class Appointment {
     public void setContactId(Integer contactId) {
         this.contactId = contactId;
     }
+
+    public void setStart(ZonedDateTime start) {
+        this.start = start;
+    }
+
+    public void setEnd(ZonedDateTime end) {
+        this.end = end;
+    }
+
+    public Timestamp getStartSqlTimestamp(){
+        return Timestamp.valueOf(this.start.toLocalDateTime());
+    }
+
+    public Timestamp getEndSqlTimestamp(){
+        return Timestamp.valueOf(this.end.toLocalDateTime());
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+            "appointmentId=" + appointmentId +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
+            ", location='" + location + '\'' +
+            ", type='" + type + '\'' +
+            ", start=" + start +
+            ", end=" + end +
+            ", createDate=" + createDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastUpdate=" + lastUpdate +
+            ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+            ", customerId=" + customerId +
+            ", userId=" + userId +
+            ", contactId=" + contactId +
+            '}';
+    }
 }

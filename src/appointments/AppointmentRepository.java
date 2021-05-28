@@ -1,14 +1,9 @@
 package appointments;
 
+import authorization.AuthorizedState;
 import database.DatabaseConnector;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
+import java.sql.*;
 
 public class AppointmentRepository {
     private Connection db;
@@ -21,20 +16,35 @@ public class AppointmentRepository {
         }
     }
 
-    public Appointment fetchAppointmentById(Integer id) throws SQLException {
-        var ps = this.getDb().prepareStatement(
-            "SELECT * FROM appointments WHERE Appointment_ID = ?"
-        );
-        ps.setInt(1, id);
-        ps.setMaxRows(1);
+    public Appointment fetchAppointmentById(Integer id) {
+        var appointment = new Appointment();
 
-        var rs = ps.executeQuery();
+        if (id == null) {
+            return appointment;
+        }
 
-        return this.fetchRsIntoAppointment(rs);
+        try {
+            var ps = this.getDb().prepareStatement(
+                "SELECT * FROM appointments WHERE Appointment_ID = ?"
+            );
+            ps.setInt(1, id);
+            ps.setMaxRows(1);
+            var rs = ps.executeQuery();
+
+            while (rs.next()){
+                appointment = this.fetchRsIntoAppointment(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching appointment by id: " + id);
+            System.out.println(e.getMessage());
+        }
+
+        return appointment;
     }
 
-    public ObservableList<Appointment> fetchAll() {
-        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    public void fetchAll() {
+        AppointmentList.getInstance().getAppointmentList().clear();
 
         try {
             var ps = this.getDb().prepareStatement(
@@ -43,13 +53,12 @@ public class AppointmentRepository {
 
             var rs = ps.executeQuery();
             while (rs.next()) {
-                appointments.add(this.fetchRsIntoAppointment(rs));
+                AppointmentList.getInstance().getAppointmentList().add(this.fetchRsIntoAppointment(rs));
             }
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println("Error fetching all appointments");
+            System.out.println(e.getMessage());
         }
-
-        return appointments;
     }
 
     private Appointment fetchRsIntoAppointment(ResultSet rs) throws SQLException {
@@ -79,6 +88,64 @@ public class AppointmentRepository {
 
     public Connection getDb() {
         return db;
+    }
+
+    public void createOrUpdateAppointment(Appointment appointment) {
+
+        var existingAppointment = this.fetchAppointmentById(appointment.getAppointmentId());
+
+        String sql =
+            "INSERT INTO appointments (" +
+                "Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, " +
+                "Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
+            "ON DUPLICATE KEY UPDATE " +
+                "Appointment_ID=VALUES(Appointment_ID), " +
+                "Title=VALUES(Title), " +
+                "Description=VALUES(Description), " +
+                "Location=VALUES(Location)," +
+                "Type=VALUES(Type)," +
+                "Start=VALUES(Start)," +
+                "End=VALUES(End)," +
+                "Create_Date=VALUES(Create_Date)," +
+                "Created_By=VALUES(Created_By)," +
+                "Last_Update=VALUES(Last_Update)," +
+                "Last_Updated_By=VALUES(Last_Updated_By)," +
+                "Customer_ID=VALUES(Customer_ID)," +
+                "User_ID=VALUES(User_ID)," +
+                "Contact_ID=VALUES(Contact_ID)";
+            try {
+            PreparedStatement ps = this.getDb().prepareStatement(sql);
+            ps.setObject(1,appointment.getAppointmentId());
+            ps.setString(2,appointment.getTitle());
+            ps.setString(3,appointment.getDescription());
+            ps.setString(4,appointment.getLocation());
+            ps.setString(5,appointment.getType());
+            ps.setTimestamp(6,appointment.getStartSqlTimestamp());
+            ps.setTimestamp(7,appointment.getEndSqlTimestamp());
+            ps.setTimestamp(8, existingAppointment.getCreateDate() != null
+                ? existingAppointment.getCreateDate()
+                : new Timestamp(System.currentTimeMillis())
+            );
+            ps.setString(9, existingAppointment.getCreatedBy() != null
+                ? existingAppointment.getCreatedBy()
+                : AuthorizedState.getInstance().getAuthorizedUser().getUserName()
+            );
+            ps.setTimestamp(10, new Timestamp(System.currentTimeMillis()));
+            ps.setString(11, AuthorizedState.getInstance().getAuthorizedUser().getUserName());
+            ps.setInt(12, appointment.getCustomerId());
+            ps.setInt(13, existingAppointment.getUserId() != null
+                ? existingAppointment.getUserId()
+                : AuthorizedState.getInstance().getAuthorizedUser().getUserId()
+            );
+            ps.setInt(14, appointment.getContactId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error creating or updating appointment " + appointment.getAppointmentId());
+            System.out.println(e.getMessage());
+        }
+
+        this.fetchAll();
     }
 }
 

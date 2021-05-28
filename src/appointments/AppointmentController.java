@@ -16,6 +16,12 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentController implements Initializable {
@@ -158,49 +164,48 @@ public class AppointmentController implements Initializable {
         appointmentCustomerComboBox.setValue(this.customerRepository.fetchCustomerById(app.getCustomerId()));
     }
 
-    //function runs when the submit button is pressed if isUpdatingAppointment true send appointment to isUpdatingAppointment if not make an appointment
-    /**
-     * This function runs when the submit button is pressed. <p>It collects all the information from the
-     * form and compiles it into a appointment object. It uses the isBusinessHours function to check
-     * if the new app is in business hours and uses the isOverlapping function to see if the new appointment
-     * overlaps with any other appointment. Then it uses the mysql.AddAppointment function to add the appointment
-     * to the database.
-     */
     @FXML
-    private void AppSubmit(ActionEvent event) {
-//        String tmp;
-//        tmp = appointmentIdTextField.getText();
-//        int ID = 0;
-//        if(isUpdatingAppointment) ID = Integer.parseInt(tmp);
-//
-//        String title = appointmentTitleTextField.getText();
-//        String des = appointmentDescriptionTextField.getText();
-//        String Loc = appointmentLocationTextField.getText();
-//        Contacts contact = appointmentContactComboBox.getValue();
-//        String type = appointmentTypeTextField.getText();
-//
-//        LocalDate beginDate = appointmentStartDatePicker.getValue();
-//        String startHr = appointmentStartHourComboBox.getValue().toString();
-//        String startMin = appointmentStartMinuteComboBox.getValue().toString();
-//        if(startHr.length() < 2) startHr = "0" + startHr;
-//        if(startMin.length() < 2) startMin = "0" + startMin;
-//        System.out.println(startHr + ":" + startMin);
-//        LocalTime beginTime = LocalTime.parse(startHr + ":" + startMin, DateTimeFormatter.ISO_TIME);
-//        ZonedDateTime begin = ZonedDateTime.of(beginDate, beginTime, ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC+0"));
-//        System.out.println("Time: " + beginTime);
-//        System.out.println("TimeDate: " + begin);
-//
-//        LocalDate endDate = appointmentEndDatePicker.getValue();
-//        String endHr = appointmentEndHourComboBox.getValue().toString();
-//        String endMin = appointmentEndMinuteComboBox.getValue().toString();
-//        if(endHr.length() < 2) endHr = "0" + endHr;
-//        if(endMin.length() < 2) endMin = "0" + endMin;
-//        LocalTime endTime = LocalTime.parse(endHr + ":" + endMin, DateTimeFormatter.ISO_TIME);
-//        ZonedDateTime end = ZonedDateTime.of(endDate, endTime, ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC+0"));
-//
-//        Customers customer = appointmentCustomerComboBox.getValue();
-//        Appointments app = new Appointments(ID, title, des, Loc, contact, type, begin.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), customer);
-//
+    private void handleAppointmentSubmitButton(ActionEvent event) {
+
+        System.out.print("Appointment creation/updating started");
+        var tempAppointment = new Appointment();
+        tempAppointment.setAppointmentId(isUpdatingAppointment
+            ? Integer.parseInt(appointmentIdTextField.getText())
+            : null);
+        tempAppointment.setTitle(appointmentTitleTextField.getText());
+        tempAppointment.setDescription(appointmentDescriptionTextField.getText());
+        tempAppointment.setLocation(appointmentLocationTextField.getText());
+        tempAppointment.setContactId(appointmentContactComboBox.getValue().getContactId());
+        tempAppointment.setType(appointmentTypeTextField.getText());
+        tempAppointment.setCustomerId(appointmentCustomerComboBox.getValue().getCustomerId());
+
+        var startDate = appointmentStartDatePicker.getValue();
+        var endDate = appointmentEndDatePicker.getValue();
+
+        var startHr = appointmentStartHourComboBox.getValue().toString();
+        var endHr = appointmentEndHourComboBox.getValue().toString();
+
+        var startMin = appointmentStartMinuteComboBox.getValue().toString();
+        var endMin = appointmentEndMinuteComboBox.getValue().toString();
+
+        var beginTime = LocalTime.of(Integer.parseInt(startHr), Integer.parseInt(startMin));
+        var endTime = LocalTime.of(Integer.parseInt(endHr), Integer.parseInt(endMin));
+
+        var begin = ZonedDateTime.of(
+            startDate,
+            beginTime,
+            ZoneId.systemDefault()
+        );
+        var end = ZonedDateTime.of(
+            endDate,
+            endTime,
+            ZoneId.systemDefault()
+        );
+
+        //.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        tempAppointment.setStart(begin);
+        tempAppointment.setEnd(end);
+
 //        if(!isBussinessHours(app)){
 //            errorMessageLabel.setText("Selected Times are outside businness hours");
 //            return;
@@ -211,16 +216,9 @@ public class AppointmentController implements Initializable {
 //            errorMessageLabel.setText("Selected Times are overlapping another appointment");
 //            return;
 //        }
-//
-//        try {
-//            if(isUpdatingAppointment) mysql.database.updateAppointment(app);
-//            else mysql.database.addAppointment(app);
-//
-//        }
-//        catch (SQLException e) {
-//            System.out.println("SQL Error!!! " + e);
-//        }
-//        ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        this.appointmentRepository.createOrUpdateAppointment(tempAppointment);
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
     //Runs when the cancel button is pressed and closed the window

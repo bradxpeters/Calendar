@@ -2,6 +2,7 @@ package baseInterface;
 
 import appointments.Appointment;
 import appointments.AppointmentController;
+import appointments.AppointmentList;
 import appointments.AppointmentRepository;
 import authorization.AuthorizedState;
 import contacts.Contact;
@@ -168,13 +169,12 @@ public class BaseInterfaceController implements Initializable {
 
     private void populateInitialData() {
         // Populate customer table
-        var customerRepository = new CustomerRepository();
         customerTableView.setItems(CustomerList.getInstance().getCustomerList());
         customerTableView.getSortOrder().add(customerIdColumn);
 
         // Populate appointment table
         var appointmentRepository = new AppointmentRepository();
-        appointmentTableView.setItems(appointmentRepository.fetchAll());
+        appointmentTableView.setItems(AppointmentList.getInstance().getAppointmentList());
     }
 
     private void setUpTableColumns() {

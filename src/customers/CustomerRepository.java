@@ -20,6 +20,10 @@ public class CustomerRepository {
 
         var customer = new Customer();
 
+        if (id == null) {
+            return customer;
+        }
+
         try {
             var ps = this.getDb().prepareStatement("" +
                 "SELECT customers.*, fld.Division AS divisionName, c.Country as countryName " +
