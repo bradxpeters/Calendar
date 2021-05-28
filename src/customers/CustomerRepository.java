@@ -99,6 +99,30 @@ public class CustomerRepository {
         this.fetchAll();
     }
 
+    public void deleteCustomer(Customer customer) {
+        // Clean up appointments
+        var appointmentSql = "DELETE FROM appointments WHERE Customer_ID = ?";
+
+        // Delete customer
+        var customerSQL = "DELETE FROM customers WHERE Customer_ID = ?";
+
+        try {
+            var ps1 = this.getDb().prepareStatement(appointmentSql);
+            var ps2 = this.getDb().prepareStatement(customerSQL);
+
+            ps1.setObject(1,customer.getCustomerId());
+            ps2.setObject(1,customer.getCustomerId());
+
+            ps1.executeUpdate();
+            ps2.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting customer: " + customer.getCustomerId());
+            System.out.println(e.getMessage());
+        }
+
+        this.fetchAll();
+    }
+
     public Connection getDb() {
         return db;
     }

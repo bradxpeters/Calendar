@@ -116,7 +116,7 @@
                                  <children>
                                               <Button fx:id="customerAddButton" mnemonicParsing="false" onAction="#handleAddOrUpdateCustomerButton" prefWidth="80.0" text="Add" />
                                               <Button fx:id="customerUpdateButton" mnemonicParsing="false" onAction="#handleAddOrUpdateCustomerButton" prefWidth="80.0" text="Update" />
-                                              <Button fx:id="customerDeleteButton" mnemonicParsing="false" onAction="#customerDelete" prefWidth="80.0" text="Delete" />
+                                              <Button fx:id="customerDeleteButton" mnemonicParsing="false" onAction="#handleCustomerDeleteButton" prefWidth="80.0" text="Delete" />
                                  </children>
                               </HBox>
                                     </children>

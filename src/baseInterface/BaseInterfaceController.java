@@ -211,33 +211,20 @@ public class BaseInterfaceController implements Initializable {
         }
     }
 
-    /**
-     * This function runs when the Customer Delete button is pressed.
-     * <p> This function grabs the selected customer from the customer table, if there is
-     * one selected. Then it will start a new thread that will open a pop-up box to ask
-     * if you are sure you want to delete the customer. If the user hits ok then the selected
-     * customer gets passed to mysql.deleteCustomer() to be removed from the database
-     */
     @FXML
-    private void customerDelete(ActionEvent event) {
-//        Customers selected = customerTableView.getSelectionModel().getSelectedItem();
-//
-//        if(selected == null) return;
-//
-//        Runnable CDRun =
-//            () -> { if (!ConfirmCustomerDelete(selected)) return;
-//
-//                try {
-//                    mysql.database.deleteCustomer(selected);
-//                }
-//                catch (SQLException e) {
-//                    System.out.println("SQL ERROR!!!" + e);
-//                } };
-//        Thread thread = new Thread(CDRun);
-//        thread.start();
+    private void handleCustomerDeleteButton(ActionEvent event) {
+        var selected = customerTableView.getSelectionModel().getSelectedItem();
+        var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "
+                + selected.getCustomerName() + "?");
+        alert.setHeaderText("Confirmation");
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            var customerRepository = new CustomerRepository();
+            customerRepository.deleteCustomer(selected);
+        }
     }
 
-    //Open the appointment menu
     @FXML
     private void appointmentAdd(ActionEvent event) {
         try {
