@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="authorization.AuthController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="420.0" style="-fx-background-color: #2d2d2d#2d2d2d #2d2d2d#2d2d2d;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="authorization.AuthController">
    <children>
       <VBox layoutX="29.0" layoutY="71.0" prefHeight="199.0" prefWidth="367.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="367.0" spacing="17.0">
                <children>
-                  <Label fx:id="usernameLabel" prefHeight="26.0" prefWidth="180.0" text="Username">
+                  <Label fx:id="usernameLabel" prefHeight="26.0" prefWidth="180.0" text="Username" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -24,7 +24,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="367.0">
                <children>
-                  <Label fx:id="passwordLabel" prefHeight="26.0" prefWidth="197.0" text="Password">
+                  <Label fx:id="passwordLabel" prefHeight="26.0" prefWidth="197.0" text="Password" textFill="#fcfcfc">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -39,15 +39,15 @@
             </HBox>
          </children>
       </VBox>
-      <Label layoutX="143.0" layoutY="14.0" prefHeight="67.0" prefWidth="140.0" text="World Calendar" textAlignment="CENTER">
+      <Label layoutX="92.0" layoutY="14.0" prefHeight="67.0" prefWidth="232.0" text="World Calendar" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="21.0" />
+            <Font name="Courier" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="22.0" layoutY="262.0" prefHeight="17.0" prefWidth="70.0" text="Location:" />
+      <Label layoutX="22.0" layoutY="262.0" prefHeight="17.0" prefWidth="70.0" text="Location:" textFill="WHITE" />
       <Label layoutX="84.0" layoutY="270.0" />
-      <Label layoutX="22.0" layoutY="279.0" prefHeight="17.0" prefWidth="70.0" text="Language:" />
-      <Label fx:id="locationLabel" layoutX="92.0" layoutY="262.0" prefHeight="17.0" prefWidth="116.0" />
-      <Label fx:id="languageLabel" layoutX="92.0" layoutY="279.0" prefHeight="17.0" prefWidth="116.0" />
+      <Label layoutX="22.0" layoutY="279.0" prefHeight="17.0" prefWidth="70.0" text="Language:" textFill="WHITE" />
+      <Label fx:id="locationLabel" layoutX="92.0" layoutY="262.0" prefHeight="17.0" prefWidth="116.0" textFill="WHITE" />
+      <Label fx:id="languageLabel" layoutX="92.0" layoutY="279.0" prefHeight="17.0" prefWidth="116.0" textFill="WHITE" />
    </children>
 </Pane>

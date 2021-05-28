@@ -16,18 +16,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="800.0" prefHeight="500.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseInterface.BaseInterfaceController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="800.0" prefHeight="535.0" prefWidth="1052.0" style="-fx-background-color: #2d2d2d#2d2d2d;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseInterface.BaseInterfaceController">
     <center>
-        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <TabPane prefHeight="426.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Appointments">
                     <content>
                         <BorderPane>
                             <center>
-                                <TableView fx:id="appointmentTableView" prefHeight="200.0" prefWidth="200.0">
+                                <TableView fx:id="appointmentTableView" prefHeight="200.0" prefWidth="1153.0">
                                     <columns>
                                         <TableColumn fx:id="appointmentIdColumn" prefWidth="100.0" text="Appointment ID" />
                                         <TableColumn fx:id="appointmentTitleColumn" prefWidth="100.0" text="Title" />
@@ -47,20 +46,17 @@
                             <bottom>
                                 <AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0">
                                     <children>
-                                        <Button fx:id="AppointmentAddButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#appointmentAdd" text="Add" AnchorPane.leftAnchor="14.0" />
-                                        <Button fx:id="AppointmentUpdateButton" layoutX="72.0" layoutY="10.0" mnemonicParsing="false" onAction="#appointmentUpdate" text="Update" AnchorPane.leftAnchor="76.0" />
-                                        <Button fx:id="AppointmentDeleteButton" layoutX="921.0" layoutY="10.0" mnemonicParsing="false" onAction="#appointmentDelete" text="Delete" AnchorPane.rightAnchor="14.0" />
-                                        <RadioButton fx:id="weekRadio" layoutX="183.0" layoutY="4.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Week">
+                                        <RadioButton fx:id="weekRadio" layoutX="860.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Week" textFill="WHITE">
                                             <toggleGroup>
                                                 <ToggleGroup fx:id="ViewPeriod" />
                                             </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton fx:id="monthRadio" layoutX="183.0" layoutY="26.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Month" toggleGroup="$ViewPeriod" />
-                                        <Separator layoutX="146.0" orientation="VERTICAL" prefHeight="157.0" prefWidth="32.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                        <HBox alignment="CENTER" layoutX="532.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0">
+                                        <RadioButton fx:id="monthRadio" layoutX="941.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Month" textFill="WHITE" toggleGroup="$ViewPeriod" />
+                                        <Separator layoutX="344.0" orientation="VERTICAL" prefHeight="157.0" prefWidth="32.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                        <HBox alignment="CENTER" layoutX="387.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="266.0">
                                             <children>
-                                                <Button fx:id="leftButton" mnemonicParsing="false" onAction="#ViewMinus" text="&lt;" />
-                                                <Label fx:id="viewLabel" text="View Label">
+                                                <Button fx:id="leftButton" mnemonicParsing="false" onAction="#ViewMinus" prefHeight="27.0" prefWidth="37.0" text="&lt;" />
+                                                <Label fx:id="viewLabel" text="View Label" textFill="WHITE">
                                                     <padding>
                                                         <Insets left="20.0" right="20.0" />
                                                     </padding>
@@ -68,6 +64,27 @@
                                                 <Button fx:id="rightButton" mnemonicParsing="false" onAction="#ViewPlus" text="&gt;" />
                                             </children>
                                         </HBox>
+                              <HBox alignment="TOP_CENTER" layoutX="20.0" prefHeight="100.0" prefWidth="308.0" spacing="9.0">
+                                 <children>
+                                              <Button fx:id="AppointmentAddButton" mnemonicParsing="false" onAction="#appointmentAdd" prefWidth="70.0" text="Add" />
+                                              <Button fx:id="AppointmentUpdateButton" mnemonicParsing="false" onAction="#appointmentUpdate" prefWidth="70.0" text="Update" />
+                                              <Button fx:id="AppointmentDeleteButton" mnemonicParsing="false" onAction="#appointmentDelete" prefWidth="70.0" text="Delete" />
+                                        <MenuBar prefWidth="80.0">
+                                            <menus>
+                                                <Menu mnemonicParsing="false" text="Reports">
+                                                    <items>
+                                                        <MenuItem mnemonicParsing="false" onAction="#RunReport1" text="Customer Appointments by Type and Month" />
+                                                        <MenuItem mnemonicParsing="false" onAction="#RunReport2" text="Schedule by Contact" />
+                                                        <MenuItem mnemonicParsing="false" onAction="#RunReport3" text="Customer Appointments for the Year" />
+                                                    </items>
+                                                </Menu>
+                                            </menus>
+                                        </MenuBar>
+                                 </children>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </HBox>
                                     </children>
                                 </AnchorPane>
                             </bottom>
@@ -108,36 +125,20 @@
         </TabPane>
     </center>
     <top>
-        <HBox alignment="CENTER_LEFT">
-            <children>
-                <MenuBar>
-                    <menus>
-                        <Menu mnemonicParsing="false" text="Reports">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#RunReport1" text="Customer Appointments by Type and Month" />
-                                <MenuItem mnemonicParsing="false" onAction="#RunReport2" text="Schedule by Contact" />
-                                <MenuItem mnemonicParsing="false" onAction="#RunReport3" text="Customer Appointments for the Year" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children>
+        <HBox alignment="CENTER" prefHeight="82.0" prefWidth="1200.0" spacing="101.0" style="-fx-background-color: #2d2d2d#2d2d2d;">
+         <children>
+            <Label prefHeight="17.0" prefWidth="121.0" text="Label" />
+            <Label text="World Calendar" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Courier" size="29.0" />
+               </font>
+            </Label>
+                  <Label fx:id="NextAppointment" alignment="CENTER" text="No Appointments" textFill="WHITE">
+                      <font>
+                          <Font name="System Bold" size="16.0" />
+                      </font>
+                  </Label>
+         </children>
         </HBox>
     </top>
-    <bottom>
-        <VBox>
-            <children>
-                <Separator prefWidth="200.0" />
-                <HBox alignment="CENTER">
-                    <children>
-                        <Label fx:id="NextAppointment" alignment="CENTER" text="BLANK">
-                            <font>
-                                <Font name="System Bold" size="16.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
-    </bottom>
 </BorderPane>

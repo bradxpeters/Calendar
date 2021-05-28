@@ -65,7 +65,7 @@ public class AuthController implements Initializable {
         Parent root = FXMLLoader.load(BaseInterfaceController.class.getResource("baseInterface.fxml"));
         var newStage = new Stage();
         newStage.setTitle("World Calendar");
-        newStage.setScene(new Scene(root, 1200, 800));
+        newStage.setScene(new Scene(root, 1200, 600));
         newStage.show();
 
         var stage = (Stage) this.loginButton.getScene().getWindow();
