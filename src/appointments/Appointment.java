@@ -1,6 +1,9 @@
 package appointments;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 /**
  * The type Appointment.
@@ -17,9 +20,9 @@ public class Appointment {
 
     private String type;
 
-    private Timestamp start;
+    private ZonedDateTime start;
 
-    private Timestamp end;
+    private ZonedDateTime end;
 
     private Timestamp createDate;
 
@@ -75,20 +78,22 @@ public class Appointment {
         this.type = type;
     }
 
-    public Timestamp getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
 
     public void setStart(Timestamp start) {
-        this.start = start;
+        LocalDateTime localDateTimeNoTimeZone = start.toLocalDateTime();
+        this.start = localDateTimeNoTimeZone.atZone(ZoneId.systemDefault());;
     }
 
-    public Timestamp getEnd() {
+    public ZonedDateTime getEnd() {
         return end;
     }
 
     public void setEnd(Timestamp end) {
-        this.end = end;
+        LocalDateTime localDateTimeNoTimeZone = end.toLocalDateTime();
+        this.end = localDateTimeNoTimeZone.atZone(ZoneId.systemDefault());;
     }
 
     public Timestamp getCreateDate() {

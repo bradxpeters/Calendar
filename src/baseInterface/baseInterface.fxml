@@ -66,8 +66,8 @@
                                         </HBox>
                               <HBox alignment="TOP_CENTER" layoutX="20.0" prefHeight="100.0" prefWidth="308.0" spacing="9.0">
                                  <children>
-                                              <Button fx:id="AppointmentAddButton" mnemonicParsing="false" onAction="#appointmentAdd" prefWidth="70.0" text="Add" />
-                                              <Button fx:id="AppointmentUpdateButton" mnemonicParsing="false" onAction="#appointmentUpdate" prefWidth="70.0" text="Update" />
+                                              <Button fx:id="AppointmentAddButton" mnemonicParsing="false" onAction="#handleAddOrUpdateAppointmentButton" prefWidth="70.0" text="Add" />
+                                              <Button fx:id="AppointmentUpdateButton" mnemonicParsing="false" onAction="#handleAddOrUpdateAppointmentButton" prefWidth="70.0" text="Update" />
                                               <Button fx:id="AppointmentDeleteButton" mnemonicParsing="false" onAction="#appointmentDelete" prefWidth="70.0" text="Delete" />
                                         <MenuBar prefWidth="80.0">
                                             <menus>
