@@ -82,6 +82,8 @@ public class AuthController implements Initializable {
                 alert.showAndWait();
                 return false;
             } else {
+                // Successful login
+                AuthorizedState.getInstance().setAuthorizedUser(user);
                 return true;
             }
         } else {

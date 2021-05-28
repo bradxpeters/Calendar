@@ -2,6 +2,7 @@ package baseInterface;
 
 import appointments.Appointment;
 import appointments.AppointmentRepository;
+import authorization.AuthorizedState;
 import contacts.Contact;
 import countries.Country;
 import customers.AddCustomerFormController;
@@ -168,6 +169,7 @@ public class BaseInterfaceController implements Initializable {
         // Populate customer table
         var customerRepository = new CustomerRepository();
         customerTableView.setItems(CustomerList.getInstance().getCustomerList());
+        customerTableView.getSortOrder().add(customerIdColumn);
 
         // Populate appointment table
         var appointmentRepository = new AppointmentRepository();
@@ -175,6 +177,7 @@ public class BaseInterfaceController implements Initializable {
     }
 
     private void setUpTableColumns() {
+        customerIdColumn.setSortType(TableColumn.SortType.ASCENDING);
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));

@@ -134,7 +134,7 @@ public class AddCustomerFormController implements Initializable {
         tempCustomer.setPhone(customerPhoneTextField.getText());
         tempCustomer.setDivisionId(firstLevelDivisionComboBox.getValue().getDivisionId());
 
-        this.customerRepository.createOrUpdateCustomer(tempCustomer, new User());
+        this.customerRepository.createOrUpdateCustomer(tempCustomer);
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }

@@ -1,5 +1,6 @@
 package customers;
 
+import authorization.AuthorizedState;
 import database.DatabaseConnector;
 import users.User;
 
@@ -35,7 +36,8 @@ public class CustomerRepository {
                 "SELECT customers.*, fld.Division AS divisionName, c.Country as countryName " +
                     "FROM customers " +
                     "JOIN first_level_divisions fld ON customers.Division_ID = fld.Division_ID " +
-                    "JOIN countries c ON c.Country_ID = fld.COUNTRY_ID"
+                    "JOIN countries c ON c.Country_ID = fld.COUNTRY_ID " +
+                    "ORDER BY customers.Customer_ID ASC"
             );
 
             var rs = ps.executeQuery();
@@ -71,7 +73,7 @@ public class CustomerRepository {
         return customer;
     }
 
-    public void createOrUpdateCustomer(Customer customer, User user) {
+    public void createOrUpdateCustomer(Customer customer) {
         String sql =
             "INSERT INTO customers (" +
                 "Customer_ID, Customer_Name, Address, Postal_Code, Phone, Last_Update, Last_Updated_By, Division_ID) " +
@@ -93,7 +95,7 @@ public class CustomerRepository {
             ps.setString(4, customer.getPostalCode());
             ps.setString(5, customer.getPhone());
             ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
-            ps.setString(7, user.getUserName());
+            ps.setString(7, AuthorizedState.getInstance().getAuthorizedUser().getUserName());
             ps.setInt(8, customer.getDivisionId());
             ps.executeUpdate();
         } catch (SQLException e) {
