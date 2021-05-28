@@ -9,27 +9,36 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddCustomerFormController implements Initializable {
+
     @FXML
     private TextField Customer_ID;
+
     @FXML
     private TextField Customer_Name;
+
     @FXML
     private TextField Customer_Add;
+
     @FXML
     private TextField Customer_Post;
+
     @FXML
     private TextField Customer_Phone;
+
     @FXML
-    private ComboBox<FirstLevelDivision> Customer_Div;
+    private ComboBox<FirstLevelDivision> firstLevelDivisionComboBox;
+
     @FXML
-    private ComboBox<Country> Customer_Country;
+    private ComboBox<Country> countryComboBox;
 
     private boolean update = false;
 
@@ -42,12 +51,46 @@ public class AddCustomerFormController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Customer_Div.setDisable(true);
+        firstLevelDivisionComboBox.setDisable(true);
 
+        // Initialize repos
         this.setCountryRepository(new CountryRepository());
         this.setFirstLevelDivisionRepository(new FirstLevelDivisionRepository());
 
-        Customer_Country.setItems(this.countryRepository.fetchAll());
+        // Initialize form components
+        this.setupCountryComboBox();
+        this.setupFirstLevelDivisionComboBox();
+    }
+
+    private void setupCountryComboBox() {
+        Callback<ListView<Country>, ListCell<Country>> factory = lv -> new ListCell<>() {
+
+            @Override
+            protected void updateItem(Country item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getCountry());
+            }
+        };
+
+        countryComboBox.setItems(this.countryRepository.fetchAll());
+        countryComboBox.setCellFactory(factory);
+        countryComboBox.setButtonCell(factory.call(null));
+    }
+
+    private void setupFirstLevelDivisionComboBox() {
+        Callback<ListView<FirstLevelDivision>, ListCell<FirstLevelDivision>> factory =
+            lv -> new ListCell<>() {
+
+            @Override
+            protected void updateItem(FirstLevelDivision item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getDivision());
+            }
+        };
+
+        firstLevelDivisionComboBox.setItems(this.firstLevelDivisionRepository.fetchAll());
+        firstLevelDivisionComboBox.setCellFactory(factory);
+        firstLevelDivisionComboBox.setButtonCell(factory.call(null));
     }
 
     //This function is used to prefill the form and set it to update
@@ -64,10 +107,10 @@ public class AddCustomerFormController implements Initializable {
         Customer_Add.setText(cus.getAddress());
         Customer_Post.setText(cus.getPostalCode());
         Customer_Phone.setText(cus.getPhone());
-        Customer_Country.setValue(
+        countryComboBox.setValue(
             this.countryRepository.fetchCountryByDivisionId(cus.getDivisionId())
         );
-        Customer_Div.setValue(
+        firstLevelDivisionComboBox.setValue(
             this.firstLevelDivisionRepository.fetchFirstLevelDivisionById(cus.getDivisionId())
         );
     }
@@ -84,7 +127,7 @@ public class AddCustomerFormController implements Initializable {
         String tempAdd = Customer_Add.getText();
         String tempPost = Customer_Post.getText();
         String tempPhone = Customer_Phone.getText();
-        FirstLevelDivision tempDiv = Customer_Div.getValue();
+        FirstLevelDivision tempDiv = firstLevelDivisionComboBox.getValue();
         Customer cus = new Customer(tempID, tempName, tempAdd, tempPost, tempPhone, tempDiv.getDivisionId());
         System.out.print(cus.getCustomerName());
         System.out.print(" Done!\n\tPass temp Customer to mysql...\n");
@@ -108,9 +151,9 @@ public class AddCustomerFormController implements Initializable {
     //when the country is seleced update the division list
     @FXML
     private void CountryChange(ActionEvent event) {
-        Country selected = Customer_Country.getValue();
-        Customer_Div.setDisable(false);
-        Customer_Div.setItems(
+        Country selected = countryComboBox.getValue();
+        firstLevelDivisionComboBox.setDisable(false);
+        firstLevelDivisionComboBox.setItems(
             this.firstLevelDivisionRepository.fetchFirstLevelDivisionsByCountryId(selected.getCountryId())
         );
     }

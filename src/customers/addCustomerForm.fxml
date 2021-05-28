@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="356.0" minWidth="-Infinity" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customers.AddCustomerFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="356.0" minWidth="-Infinity" prefWidth="400.0" style="-fx-background-color: #2d2d2d#2d2d2d #2d2d2d#2d2d2d;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customers.AddCustomerFormController">
     <center>
         <VBox BorderPane.alignment="CENTER">
             <children>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Customer_ID:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <Label layoutY="5.0" text="Customer Id" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="Customer_ID" disable="true" editable="false" focusTraversable="false" layoutX="114.0" layoutY="20.0" opacity="0.5" prefHeight="31.0" prefWidth="386.0" promptText="Auto-Generated" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <VBox.margin>
@@ -28,7 +28,7 @@
                 </AnchorPane>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Customer_Name:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <Label layoutY="5.0" text="Customer Name" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="Customer_Name" layoutX="114.0" layoutY="20.0" prefHeight="31.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
@@ -37,7 +37,7 @@
                 </AnchorPane>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Address:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <Label layoutY="5.0" text="Address" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="Customer_Add" layoutX="114.0" layoutY="20.0" prefHeight="31.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
@@ -46,7 +46,7 @@
                 </AnchorPane>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Postal_Code:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <Label layoutY="5.0" text="Postal Code" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="Customer_Post" layoutX="114.0" layoutY="20.0" prefHeight="31.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
@@ -55,7 +55,7 @@
                 </AnchorPane>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Phone:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <Label layoutY="5.0" text="Phone:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                         <TextField fx:id="Customer_Phone" layoutX="114.0" layoutY="20.0" prefHeight="31.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
@@ -64,8 +64,8 @@
                 </AnchorPane>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Division_ID:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <ComboBox fx:id="Customer_Div" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label layoutY="5.0" text="Division" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <ComboBox fx:id="firstLevelDivisionComboBox" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -73,8 +73,8 @@
                 </AnchorPane>
                 <AnchorPane>
                     <children>
-                        <Label layoutY="5.0" text="Country:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <ComboBox fx:id="Customer_Country" onAction="#CountryChange" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label layoutY="5.0" text="Country" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                        <ComboBox fx:id="countryComboBox" onAction="#CountryChange" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

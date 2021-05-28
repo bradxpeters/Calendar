@@ -35,7 +35,7 @@ public class FirstLevelDivisionRepository {
             firstLevelDivision = this.fetchRsIntoFirstLevelDivision(rs);
 
         } catch (SQLException e) {
-            System.out.println("Error first level division by Id");
+            System.out.println("Error fetching first level division by id: " + id);
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
@@ -45,6 +45,7 @@ public class FirstLevelDivisionRepository {
     public ObservableList<FirstLevelDivision> fetchFirstLevelDivisionsByCountryId(Integer id) {
 
         ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
+
         try {
             var ps = this.getDb().prepareStatement(
                 "SELECT * FROM first_level_divisions WHERE first_level_divisions.COUNTRY_ID = ?"
@@ -52,11 +53,13 @@ public class FirstLevelDivisionRepository {
             ps.setInt(1, id);
 
             var rs = ps.executeQuery();
-            firstLevelDivisions.add(this.fetchRsIntoFirstLevelDivision(rs));
+            while(rs.next()){
+                firstLevelDivisions.add(this.fetchRsIntoFirstLevelDivision(rs));
+            }
 
         } catch (SQLException e) {
-            System.out.println("Error first level division by Id");
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println("Error fetching first level division by country id: " + id);
+            System.out.println(e.getMessage());
         }
 
         return firstLevelDivisions;
