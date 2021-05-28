@@ -12,9 +12,9 @@
    <children>
       <VBox layoutX="29.0" layoutY="71.0" prefHeight="199.0" prefWidth="367.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="367.0" spacing="20.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="367.0" spacing="17.0">
                <children>
-                  <Label text="Username">
+                  <Label fx:id="usernameLabel" prefHeight="26.0" prefWidth="180.0" text="Username">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -22,9 +22,9 @@
                   <TextField fx:id="usernameTextfield" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="367.0" spacing="25.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="367.0">
                <children>
-                  <Label text="Password">
+                  <Label fx:id="passwordLabel" prefHeight="26.0" prefWidth="197.0" text="Password">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -39,5 +39,15 @@
             </HBox>
          </children>
       </VBox>
+      <Label layoutX="143.0" layoutY="14.0" prefHeight="67.0" prefWidth="140.0" text="World Calendar" textAlignment="CENTER">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="262.0" prefHeight="17.0" prefWidth="70.0" text="Location:" />
+      <Label layoutX="84.0" layoutY="270.0" />
+      <Label layoutX="22.0" layoutY="279.0" prefHeight="17.0" prefWidth="70.0" text="Language:" />
+      <Label fx:id="locationLabel" layoutX="92.0" layoutY="262.0" prefHeight="17.0" prefWidth="116.0" />
+      <Label fx:id="languageLabel" layoutX="92.0" layoutY="279.0" prefHeight="17.0" prefWidth="116.0" />
    </children>
 </Pane>

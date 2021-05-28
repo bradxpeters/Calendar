@@ -1,5 +1,6 @@
 package authorization;
 
+import baseInterface.BaseInterfaceController;
 import calendar.CalendarController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import users.UserRepository;
@@ -17,23 +19,42 @@ import users.UserRepository;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+
+import java.time.ZoneId;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AuthController implements Initializable {
-    @FXML
-    public TextField usernameTextfield;
+
+    private ResourceBundle bundle;
 
     @FXML
-    public TextField passwordTextfield;
+    private TextField usernameTextfield;
 
     @FXML
-    public Button loginButton;
+    private TextField passwordTextfield;
+
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private Label locationLabel;
+
+    @FXML
+    private Label languageLabel;
+
+    @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private Label passwordLabel;
 
     @FXML
     public void handleLoginButton(ActionEvent event) throws SQLException, IOException {
 
-        var username = this.getUsernameTextfield().getText().trim();
-        var password = this.getPasswordTextfield().getText().trim();
+        var username = this.usernameTextfield.getText().trim();
+        var password = this.passwordTextfield.getText().trim();
 
         if (this.isValidLoginAttempt(username, password)) {
             this.launchMainApp();
@@ -41,13 +62,13 @@ public class AuthController implements Initializable {
     }
 
     private void launchMainApp() throws IOException {
-        Parent root = FXMLLoader.load(CalendarController.class.getResource("calendar.fxml"));
+        Parent root = FXMLLoader.load(BaseInterfaceController.class.getResource("baseInterface.fxml"));
         var newStage = new Stage();
-        newStage.setTitle("Calendar");
-        newStage.setScene(new Scene(root, 600, 400));
+        newStage.setTitle("World Calendar");
+        newStage.setScene(new Scene(root, 1200, 800));
         newStage.show();
 
-        var stage = (Stage) this.getLoginButton().getScene().getWindow();
+        var stage = (Stage) this.loginButton.getScene().getWindow();
         stage.close();
     }
 
@@ -57,14 +78,14 @@ public class AuthController implements Initializable {
 
         if (user != null) {
             if (!user.getPassword().equals(password)) {
-                var alert = new Alert(Alert.AlertType.ERROR, "Password is incorrect!");
+                var alert = new Alert(Alert.AlertType.ERROR, this.bundle.getString("PassError"));
                 alert.showAndWait();
                 return false;
             } else {
                 return true;
             }
         } else {
-            var alert = new Alert(Alert.AlertType.ERROR, "User " + username + " not found!");
+            var alert = new Alert(Alert.AlertType.ERROR, this.bundle.getString("UserError"));
             alert.showAndWait();
             return false;
         }
@@ -75,53 +96,56 @@ public class AuthController implements Initializable {
     }
 
     private boolean canSubmitLogin() {
-        return this.getUsernameTextfield().getText() != null
-            && !this.getUsernameTextfield().getText().equalsIgnoreCase("")
-            && this.getPasswordTextfield().getText() != null
-            && !this.getPasswordTextfield().getText().equalsIgnoreCase("");
+        return this.passwordTextfield.getText() != null
+            && !this.passwordTextfield.getText().equalsIgnoreCase("")
+            && this.passwordTextfield.getText() != null
+            && !this.passwordTextfield.getText().equalsIgnoreCase("");
+    }
+
+    public void handleLocalization(Locale localOverride) {
+        if (localOverride != null) {
+            Locale.setDefault(localOverride);
+        }
+        this.setBundle(ResourceBundle.getBundle("Language.lang", Locale.getDefault()));
+        this.locationLabel.setText(ZoneId.systemDefault().getDisplayName(TextStyle.FULL, Locale.getDefault()));
+        this.languageLabel.setText(Locale.getDefault().getDisplayLanguage());
+        this.usernameLabel.setText(this.bundle.getString("Username"));
+        this.passwordLabel.setText(this.bundle.getString("Password"));
+        this.loginButton.setText(this.bundle.getString("Login"));;
+    }
+
+    public void handleAddListeners() {
+        this.passwordTextfield
+            .textProperty()
+            .addListener((observableValue, oldValue, newValue) -> handleLoginButtonState());
+
+        this.usernameTextfield
+            .textProperty()
+            .addListener((observableValue, oldValue, newValue) -> handleLoginButtonState());
+    }
+
+    public void handleButtonStates() {
+        this.loginButton.setDisable(true);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Platform.runLater(() -> {
-            this.getLoginButton().setDisable(true);
+            // Buttons
+            this.handleButtonStates();
 
-            // listeners
-            this.getPasswordTextfield()
-                .textProperty()
-                .addListener((observableValue, oldValue, newValue) -> handleLoginButtonState());
+            // Listeners
+            this.handleAddListeners();
 
-            this.getUsernameTextfield()
-                .textProperty()
-                .addListener((observableValue, oldValue, newValue) -> handleLoginButtonState());
-
+            // Localization
+            var localeOverride = new Locale("fr", "France");
+            this.handleLocalization(null);
         });
 
-
     }
 
-    public TextField getUsernameTextfield() {
-        return usernameTextfield;
-    }
-
-    public void setUsernameTextfield(TextField usernameTextfield) {
-        this.usernameTextfield = usernameTextfield;
-    }
-
-    public TextField getPasswordTextfield() {
-        return passwordTextfield;
-    }
-
-    public void setPasswordTextfield(TextField passwordTextfield) {
-        this.passwordTextfield = passwordTextfield;
-    }
-
-    public Button getLoginButton() {
-        return loginButton;
-    }
-
-    public void setLoginButton(Button loginButton) {
-        this.loginButton = loginButton;
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 }

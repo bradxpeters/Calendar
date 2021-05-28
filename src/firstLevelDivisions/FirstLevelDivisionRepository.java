@@ -1,7 +1,6 @@
 package firstLevelDivisions;
 
 import database.DatabaseConnector;
-import users.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;

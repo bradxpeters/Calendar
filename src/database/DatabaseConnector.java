@@ -15,8 +15,6 @@ public class DatabaseConnector {
 
     private static Connection db;
 
-    private DatabaseConnector(Connection db) {}
-
     /**
      * Gets instance.
      *

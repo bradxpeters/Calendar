@@ -6,16 +6,6 @@ import java.sql.Timestamp;
  * The type Customer.
  */
 public class Customer {
-//      `Customer_ID` int(10) NOT NULL AUTO_INCREMENT,
-//  `Customer_Name` varchar(50) NOT NULL,
-//  `Address` varchar(100) NOT NULL,
-//  `Postal_Code` varchar(50) NOT NULL,
-//  `Phone` varchar(50) NOT NULL,
-//  `Create_Date` datetime DEFAULT CURRENT_TIMESTAMP,
-//        `Created_By` varchar(50) DEFAULT NULL,
-//  `Last_Update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//        `Last_Updated_By` varchar(50) DEFAULT NULL,
-//  `Division_ID` int(10) NOT NULL,
 
     private Integer customerId;
 
@@ -215,5 +205,21 @@ public class Customer {
      */
     public void setDivisionId(Integer divisionId) {
         this.divisionId = divisionId;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+            "customerId=" + customerId +
+            ", customerName='" + customerName + '\'' +
+            ", address='" + address + '\'' +
+            ", postalCode='" + postalCode + '\'' +
+            ", phone='" + phone + '\'' +
+            ", createDate=" + createDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastUpdate=" + lastUpdate +
+            ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+            ", divisionId=" + divisionId +
+            '}';
     }
 }
