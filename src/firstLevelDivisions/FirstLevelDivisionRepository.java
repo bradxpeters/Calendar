@@ -32,11 +32,13 @@ public class FirstLevelDivisionRepository {
             ps.setMaxRows(1);
 
             var rs = ps.executeQuery();
-            firstLevelDivision = this.fetchRsIntoFirstLevelDivision(rs);
+            while(rs.next()) {
+                firstLevelDivision = this.fetchRsIntoFirstLevelDivision(rs);
+            }
 
         } catch (SQLException e) {
             System.out.println("Error fetching first level division by id: " + id);
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(e.getMessage());
         }
 
         return firstLevelDivision;

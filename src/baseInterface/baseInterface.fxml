@@ -114,8 +114,8 @@
                                     <children>
                               <HBox alignment="CENTER" layoutX="11.0" layoutY="8.0" prefHeight="42.0" prefWidth="338.0" spacing="19.0">
                                  <children>
-                                              <Button fx:id="customerAddButton" mnemonicParsing="false" onAction="#customerAdd" prefWidth="80.0" text="Add" />
-                                              <Button fx:id="customerUpdateButton" mnemonicParsing="false" onAction="#customerUpdate" prefWidth="80.0" text="Update" />
+                                              <Button fx:id="customerAddButton" mnemonicParsing="false" onAction="#handleAddOrUpdateCustomerButton" prefWidth="80.0" text="Add" />
+                                              <Button fx:id="customerUpdateButton" mnemonicParsing="false" onAction="#handleAddOrUpdateCustomerButton" prefWidth="80.0" text="Update" />
                                               <Button fx:id="customerDeleteButton" mnemonicParsing="false" onAction="#customerDelete" prefWidth="80.0" text="Delete" />
                                  </children>
                               </HBox>

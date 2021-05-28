@@ -3,6 +3,7 @@ package baseInterface;
 import appointments.Appointment;
 import appointments.AppointmentRepository;
 import contacts.Contact;
+import customers.AddCustomerFormController;
 import customers.Customer;
 import customers.CustomerRepository;
 import firstLevelDivisions.FirstLevelDivision;
@@ -186,39 +187,26 @@ public class BaseInterfaceController implements Initializable {
 
     //When add customer button is presssed cutomer menu opens to add new customer to database
     @FXML
-    private void customerAdd(ActionEvent event) {
-        try {
-            Parent loader = FXMLLoader.load(Customer.class.getResource("addCustomerForm.fxml"));
-            var newStage = new Stage();
-            newStage.setTitle("Add Customer");
-            newStage.setScene(new Scene(loader, 1200, 600));
-            newStage.show();
-        }
-        catch(IOException e) {
-            System.out.println("SQL ERROR!!! " + e);
-        }
-    }
-
-    //When the update button is pressed get the selected cutomer and pass it to the menu using prefill function
-    @FXML
-    private void customerUpdate(ActionEvent event) {
-        var selected = customerTableView.getSelectionModel().getSelectedItem();
-        if(selected == null) return;
+    private void handleAddOrUpdateCustomerButton(ActionEvent event) {
+        var selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        var selectedButtonText = ((Button) event.getSource()).getText();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Customer_Menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(Customer.class.getResource("addCustomerForm.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("CalenDo - Update Customer");
+            var scene = new Scene(root);
+            var stage = new Stage();
+            stage.setTitle("Add Or Update Customer");
             stage.setScene(scene);
             stage.show();
 
-            var controller = loader.getController();
-//            controller.prefill(selected);
+            AddCustomerFormController controller = loader.getController();
+            if (selectedCustomer != null && selectedButtonText.equals("Update")) {
+                controller.prefill(selectedCustomer);
+            }
         }
         catch(IOException e) {
-            System.out.println("SQL ERROR!!! " + e);
+            System.out.println(e.getMessage());
         }
     }
 

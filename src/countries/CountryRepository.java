@@ -45,11 +45,13 @@ public class CountryRepository {
             ps.setMaxRows(1);
 
             var rs = ps.executeQuery();
-            country = this.fetchRsIntoCountry(rs);
+            while (rs.next()) {
+                country = this.fetchRsIntoCountry(rs);
+            }
 
         } catch (SQLException e) {
-            System.out.println("Error getting country by division Id");
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println("Error getting country by division id: " + id);
+            System.out.println(e.getMessage());
         }
 
         return country;

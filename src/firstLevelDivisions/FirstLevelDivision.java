@@ -149,14 +149,6 @@ public class FirstLevelDivision {
 
     @Override
     public String toString() {
-        return "FirstLevelDivision{" +
-            "divisionId=" + divisionId +
-            ", division='" + division + '\'' +
-            ", createDate=" + createDate +
-            ", createdBy='" + createdBy + '\'' +
-            ", lastUpdate=" + lastUpdate +
-            ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
-            ", countryId=" + countryId +
-            '}';
+        return division;
     }
 }
