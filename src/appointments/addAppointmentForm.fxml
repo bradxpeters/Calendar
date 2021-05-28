@@ -20,7 +20,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Appointment ID" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <TextField fx:id="AppID" disable="true" editable="false" opacity="0.5" promptText="Auto-Generated" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="appointmentIdTextField" disable="true" editable="false" opacity="0.5" promptText="Auto-Generated" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -29,7 +29,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Title:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <TextField fx:id="AppTitle" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="appointmentTitleTextField" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -38,7 +38,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Description:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <TextField fx:id="AppDescription" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="appointmentDescriptionTextField" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -47,7 +47,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Location:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <TextField fx:id="AppLocation" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="appointmentLocationTextField" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -56,7 +56,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Contact:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <ComboBox fx:id="AppContact" prefWidth="150.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ComboBox fx:id="appointmentContactComboBox" prefWidth="150.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -65,7 +65,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Type:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <TextField fx:id="AppType" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="appointmentTypeTextField" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -74,7 +74,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Start Date:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <DatePicker fx:id="AppStartDate" onAction="#ClearError" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <DatePicker fx:id="appointmentStartDatePicker" onAction="#ClearError" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -90,13 +90,13 @@
                                         <Insets right="5.0" />
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="AppStartHr" onAction="#ClearError" prefWidth="75.0" />
+                                <ComboBox fx:id="appointmentStartHourComboBox" onAction="#ClearError" prefWidth="75.0" />
                                 <Label text="Min:" textFill="WHITE">
                                     <padding>
                                         <Insets left="30.0" right="5.0" />
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="AppStartMin" onAction="#ClearError" prefWidth="80.0" />
+                                <ComboBox fx:id="appointmentStartMinuteComboBox" onAction="#ClearError" prefWidth="80.0" />
                             </children>
                         </HBox>
                     </children>
@@ -107,7 +107,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="End Date:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <DatePicker fx:id="AppEndDate" onAction="#ClearError" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <DatePicker fx:id="appointmentEndDatePicker" onAction="#ClearError" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets left="10.0" right="10.0" top="10.0" />
@@ -123,13 +123,13 @@
                                         <Insets right="5.0" />
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="AppEndHr" onAction="#ClearError" prefWidth="75.0" />
+                                <ComboBox fx:id="appointmentEndHourComboBox" onAction="#ClearError" prefWidth="75.0" />
                                 <Label text="Min:" textFill="WHITE">
                                     <padding>
                                         <Insets left="30.0" right="5.0" />
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="AppEndMin" onAction="#ClearError" prefWidth="80.0" />
+                                <ComboBox fx:id="appointmentEndMinuteComboBox" onAction="#ClearError" prefWidth="80.0" />
                             </children>
                         </HBox>
                     </children>
@@ -140,7 +140,7 @@
                 <AnchorPane prefWidth="200.0">
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Customer:" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <ComboBox fx:id="AppCustomer" prefWidth="150.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ComboBox fx:id="appointmentCustomerComboBox" prefWidth="150.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -156,15 +156,15 @@
         <AnchorPane prefHeight="0.0" prefWidth="400.0" style="-fx-background-color: #2d2d2d#2d2d2d #2d2d2d#2d2d2d;" BorderPane.alignment="CENTER">
             <children>
                 <Separator layoutX="89.0" layoutY="13.0" prefWidth="200.0" style="-fx-background-color: #2d2d2d#2d2d2d #2d2d2d#2d2d2d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <Button fx:id="SubmitButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#AppSubmit" text="Submit" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0" />
-                <Button fx:id="CancelButton" layoutX="321.0" layoutY="10.0" mnemonicParsing="false" onAction="#AppCancel" text="Cancel" />
+                <Button fx:id="submitButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#AppSubmit" text="Submit" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0" />
+                <Button fx:id="cancelButton" layoutX="321.0" layoutY="10.0" mnemonicParsing="false" onAction="#AppCancel" text="Cancel" />
             </children>
         </AnchorPane>
     </bottom>
     <top>
         <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="ErrorMsg" text="BLANK" textAlignment="CENTER" textFill="RED">
+                <Label fx:id="errorMessageLabel" text="BLANK" textAlignment="CENTER" textFill="RED">
                     <font>
                         <Font size="15.0" />
                     </font>

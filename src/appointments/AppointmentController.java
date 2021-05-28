@@ -12,43 +12,59 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AppointmentController implements Initializable {
     @FXML
-    private TextField AppID;
+    private TextField appointmentIdTextField;
+
     @FXML
-    private TextField AppTitle;
+    private TextField appointmentTitleTextField;
+
     @FXML
-    private TextField AppDescription;
+    private TextField appointmentDescriptionTextField;
+
     @FXML
-    private TextField AppLocation;
+    private TextField appointmentLocationTextField;
+
     @FXML
-    private ComboBox<Contact> AppContact;
+    private ComboBox<Contact> appointmentContactComboBox;
+
     @FXML
-    private TextField AppType;
+    private TextField appointmentTypeTextField;
+
     @FXML
-    private DatePicker AppStartDate;
+    private DatePicker appointmentStartDatePicker;
+
     @FXML
-    private ComboBox<Integer> AppStartHr;
+    private ComboBox<Integer> appointmentStartHourComboBox;
+
     @FXML
-    private ComboBox<Integer> AppStartMin;
+    private ComboBox<Integer> appointmentStartMinuteComboBox;
+
     @FXML
-    private DatePicker AppEndDate;
+    private DatePicker appointmentEndDatePicker;
+
     @FXML
-    private ComboBox<Integer> AppEndHr;
+    private ComboBox<Integer> appointmentEndHourComboBox;
+
     @FXML
-    private ComboBox<Integer> AppEndMin;
+    private ComboBox<Integer> appointmentEndMinuteComboBox;
+
     @FXML
-    private ComboBox<Customer> AppCustomer;
+    private ComboBox<Customer> appointmentCustomerComboBox;
+
     @FXML
-    private Label ErrorMsg;
+    private Label errorMessageLabel;
+
     @FXML
-    private Button SubmitButton;
+    private Button submitButton;
+
     @FXML
-    private Button CancelButton;
+    private Button cancelButton;
 
     private boolean update = false;
 
@@ -64,9 +80,7 @@ public class AppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //fill combo boxes with lists
-        AppContact.setItems(ContactList.getInstance().getContactList());
-        AppCustomer.setItems(CustomerList.getInstance().getCustomerList());
+        appointmentCustomerComboBox.setItems(CustomerList.getInstance().getCustomerList());
 
         //Make an observable list with 0-23 hour options
         ObservableList<Integer> hr = FXCollections.observableArrayList();
@@ -77,46 +91,76 @@ public class AppointmentController implements Initializable {
         }
 
         //fill hour combo boxes with hr list
-        AppStartHr.setItems(hr);
-        AppEndHr.setItems(hr);
+        appointmentStartHourComboBox.setItems(hr);
+        appointmentEndHourComboBox.setItems(hr);
 
         //make list with 0, 15, 30, 45
         ObservableList<Integer> min = FXCollections.observableArrayList(0, 15, 30, 45);
 
         //fill min combo boxes with min list
-        AppStartMin.setItems(min);
-        AppEndMin.setItems(min);
+        appointmentStartMinuteComboBox.setItems(min);
+        appointmentEndMinuteComboBox.setItems(min);
 
         //Clear the error at top of screen
         ClearError(new ActionEvent());
 
         this.setAppointmentRepository(new AppointmentRepository());
         this.setContactRepository(new ContactRepository());
+
+        this.setupContactComboBox();
+        this.setupAppointmentCustomerComboBox();
     }
 
-    /**
-     * This function fills in the form from the passed variable and sets update to true
-     * used by the Main Menu controller to fill in the menu
-     * @param app the appointment to prefill into the form
-     */
+    private void setupContactComboBox() {
+        Callback<ListView<Contact>, ListCell<Contact>> factory = lv -> new ListCell<>() {
+
+            @Override
+            protected void updateItem(Contact item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getContactName());
+            }
+
+        };
+
+        appointmentContactComboBox.setItems(ContactList.getInstance().getContactList());
+        appointmentContactComboBox.setCellFactory(factory);
+        appointmentContactComboBox.setButtonCell(factory.call(null));
+    }
+
+    private void setupAppointmentCustomerComboBox() {
+        Callback<ListView<Customer>, ListCell<Customer>> factory = lv -> new ListCell<>() {
+
+            @Override
+            protected void updateItem(Customer item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getCustomerName());
+            }
+
+        };
+
+        appointmentCustomerComboBox.setItems(CustomerList.getInstance().getCustomerList());
+        appointmentCustomerComboBox.setCellFactory(factory);
+        appointmentCustomerComboBox.setButtonCell(factory.call(null));
+    }
+
     public void prefill (Appointment app) {                                         //PreFill all Customer info
         update = true;
 
-//        AppID.setText(String.valueOf(app.getAppointmentId()));
-//        AppTitle.setText(app.getTitle());
-//        AppDescription.setText(app.getDescription());
-//        AppLocation.setText(app.getLocation());
-//        AppContact.setValue(this.contactRepository.fetchContactById(app.getContactId()));
-//        AppType.setText(app.getType());
+//        appointmentIdTextField.setText(String.valueOf(app.getAppointmentId()));
+//        appointmentTitleTextField.setText(app.getTitle());
+//        appointmentDescriptionTextField.setText(app.getDescription());
+//        appointmentLocationTextField.setText(app.getLocation());
+//        appointmentContactComboBox.setValue(this.contactRepository.fetchContactById(app.getContactId()));
+//        appointmentTypeTextField.setText(app.getType());
 //        ZonedDateTime convertedStart = app.getStartTimeObj().withZoneSameInstant(ZoneId.systemDefault());
-//        AppStartDate.setValue(convertedStart.toLocalDate());
-//        AppStartHr.setValue(convertedStart.getHour());
-//        AppStartMin.setValue(convertedStart.getMinute());
+//        appointmentStartDatePicker.setValue(convertedStart.toLocalDate());
+//        appointmentStartHourComboBox.setValue(convertedStart.getHour());
+//        appointmentStartMinuteComboBox.setValue(convertedStart.getMinute());
 //        ZonedDateTime convertedEnd = app.getEndTimeObj().withZoneSameInstant(ZoneId.systemDefault());
-//        AppEndDate.setValue(convertedEnd.toLocalDate());
-//        AppEndHr.setValue(convertedEnd.getHour());
-//        AppEndMin.setValue(convertedEnd.getMinute());
-//        AppCustomer.setValue(app.getCustomer());
+//        appointmentEndDatePicker.setValue(convertedEnd.toLocalDate());
+//        appointmentEndHourComboBox.setValue(convertedEnd.getHour());
+//        appointmentEndMinuteComboBox.setValue(convertedEnd.getMinute());
+//        appointmentCustomerComboBox.setValue(app.getCustomer());
     }
 
     //function runs when the submit button is pressed if update true send appointment to update if not make an appointment
@@ -130,19 +174,19 @@ public class AppointmentController implements Initializable {
     @FXML
     private void AppSubmit(ActionEvent event) {
 //        String tmp;
-//        tmp = AppID.getText();
+//        tmp = appointmentIdTextField.getText();
 //        int ID = 0;
 //        if(update) ID = Integer.parseInt(tmp);
 //
-//        String title = AppTitle.getText();
-//        String des = AppDescription.getText();
-//        String Loc = AppLocation.getText();
-//        Contacts contact = AppContact.getValue();
-//        String type = AppType.getText();
+//        String title = appointmentTitleTextField.getText();
+//        String des = appointmentDescriptionTextField.getText();
+//        String Loc = appointmentLocationTextField.getText();
+//        Contacts contact = appointmentContactComboBox.getValue();
+//        String type = appointmentTypeTextField.getText();
 //
-//        LocalDate beginDate = AppStartDate.getValue();
-//        String startHr = AppStartHr.getValue().toString();
-//        String startMin = AppStartMin.getValue().toString();
+//        LocalDate beginDate = appointmentStartDatePicker.getValue();
+//        String startHr = appointmentStartHourComboBox.getValue().toString();
+//        String startMin = appointmentStartMinuteComboBox.getValue().toString();
 //        if(startHr.length() < 2) startHr = "0" + startHr;
 //        if(startMin.length() < 2) startMin = "0" + startMin;
 //        System.out.println(startHr + ":" + startMin);
@@ -151,25 +195,25 @@ public class AppointmentController implements Initializable {
 //        System.out.println("Time: " + beginTime);
 //        System.out.println("TimeDate: " + begin);
 //
-//        LocalDate endDate = AppEndDate.getValue();
-//        String endHr = AppEndHr.getValue().toString();
-//        String endMin = AppEndMin.getValue().toString();
+//        LocalDate endDate = appointmentEndDatePicker.getValue();
+//        String endHr = appointmentEndHourComboBox.getValue().toString();
+//        String endMin = appointmentEndMinuteComboBox.getValue().toString();
 //        if(endHr.length() < 2) endHr = "0" + endHr;
 //        if(endMin.length() < 2) endMin = "0" + endMin;
 //        LocalTime endTime = LocalTime.parse(endHr + ":" + endMin, DateTimeFormatter.ISO_TIME);
 //        ZonedDateTime end = ZonedDateTime.of(endDate, endTime, ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC+0"));
 //
-//        Customers customer = AppCustomer.getValue();
+//        Customers customer = appointmentCustomerComboBox.getValue();
 //        Appointments app = new Appointments(ID, title, des, Loc, contact, type, begin.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), customer);
 //
 //        if(!isBussinessHours(app)){
-//            ErrorMsg.setText("Selected Times are outside businness hours");
+//            errorMessageLabel.setText("Selected Times are outside businness hours");
 //            return;
 //        }
 //
 //        //We need to check if the new appointment will overlap any existing appointment
 //        if(isOverlapping(app)){
-//            ErrorMsg.setText("Selected Times are overlapping another appointment");
+//            errorMessageLabel.setText("Selected Times are overlapping another appointment");
 //            return;
 //        }
 //
@@ -264,7 +308,7 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void ClearError(ActionEvent event) {
-        ErrorMsg.setText("");
+        errorMessageLabel.setText("");
     }
 
     public void setAppointmentRepository(AppointmentRepository appointmentRepository) {

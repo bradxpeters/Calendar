@@ -80,7 +80,6 @@ public class AddCustomerFormController implements Initializable {
         countryComboBox.setItems(this.countryRepository.fetchAll());
         countryComboBox.setCellFactory(factory);
         countryComboBox.setButtonCell(factory.call(null));
-
     }
 
     private void setupFirstLevelDivisionComboBox() {
