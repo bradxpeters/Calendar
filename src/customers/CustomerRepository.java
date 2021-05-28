@@ -1,12 +1,9 @@
 package customers;
 
 import database.DatabaseConnector;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import users.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 
 public class CustomerRepository {
@@ -30,8 +27,8 @@ public class CustomerRepository {
         return this.fetchRsIntoCustomer(rs);
     }
 
-    public ObservableList<Customer> fetchAll() {
-        ObservableList<Customer> customers = FXCollections.observableArrayList();
+    public void fetchAll() {
+        CustomerList.getInstance().getCustomerList().clear();
 
         try {
             var ps = this.getDb().prepareStatement(
@@ -40,13 +37,12 @@ public class CustomerRepository {
 
             var rs = ps.executeQuery();
             while (rs.next()) {
-                customers.add(this.fetchRsIntoCustomer(rs));
+                CustomerList.getInstance().getCustomerList().add(this.fetchRsIntoCustomer(rs));
             }
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println("Error fetching all customers");
+            System.out.println(e.getMessage());
         }
-
-        return customers;
     }
 
     private Customer fetchRsIntoCustomer(ResultSet rs) throws SQLException {
@@ -68,6 +64,39 @@ public class CustomerRepository {
         }
 
         return customer;
+    }
+
+    public void createOrUpdateCustomer(Customer customer, User user) {
+        String sql =
+            "INSERT INTO customers (" +
+                "Customer_ID, Customer_Name, Address, Postal_Code, Phone, Last_Update, Last_Updated_By, Division_ID) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
+            "ON DUPLICATE KEY UPDATE " +
+                "Customer_ID=VALUES(Customer_ID), " +
+                "Customer_Name=VALUES(Customer_Name), " +
+                "Address=VALUES(Address)," +
+                "Postal_Code=VALUES(Postal_Code)," +
+                "Phone=VALUES(Phone)," +
+                "Last_Update=VALUES(Last_Update)," +
+                "Last_Updated_By=VALUES(Last_Updated_By)," +
+                "Division_ID=VALUES(Division_ID)";
+        try {
+            PreparedStatement ps = this.getDb().prepareStatement(sql);
+            ps.setObject(1,customer.getCustomerId());
+            ps.setString(2, customer.getCustomerName());
+            ps.setString(3, customer.getAddress());
+            ps.setString(4, customer.getPostalCode());
+            ps.setString(5, customer.getPhone());
+            ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+            ps.setString(7, user.getUserName());
+            ps.setInt(8, customer.getDivisionId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error creating or updating customer " + customer.getCustomerName());
+            System.out.println(e.getMessage());
+        }
+
+        this.fetchAll();
     }
 
     public Connection getDb() {

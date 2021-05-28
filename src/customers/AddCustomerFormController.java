@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
+import users.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,7 +27,7 @@ public class AddCustomerFormController implements Initializable {
     private TextField customerNameTextField;
 
     @FXML
-    private TextField addCustomerTextField;
+    private TextField customerAddressTextField;
 
     @FXML
     private TextField customerPostalCodeTextField;
@@ -46,6 +47,8 @@ public class AddCustomerFormController implements Initializable {
 
     private FirstLevelDivisionRepository firstLevelDivisionRepository;
 
+    private CustomerRepository customerRepository;
+
     /**
      * Initializes the controller class.
      */
@@ -56,6 +59,7 @@ public class AddCustomerFormController implements Initializable {
         // Initialize repos
         this.setCountryRepository(new CountryRepository());
         this.setFirstLevelDivisionRepository(new FirstLevelDivisionRepository());
+        this.setCustomerRepository(new CustomerRepository());
 
         // Initialize form components
         this.setupCountryComboBox();
@@ -105,7 +109,7 @@ public class AddCustomerFormController implements Initializable {
 
         customerIdTextField.setText(String.valueOf(cus.getCustomerId()));
         customerNameTextField.setText(cus.getCustomerName());
-        addCustomerTextField.setText(cus.getAddress());
+        customerAddressTextField.setText(cus.getAddress());
         customerPostalCodeTextField.setText(cus.getPostalCode());
         customerPhoneTextField.setText(cus.getPhone());
         countryComboBox.setValue(
@@ -121,24 +125,17 @@ public class AddCustomerFormController implements Initializable {
      */
     @FXML
     private void handleSubmitButton(ActionEvent event) {
-        System.out.print("Submit button hit!\ncreating temp customer...");
-        int tempID = 0;
-        if (isUpdatingCustomer) tempID = Integer.parseInt(customerIdTextField.getText());
-        String tempName = customerNameTextField.getText();
-        String tempAdd = addCustomerTextField.getText();
-        String tempPost = customerPostalCodeTextField.getText();
-        String tempPhone = customerPhoneTextField.getText();
-        FirstLevelDivision tempDiv = firstLevelDivisionComboBox.getValue();
-        Customer cus = new Customer(tempID, tempName, tempAdd, tempPost, tempPhone, tempDiv.getDivisionId());
-        System.out.print(cus.getCustomerName());
-        System.out.print(" Done!\n\tPass temp Customer to mysql...\n");
-//        try {
-//            if (isUpdatingCustomer) mysql.database.updateCustomer(cus);
-//            else mysql.database.addCustomer(cus);
-//        }
-//        catch (SQLException e) {
-//            System.out.println("SQL ERROR!!! " + e);
-//        }
+        System.out.print("Customer creation/updating started");
+        var tempCustomer = new Customer();
+        tempCustomer.setCustomerId(isUpdatingCustomer ? Integer.parseInt(customerIdTextField.getText()) : null);
+        tempCustomer.setCustomerName(customerNameTextField.getText());
+        tempCustomer.setAddress(customerAddressTextField.getText());
+        tempCustomer.setPostalCode(customerPostalCodeTextField.getText());
+        tempCustomer.setPhone(customerPhoneTextField.getText());
+        tempCustomer.setDivisionId(firstLevelDivisionComboBox.getValue().getDivisionId());
+
+        this.customerRepository.createOrUpdateCustomer(tempCustomer, new User());
+
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
@@ -165,5 +162,9 @@ public class AddCustomerFormController implements Initializable {
 
     public void setFirstLevelDivisionRepository(FirstLevelDivisionRepository firstLevelDivisionRepository) {
         this.firstLevelDivisionRepository = firstLevelDivisionRepository;
+    }
+
+    public void setCustomerRepository(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 }

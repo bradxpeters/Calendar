@@ -5,6 +5,7 @@ import appointments.AppointmentRepository;
 import contacts.Contact;
 import customers.AddCustomerFormController;
 import customers.Customer;
+import customers.CustomerList;
 import customers.CustomerRepository;
 import firstLevelDivisions.FirstLevelDivision;
 import javafx.event.ActionEvent;
@@ -159,7 +160,7 @@ public class BaseInterfaceController implements Initializable {
     private void populateInitialData() {
         // Populate customer table
         var customerRepository = new CustomerRepository();
-        customerTableView.setItems(customerRepository.fetchAll());
+        customerTableView.setItems(CustomerList.getInstance().getCustomerList());
 
         // Populate appointment table
         var appointmentRepository = new AppointmentRepository();
@@ -176,9 +177,9 @@ public class BaseInterfaceController implements Initializable {
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        appointmentDescColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        appointmentDescColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory("contactId"));
+        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
