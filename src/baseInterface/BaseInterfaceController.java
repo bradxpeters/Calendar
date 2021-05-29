@@ -26,6 +26,8 @@ import reports.ReportLists;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -138,22 +140,34 @@ public class BaseInterfaceController implements Initializable {
         this.handleUpcomingAppointmentCheck();
     }
 
-    private void handleUpcomingAppointmentCheck() {
+    /**
+     * Checks to see if there is an appointment in the next 15 minutes.
+     * Uses the users local time zone.
+     *
+     * I used a lambda expression here to easily filter down to a single
+     * appointment from a list of appointments. This is much cleaner and more elegant than
+     * a for loop.
+     */
+    public void handleUpcomingAppointmentCheck() {
         nextAppointmentLabel.setText("No appointments within the next 15 minutes.");
+
         var upcomingAppointment = AppointmentList.getInstance().getAppointmentList()
             .stream()
-            .filter(a -> a.getStart().isBefore(ZonedDateTime.now().plusMinutes(15)))
+            .filter(a ->
+                a.getStart().isBefore(ZonedDateTime.now().plusMinutes(15)) &&
+                a.getStart().isAfter(ZonedDateTime.now())
+            )
             .limit(1)
-            .collect(Collectors.toList()).get(0);
+            .collect(Collectors.toList());
 
-        if (upcomingAppointment != null) {
+        if (upcomingAppointment.size() > 0 && upcomingAppointment.get(0) != null) {
             var alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment soon! \nID: "
-                + upcomingAppointment.getAppointmentId() + " " + upcomingAppointment.getDisplayStart());
+                + upcomingAppointment.get(0).getAppointmentId() + " " + upcomingAppointment.get(0).getDisplayStart());
             alert.setHeaderText("Confirmation");
             alert.showAndWait();
             nextAppointmentLabel.setText("Upcoming appointment: ID: " +
-                upcomingAppointment.getAppointmentId() + "   " +
-                upcomingAppointment.getDisplayStart()
+                upcomingAppointment.get(0).getAppointmentId() + "   " +
+                upcomingAppointment.get(0).getDisplayStart()
             );
         }
     }
