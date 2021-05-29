@@ -52,7 +52,7 @@ public class ReportsRepository {
 
     /**
      * Fetch appointments by contact report.
-     *
+     * <p>
      * Lambda usage: This Lambda us used to help generate a report of appointments for each
      * contact. I chose to use a Lambda here as it was a simple way to map contact names to appointments
      * and it also helped to not have to made another query to the DB therefore increasing performance.

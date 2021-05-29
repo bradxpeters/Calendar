@@ -335,15 +335,15 @@ public class Appointment {
 
     public String getDisplayStart() {
         if (this.getStartSqlTimestamp() != null) {
-            return  new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getStartSqlTimestamp());
-        };
+            return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getStartSqlTimestamp());
+        }
         return this.getStart().toString();
     }
 
     public String getDisplayEnd() {
         if (this.getEndSqlTimestamp() != null) {
-            return  new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getEndSqlTimestamp());
-        };
+            return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getEndSqlTimestamp());
+        }
         return this.getEnd().toString();
     }
 

@@ -62,7 +62,7 @@ public class AppointmentController implements Initializable {
     /**
      * Initialize the Appointment Controller
      * Public for JavaDocs
-     *
+     * <p>
      * I used a Lambda here to generate a list of integers from 0 - 24 in a concise
      * and elegant way. Originally I had a regular for loop which was ugly and overkill for this need.
      */
@@ -229,10 +229,10 @@ public class AppointmentController implements Initializable {
             .withZoneSameInstant(ZoneId.of("America/New_York"));
 
         var businessHoursStart = ZonedDateTime
-            .of(LocalDate.now().atTime(8,0), ZoneId.of("America/New_York"));
+            .of(LocalDate.now().atTime(8, 0), ZoneId.of("America/New_York"));
 
         var businessHoursEnd = ZonedDateTime
-            .of(LocalDate.now().atTime(22,0), ZoneId.of("America/New_York"));
+            .of(LocalDate.now().atTime(22, 0), ZoneId.of("America/New_York"));
 
         var daysToCheck = Arrays.asList(
             appointmentStartEastern.getDayOfWeek(),
@@ -261,7 +261,7 @@ public class AppointmentController implements Initializable {
     /**
      * Check for overlapping appointments
      * Public for JavaDocs
-     *
+     * <p>
      * I use a Lambda here to easily accomplish several tasks to check if an appointment
      * overlaps with any existing appointment. First it filters out out the appointment that
      * is passed into the function. Then it loops through each appointment to see if the times

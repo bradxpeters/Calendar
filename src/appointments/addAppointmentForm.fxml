@@ -103,7 +103,7 @@
                                         <Insets right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentStartHourComboBox"  prefWidth="75.0"/>
+                                <ComboBox fx:id="appointmentStartHourComboBox" prefWidth="75.0"/>
                                 <Label text="Min:" textFill="WHITE">
                                     <padding>
                                         <Insets left="30.0" right="5.0"/>
@@ -143,13 +143,13 @@
                                         <Insets right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentEndHourComboBox"  prefWidth="75.0"/>
+                                <ComboBox fx:id="appointmentEndHourComboBox" prefWidth="75.0"/>
                                 <Label text="Min:" textFill="WHITE">
                                     <padding>
                                         <Insets left="30.0" right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentEndMinuteComboBox"  prefWidth="80.0"/>
+                                <ComboBox fx:id="appointmentEndMinuteComboBox" prefWidth="80.0"/>
                             </children>
                         </HBox>
                     </children>

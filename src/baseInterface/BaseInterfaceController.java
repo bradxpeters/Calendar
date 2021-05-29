@@ -26,15 +26,13 @@ import reports.ReportLists;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
  * The type Base interface controller.
- * This is the main shell of the user inteface.
+ * This is the main shell of the user interface.
  */
 public class BaseInterfaceController implements Initializable {
 
@@ -143,7 +141,7 @@ public class BaseInterfaceController implements Initializable {
     /**
      * Checks to see if there is an appointment in the next 15 minutes.
      * Uses the users local time zone.
-     *
+     * <p>
      * I used a lambda expression here to easily filter down to a single
      * appointment from a list of appointments. This is much cleaner and more elegant than
      * a for loop.
@@ -155,7 +153,7 @@ public class BaseInterfaceController implements Initializable {
             .stream()
             .filter(a ->
                 a.getStart().isBefore(ZonedDateTime.now().plusMinutes(15)) &&
-                a.getStart().isAfter(ZonedDateTime.now())
+                    a.getStart().isAfter(ZonedDateTime.now())
             )
             .limit(1)
             .collect(Collectors.toList());

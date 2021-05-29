@@ -36,22 +36,16 @@ public class AuthController implements Initializable {
 
     @FXML
     private TextField usernameTextfield;
-
     @FXML
     private TextField passwordTextfield;
-
     @FXML
     private Button loginButton;
-
     @FXML
     private Label locationLabel;
-
     @FXML
     private Label languageLabel;
-
     @FXML
     private Label usernameLabel;
-
     @FXML
     private Label passwordLabel;
 
@@ -161,7 +155,6 @@ public class AuthController implements Initializable {
      * testing locally without changing machine language.
      *
      * @param localOverride the local override
-
      */
     public void handleLocalization(Locale localOverride) {
         if (localOverride != null) {
