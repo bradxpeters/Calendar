@@ -25,60 +25,42 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 public class AppointmentController implements Initializable {
+    boolean isOverlapping = false;
     @FXML
     private TextField appointmentIdTextField;
-
     @FXML
     private TextField appointmentTitleTextField;
-
     @FXML
     private TextField appointmentDescriptionTextField;
-
     @FXML
     private TextField appointmentLocationTextField;
-
     @FXML
     private ComboBox<Contact> appointmentContactComboBox;
-
     @FXML
     private TextField appointmentTypeTextField;
-
     @FXML
     private DatePicker appointmentStartDatePicker;
-
     @FXML
     private ComboBox<Integer> appointmentStartHourComboBox;
-
     @FXML
     private ComboBox<Integer> appointmentStartMinuteComboBox;
-
     @FXML
     private DatePicker appointmentEndDatePicker;
-
     @FXML
     private ComboBox<Integer> appointmentEndHourComboBox;
-
     @FXML
     private ComboBox<Integer> appointmentEndMinuteComboBox;
-
     @FXML
     private ComboBox<Customer> appointmentCustomerComboBox;
-
     @FXML
     private Label errorMessageLabel;
-
     @FXML
     private Button submitButton;
-
     @FXML
     private Button cancelButton;
-
     private boolean isUpdatingAppointment = false;
-
     private AppointmentRepository appointmentRepository;
-
     private ContactRepository contactRepository;
-
     private CustomerRepository customerRepository;
 
     @Override
@@ -87,7 +69,7 @@ public class AppointmentController implements Initializable {
         //Make an observable list with 0-23 hour options
         ObservableList<Integer> hr = FXCollections.observableArrayList();
         int i = 0;
-        while(i < 24) {
+        while (i < 24) {
             hr.add(i);
             i++;
         }
@@ -146,7 +128,7 @@ public class AppointmentController implements Initializable {
         appointmentCustomerComboBox.setButtonCell(factory.call(null));
     }
 
-    public void prefill (Appointment app) {
+    public void prefill(Appointment app) {
         isUpdatingAppointment = true;
 
         appointmentIdTextField.setText(String.valueOf(app.getAppointmentId()));
@@ -205,18 +187,19 @@ public class AppointmentController implements Initializable {
         tempAppointment.setStart(begin);
         tempAppointment.setEnd(end);
 
-        if(!isAppointmentDuringBusinessHours(tempAppointment)){
+        if (!isAppointmentDuringBusinessHours(tempAppointment)) {
             var alert = new Alert(Alert.AlertType.ERROR, "Appointment outside of business hours");
             alert.setHeaderText("Error!");
             alert.showAndWait();
             return;
         }
-//
-//        //We need to check if the new appointment will overlap any existing appointment
-//        if(isOverlapping(app)){
-//            errorMessageLabel.setText("Selected Times are overlapping another appointment");
-//            return;
-//        }
+
+        if (isOverlappingAppointment(tempAppointment)) {
+            var alert = new Alert(Alert.AlertType.ERROR, "Appointments are overlapping!");
+            alert.setHeaderText("Error!");
+            alert.showAndWait();
+            return;
+        }
 
         this.appointmentRepository.createOrUpdateAppointment(tempAppointment);
         ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -224,10 +207,10 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private void handleCancelButton(ActionEvent event) {
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
-    private boolean isAppointmentDuringBusinessHours(Appointment appointment){
+    private boolean isAppointmentDuringBusinessHours(Appointment appointment) {
         var start = appointment.getStart().withZoneSameInstant(ZoneId.of("America/New_York"));
         var end = appointment.getEnd().withZoneSameInstant(ZoneId.of("America/New_York"));
 
@@ -251,53 +234,29 @@ public class AppointmentController implements Initializable {
         return !isWeekend && isValidTime;
     }
 
-    boolean overlapCheck = false;
+    private boolean isOverlappingAppointment(Appointment appointment) {
+        isOverlapping = false;
 
-    /**
-     * Check if the new appointment will overlap existing appointments after hitting
-     * the submit button on the appointment menu but before sending it to the database
-     * <p>This is used in Appointment_MenuController.AppSubmit. After the user hit submit on a new
-     * or modifying appointment the generated appointment will be passed to isOverlapping to see if the
-     * Appointment overlaps with any other appointment
-     * @param app the appointment object to be checked
-     * @return true if overlapping false if appointment is clear
-     */
-    private boolean isOverlapping(Appointment app){
-//        ZonedDateTime start = app.getStartTimeObj();
-//        ZonedDateTime end = app.getEndTimeObj();
-//        System.out.println("Starting OverLap check");
-//        overlapCheck = false;
-//        String startDate = start.withZoneSameInstant(ZoneId.of("Z")).withHour(0).withMinute(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss" ));
-//        String endDate = end.withZoneSameInstant(ZoneId.of("Z")).withHour(23).withMinute(59).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss" ));
-//        ObservableList<Appointments> List = FXCollections.observableArrayList();
-//
-//        try{
-//            List = mysql.database.getAppointmentList(startDate, endDate);
-//        }
-//        catch(SQLException e){
-//            System.out.println("Database Error!!! " + e);
-//        }
-//
-//        List.forEach(appList -> {
-//            if(appList.getApointmentID() != app.getApointmentID() ){
-//                if(appList.getStartTimeObj().isBefore(start)){
-//                    if(appList.getEndTimeObj().isAfter(start)){
-//                        overlapCheck = true;
-//                        System.out.println("OverLap Check Failed!!!");
-//                    }
-//                }
-//                else{
-//                    if(end.isAfter(appList.getStartTimeObj())){
-//                        overlapCheck = true;
-//                        System.out.println("OverLap Check Failed!!!");
-//                    }
-//                }
-//            }
-//        });
-//
-//        System.out.println("Overlap check done " + overlapCheck);
-//        return overlapCheck;
-        return false;
+        AppointmentList.getInstance()
+            .getAppointmentList()
+            .stream()
+            // Confirm same customer but not exact same appointment
+            .filter(a -> !a.getAppointmentId().equals(appointment.getAppointmentId())
+                && a.getCustomerId().equals(appointment.getCustomerId()))
+            .forEach(a -> {
+                    if (a.getStart().isBefore(appointment.getStart())) {
+                        if (a.getEnd().isAfter(appointment.getStart())) {
+                            isOverlapping = true;
+                        }
+                    } else {
+                        if (appointment.getEnd().isAfter(a.getStart())) {
+                            isOverlapping = true;
+                        }
+                    }
+                }
+            );
+
+        return isOverlapping;
     }
 
     @FXML
