@@ -182,14 +182,14 @@ public class AppointmentController implements Initializable {
         var startDate = appointmentStartDatePicker.getValue();
         var endDate = appointmentEndDatePicker.getValue();
 
-        var startHr = appointmentStartHourComboBox.getValue().toString();
-        var endHr = appointmentEndHourComboBox.getValue().toString();
+        var startHour = appointmentStartHourComboBox.getValue().toString();
+        var endHour = appointmentEndHourComboBox.getValue().toString();
 
         var startMin = appointmentStartMinuteComboBox.getValue().toString();
         var endMin = appointmentEndMinuteComboBox.getValue().toString();
 
-        var beginTime = LocalTime.of(Integer.parseInt(startHr), Integer.parseInt(startMin));
-        var endTime = LocalTime.of(Integer.parseInt(endHr), Integer.parseInt(endMin));
+        var beginTime = LocalTime.of(Integer.parseInt(startHour), Integer.parseInt(startMin));
+        var endTime = LocalTime.of(Integer.parseInt(endHour), Integer.parseInt(endMin));
 
         var begin = ZonedDateTime.of(
             startDate,

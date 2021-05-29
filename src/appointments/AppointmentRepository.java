@@ -122,8 +122,8 @@ public class AppointmentRepository {
             ps.setString(3,appointment.getDescription());
             ps.setString(4,appointment.getLocation());
             ps.setString(5,appointment.getType());
-            ps.setTimestamp(6,appointment.getStartSqlTimestamp());
-            ps.setTimestamp(7,appointment.getEndSqlTimestamp());
+            ps.setTimestamp(6,appointment.getUtcStartTimestamp());
+            ps.setTimestamp(7,appointment.getUtcEndTimestamp());
             ps.setTimestamp(8, existingAppointment.getCreateDate() != null
                 ? existingAppointment.getCreateDate()
                 : new Timestamp(System.currentTimeMillis())

@@ -84,7 +84,11 @@ public class Appointment {
 
     public void setStart(Timestamp start) {
         LocalDateTime localDateTimeNoTimeZone = start.toLocalDateTime();
-        this.start = localDateTimeNoTimeZone.atZone(ZoneId.systemDefault());;
+        this.start = localDateTimeNoTimeZone.atZone(ZoneId.systemDefault());
+    }
+
+    public void setStart(ZonedDateTime start) {
+        this.start = start;
     }
 
     public ZonedDateTime getEnd() {
@@ -93,7 +97,11 @@ public class Appointment {
 
     public void setEnd(Timestamp end) {
         LocalDateTime localDateTimeNoTimeZone = end.toLocalDateTime();
-        this.end = localDateTimeNoTimeZone.atZone(ZoneId.systemDefault());;
+        this.end = localDateTimeNoTimeZone.atZone(ZoneId.systemDefault());
+    }
+
+    public void setEnd(ZonedDateTime end) {
+        this.end = end;
     }
 
     public Timestamp getCreateDate() {
@@ -152,20 +160,20 @@ public class Appointment {
         this.contactId = contactId;
     }
 
-    public void setStart(ZonedDateTime start) {
-        this.start = start;
-    }
-
-    public void setEnd(ZonedDateTime end) {
-        this.end = end;
-    }
-
-    public Timestamp getStartSqlTimestamp(){
+    public Timestamp getStartSqlTimestamp() {
         return Timestamp.valueOf(this.start.toLocalDateTime());
     }
 
-    public Timestamp getEndSqlTimestamp(){
+    public Timestamp getEndSqlTimestamp() {
         return Timestamp.valueOf(this.end.toLocalDateTime());
+    }
+
+    public Timestamp getUtcStartTimestamp() {
+        return Timestamp.valueOf(this.start.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime());
+    }
+
+    public Timestamp getUtcEndTimestamp() {
+        return Timestamp.valueOf(this.end.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime());
     }
 
     @Override
