@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * The type Database connector.
+ */
 public class DatabaseConnector {
 
     private static final String connectionUrl = "jdbc:mysql://wgudb.ucertify.com/WJ07T8l?autoReconnect=true";
@@ -14,6 +17,12 @@ public class DatabaseConnector {
 
     private static Connection db;
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     * @throws SQLException the sql exception
+     */
     public static Connection getInstance() throws SQLException {
         if (db == null) {
             return DriverManager.getConnection(connectionUrl, username, password);

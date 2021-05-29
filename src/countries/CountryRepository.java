@@ -9,9 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+/**
+ * The type Country repository.
+ */
 public class CountryRepository {
     private Connection db;
 
+    /**
+     * Instantiates a new Country repository.
+     */
     public CountryRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -20,6 +26,13 @@ public class CountryRepository {
         }
     }
 
+    /**
+     * Fetch country by id country.
+     *
+     * @param id the id
+     * @return the country
+     * @throws SQLException the sql exception
+     */
     public Country fetchCountryById(Integer id) throws SQLException {
         var ps = this.getDb().prepareStatement(
             "SELECT * FROM countries WHERE Country_ID = ?"
@@ -32,6 +45,12 @@ public class CountryRepository {
         return this.fetchRsIntoCountry(rs);
     }
 
+    /**
+     * Fetch country by division id country.
+     *
+     * @param id the id
+     * @return the country
+     */
     public Country fetchCountryByDivisionId(Integer id) {
 
         var country = new Country();
@@ -57,6 +76,11 @@ public class CountryRepository {
         return country;
     }
 
+    /**
+     * Fetch all observable list.
+     *
+     * @return the observable list
+     */
     public ObservableList<Country> fetchAll() {
         ObservableList<Country> countries = FXCollections.observableArrayList();
 
@@ -93,6 +117,11 @@ public class CountryRepository {
         return country;
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }

@@ -6,10 +6,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type User repository.
+ */
 public class UserRepository {
 
     private Connection db;
 
+    /**
+     * Instantiates a new User repository.
+     */
     public UserRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -18,12 +24,26 @@ public class UserRepository {
         }
     }
 
+    /**
+     * Fetch user by id user.
+     *
+     * @param id the id
+     * @return the user
+     * @throws SQLException the sql exception
+     */
     public User fetchUserById(Integer id) throws SQLException {
         var ps = this.getDb().prepareStatement("SELECT * FROM users WHERE User_ID = ?");
         ps.setInt(1, id);
         return getUser(ps);
     }
 
+    /**
+     * Fetch user by username user.
+     *
+     * @param username the username
+     * @return the user
+     * @throws SQLException the sql exception
+     */
     public User fetchUserByUsername(String username) throws SQLException {
         var ps = this.getDb().prepareStatement("SELECT * FROM users WHERE User_Name = ?");
         ps.setString(1, username);
@@ -52,6 +72,11 @@ public class UserRepository {
         return user;
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }

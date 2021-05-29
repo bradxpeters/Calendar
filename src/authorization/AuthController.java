@@ -27,6 +27,9 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * The type Auth controller.
+ */
 public class AuthController implements Initializable {
 
     private ResourceBundle bundle;
@@ -52,6 +55,13 @@ public class AuthController implements Initializable {
     @FXML
     private Label passwordLabel;
 
+    /**
+     * Handle login button.
+     *
+     * @param event the event
+     * @throws SQLException the sql exception
+     * @throws IOException  the io exception
+     */
     @FXML
     public void handleLoginButton(ActionEvent event) throws SQLException, IOException {
 
@@ -130,6 +140,11 @@ public class AuthController implements Initializable {
             && !this.passwordTextfield.getText().equalsIgnoreCase("");
     }
 
+    /**
+     * Handle localization.
+     *
+     * @param localOverride the local override
+     */
     public void handleLocalization(Locale localOverride) {
         if (localOverride != null) {
             Locale.setDefault(localOverride);
@@ -142,6 +157,9 @@ public class AuthController implements Initializable {
         this.loginButton.setText(this.bundle.getString("Login"));
     }
 
+    /**
+     * Handle add listeners.
+     */
     public void handleAddListeners() {
         this.passwordTextfield
             .textProperty()
@@ -152,6 +170,9 @@ public class AuthController implements Initializable {
             .addListener((observableValue, oldValue, newValue) -> handleLoginButtonState());
     }
 
+    /**
+     * Handle button states.
+     */
     public void handleButtonStates() {
         this.loginButton.setDisable(true);
     }
@@ -173,6 +194,11 @@ public class AuthController implements Initializable {
 
     }
 
+    /**
+     * Sets bundle.
+     *
+     * @param bundle the bundle
+     */
     public void setBundle(ResourceBundle bundle) {
         this.bundle = bundle;
     }

@@ -30,9 +30,18 @@ import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * The type Base interface controller.
+ */
 public class BaseInterfaceController implements Initializable {
 
+    /**
+     * The constant startView.
+     */
     public static ZonedDateTime startView;
+    /**
+     * The constant endView.
+     */
     public static ZonedDateTime endView;
     @FXML
     private TableView<Customer> customerTableView;

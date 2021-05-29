@@ -6,9 +6,15 @@ import reports.ReportsRepository;
 
 import java.sql.*;
 
+/**
+ * The type Customer repository.
+ */
 public class CustomerRepository {
     private Connection db;
 
+    /**
+     * Instantiates a new Customer repository.
+     */
     public CustomerRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -17,6 +23,12 @@ public class CustomerRepository {
         }
     }
 
+    /**
+     * Fetch customer by id customer.
+     *
+     * @param id the id
+     * @return the customer
+     */
     public Customer fetchCustomerById(Integer id) {
 
         var customer = new Customer();
@@ -46,6 +58,9 @@ public class CustomerRepository {
         return customer;
     }
 
+    /**
+     * Fetch all.
+     */
     public void fetchAll() {
         CustomerList.getInstance().getCustomerList().clear();
 
@@ -91,6 +106,11 @@ public class CustomerRepository {
         return customer;
     }
 
+    /**
+     * Create or update customer.
+     *
+     * @param customer the customer
+     */
     public void createOrUpdateCustomer(Customer customer) {
         String sql =
             "INSERT INTO customers (" +
@@ -126,6 +146,11 @@ public class CustomerRepository {
         reportRepository.refreshAllReports();
     }
 
+    /**
+     * Delete customer.
+     *
+     * @param customer the customer
+     */
     public void deleteCustomer(Customer customer) {
         // Clean up appointments
         var appointmentSql = "DELETE FROM appointments WHERE Customer_ID = ?";
@@ -150,6 +175,11 @@ public class CustomerRepository {
         this.fetchAll();
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }

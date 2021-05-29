@@ -11,9 +11,15 @@ import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+/**
+ * The type Reports repository.
+ */
 public class ReportsRepository {
     private Connection db;
 
+    /**
+     * Instantiates a new Reports repository.
+     */
     public ReportsRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -22,6 +28,9 @@ public class ReportsRepository {
         }
     }
 
+    /**
+     * Fetch appointment summary report.
+     */
     public void fetchAppointmentSummaryReport() {
         ReportLists.getInstance().getAppointmentSummaryReportsList().clear();
 
@@ -41,7 +50,10 @@ public class ReportsRepository {
         }
     }
 
-    // TODO: LAMBDA COMMENT
+    /**
+     * Fetch appointments by contact report.
+     */
+// TODO: LAMBDA COMMENT
     public void fetchAppointmentsByContactReport() {
         ReportLists.getInstance().getAppointmentsByContactList().clear();
 
@@ -75,6 +87,9 @@ public class ReportsRepository {
         ReportLists.getInstance().getAppointmentsByContactList().addAll(appointmentsByContact);
     }
 
+    /**
+     * Fetch customers by location.
+     */
     public void fetchCustomersByLocation() {
         ReportLists.getInstance().getCustomersByLocationReport().clear();
 
@@ -115,12 +130,20 @@ public class ReportsRepository {
         return report;
     }
 
+    /**
+     * Refresh all reports.
+     */
     public void refreshAllReports() {
         this.fetchAppointmentSummaryReport();
         this.fetchAppointmentsByContactReport();
         this.fetchCustomersByLocation();
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }

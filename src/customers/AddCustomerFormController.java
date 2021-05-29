@@ -17,6 +17,9 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The type Add customer form controller.
+ */
 public class AddCustomerFormController implements Initializable {
 
     @FXML
@@ -95,6 +98,11 @@ public class AddCustomerFormController implements Initializable {
 
     }
 
+    /**
+     * Prefill.
+     *
+     * @param cus the cus
+     */
     public void prefill(Customer cus) {
         isUpdatingCustomer = true;
 
@@ -144,14 +152,29 @@ public class AddCustomerFormController implements Initializable {
         );
     }
 
+    /**
+     * Sets country repository.
+     *
+     * @param countryRepository the country repository
+     */
     public void setCountryRepository(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
     }
 
+    /**
+     * Sets first level division repository.
+     *
+     * @param firstLevelDivisionRepository the first level division repository
+     */
     public void setFirstLevelDivisionRepository(FirstLevelDivisionRepository firstLevelDivisionRepository) {
         this.firstLevelDivisionRepository = firstLevelDivisionRepository;
     }
 
+    /**
+     * Sets customer repository.
+     *
+     * @param customerRepository the customer repository
+     */
     public void setCustomerRepository(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }

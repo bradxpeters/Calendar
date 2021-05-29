@@ -9,9 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+/**
+ * The type First level division repository.
+ */
 public class FirstLevelDivisionRepository {
     private Connection db;
 
+    /**
+     * Instantiates a new First level division repository.
+     */
     public FirstLevelDivisionRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -20,6 +26,12 @@ public class FirstLevelDivisionRepository {
         }
     }
 
+    /**
+     * Fetch first level division by id first level division.
+     *
+     * @param id the id
+     * @return the first level division
+     */
     public FirstLevelDivision fetchFirstLevelDivisionById(Integer id) {
 
         var firstLevelDivision = new FirstLevelDivision();
@@ -43,6 +55,12 @@ public class FirstLevelDivisionRepository {
         return firstLevelDivision;
     }
 
+    /**
+     * Fetch first level divisions by country id observable list.
+     *
+     * @param id the id
+     * @return the observable list
+     */
     public ObservableList<FirstLevelDivision> fetchFirstLevelDivisionsByCountryId(Integer id) {
 
         ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
@@ -85,6 +103,11 @@ public class FirstLevelDivisionRepository {
         return firstLevelDivision;
     }
 
+    /**
+     * Fetch all observable list.
+     *
+     * @return the observable list
+     */
     public ObservableList<FirstLevelDivision> fetchAll() {
         ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
 
@@ -104,6 +127,11 @@ public class FirstLevelDivisionRepository {
         return firstLevelDivisions;
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }

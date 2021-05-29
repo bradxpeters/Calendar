@@ -21,6 +21,17 @@ public class User {
 
     private String lastUpdatedBy;
 
+    /**
+     * Instantiates a new User.
+     *
+     * @param userId        the user id
+     * @param userName      the user name
+     * @param password      the password
+     * @param createDate    the create date
+     * @param createdBy     the created by
+     * @param lastUpdate    the last update
+     * @param lastUpdatedBy the last updated by
+     */
     public User(Integer userId, String userName, String password, Timestamp createDate,
                 String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
         this.userId = userId;
@@ -32,6 +43,9 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
     }
 

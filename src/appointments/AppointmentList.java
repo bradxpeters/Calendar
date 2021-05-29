@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
+/**
+ * The type Appointment list.
+ */
 public class AppointmentList {
     private static AppointmentList INSTANCE;
     private static ObservableList<Appointment> allAppointments;
@@ -12,6 +15,11 @@ public class AppointmentList {
     private AppointmentList() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static AppointmentList getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new AppointmentList();
@@ -20,6 +28,11 @@ public class AppointmentList {
         return INSTANCE;
     }
 
+    /**
+     * Gets appointment list.
+     *
+     * @return the appointment list
+     */
     public ObservableList<Appointment> getAppointmentList() {
         if (allAppointments == null) {
             allAppointments = FXCollections.observableList(new ArrayList<>());
@@ -31,6 +44,11 @@ public class AppointmentList {
         return allAppointments;
     }
 
+    /**
+     * Sets all customers.
+     *
+     * @param appointments the appointments
+     */
     public void setAllCustomers(ObservableList<Appointment> appointments) {
         allAppointments = appointments;
     }

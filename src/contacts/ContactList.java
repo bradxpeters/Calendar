@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
+/**
+ * The type Contact list.
+ */
 public class ContactList {
     private static ContactList INSTANCE;
     private static ObservableList<Contact> allContacts;
@@ -12,6 +15,11 @@ public class ContactList {
     private ContactList() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ContactList getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ContactList();
@@ -20,6 +28,11 @@ public class ContactList {
         return INSTANCE;
     }
 
+    /**
+     * Gets contact list.
+     *
+     * @return the contact list
+     */
     public ObservableList<Contact> getContactList() {
         if (allContacts == null) {
             allContacts = FXCollections.observableList(new ArrayList<>());
@@ -31,6 +44,11 @@ public class ContactList {
         return allContacts;
     }
 
+    /**
+     * Sets all customers.
+     *
+     * @param contacts the contacts
+     */
     public void setAllCustomers(ObservableList<Contact> contacts) {
         allContacts = contacts;
     }

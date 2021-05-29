@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
+/**
+ * The type Report lists.
+ */
 public class ReportLists {
 
     private static ReportLists INSTANCE;
@@ -15,6 +18,11 @@ public class ReportLists {
     private ReportLists() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ReportLists getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ReportLists();
@@ -23,6 +31,11 @@ public class ReportLists {
         return INSTANCE;
     }
 
+    /**
+     * Gets appointment summary reports list.
+     *
+     * @return the appointment summary reports list
+     */
     public ObservableList<AppointmentSummaryReport> getAppointmentSummaryReportsList() {
         if (appointmentSummaryReportsList == null) {
             appointmentSummaryReportsList = FXCollections.observableList(new ArrayList<>());
@@ -34,6 +47,11 @@ public class ReportLists {
         return appointmentSummaryReportsList;
     }
 
+    /**
+     * Gets appointments by contact list.
+     *
+     * @return the appointments by contact list
+     */
     public ObservableList<AppointmentByContactReport> getAppointmentsByContactList() {
         if (appointmentByContactReportList == null) {
             appointmentByContactReportList = FXCollections.observableList(new ArrayList<>());
@@ -45,6 +63,11 @@ public class ReportLists {
         return appointmentByContactReportList;
     }
 
+    /**
+     * Gets customers by location report.
+     *
+     * @return the customers by location report
+     */
     public ObservableList<CustomerLocationReport> getCustomersByLocationReport() {
         if (customerLocationReportList == null) {
             customerLocationReportList = FXCollections.observableList(new ArrayList<>());

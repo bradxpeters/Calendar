@@ -7,9 +7,15 @@ import reports.ReportsRepository;
 import java.sql.*;
 import java.time.ZonedDateTime;
 
+/**
+ * The type Appointment repository.
+ */
 public class AppointmentRepository {
     private Connection db;
 
+    /**
+     * Instantiates a new Appointment repository.
+     */
     public AppointmentRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -18,6 +24,12 @@ public class AppointmentRepository {
         }
     }
 
+    /**
+     * Fetch appointment by id appointment.
+     *
+     * @param id the id
+     * @return the appointment
+     */
     public Appointment fetchAppointmentById(Integer id) {
         var appointment = new Appointment();
 
@@ -45,6 +57,9 @@ public class AppointmentRepository {
         return appointment;
     }
 
+    /**
+     * Fetch all.
+     */
     public void fetchAll() {
         AppointmentList.getInstance().getAppointmentList().clear();
 
@@ -88,10 +103,20 @@ public class AppointmentRepository {
         return appointment;
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }
 
+    /**
+     * Create or update appointment.
+     *
+     * @param appointment the appointment
+     */
     public void createOrUpdateAppointment(Appointment appointment) {
 
         var existingAppointment = this.fetchAppointmentById(appointment.getAppointmentId());
@@ -152,6 +177,11 @@ public class AppointmentRepository {
         reportRepository.refreshAllReports();
     }
 
+    /**
+     * Delete appointment.
+     *
+     * @param appointment the appointment
+     */
     public void deleteAppointment(Appointment appointment) {
         try {
             var ps = this.getDb().prepareStatement(
@@ -168,6 +198,12 @@ public class AppointmentRepository {
         }
     }
 
+    /**
+     * Fetch appointments by range.
+     *
+     * @param startView the start view
+     * @param endView   the end view
+     */
     public void fetchAppointmentsByRange(ZonedDateTime startView, ZonedDateTime endView) {
         var startTimestamp = Timestamp.valueOf(startView.toLocalDateTime());
         var endTimestamp = Timestamp.valueOf(endView.toLocalDateTime());

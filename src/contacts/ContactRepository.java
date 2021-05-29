@@ -8,9 +8,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The type Contact repository.
+ */
 public class ContactRepository {
     private Connection db;
 
+    /**
+     * Instantiates a new Contact repository.
+     */
     public ContactRepository() {
         try {
             this.db = DatabaseConnector.getInstance();
@@ -19,6 +25,12 @@ public class ContactRepository {
         }
     }
 
+    /**
+     * Fetch contact by id contact.
+     *
+     * @param id the id
+     * @return the contact
+     */
     public Contact fetchContactById(Integer id) {
 
         var contact = new Contact();
@@ -38,6 +50,9 @@ public class ContactRepository {
         return contact;
     }
 
+    /**
+     * Fetch all.
+     */
     public void fetchAll() {
         ContactList.getInstance().getContactList().clear();
 
@@ -70,6 +85,11 @@ public class ContactRepository {
         return contact;
     }
 
+    /**
+     * Create or update contact.
+     *
+     * @param contact the contact
+     */
     public void createOrUpdateContact(Contact contact) {
         String sql =
             "INSERT INTO contacts (" +
@@ -95,6 +115,11 @@ public class ContactRepository {
         reportRepository.refreshAllReports();
     }
 
+    /**
+     * Delete contact.
+     *
+     * @param contact the contact
+     */
     public void deleteContact(Contact contact) {
         // Clean up appointments
         var appointmentSql = "DELETE FROM appointments WHERE Contact_ID = ?";
@@ -119,6 +144,11 @@ public class ContactRepository {
         this.fetchAll();
     }
 
+    /**
+     * Gets db.
+     *
+     * @return the db
+     */
     public Connection getDb() {
         return db;
     }

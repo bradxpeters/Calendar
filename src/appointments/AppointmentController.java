@@ -26,6 +26,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * The type Appointment controller.
+ */
 public class AppointmentController implements Initializable {
     @FXML
     private TextField appointmentIdTextField;
@@ -113,6 +116,11 @@ public class AppointmentController implements Initializable {
         appointmentCustomerComboBox.setButtonCell(factory.call(null));
     }
 
+    /**
+     * Prefill.
+     *
+     * @param app the app
+     */
     public void prefill(Appointment app) {
         isUpdatingAppointment = true;
 
@@ -244,14 +252,29 @@ public class AppointmentController implements Initializable {
         return isOverlapping.get();
     }
 
+    /**
+     * Sets appointment repository.
+     *
+     * @param appointmentRepository the appointment repository
+     */
     public void setAppointmentRepository(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
+    /**
+     * Sets contact repository.
+     *
+     * @param contactRepository the contact repository
+     */
     public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
 
+    /**
+     * Sets customer repository.
+     *
+     * @param customerRepository the customer repository
+     */
     public void setCustomerRepository(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
