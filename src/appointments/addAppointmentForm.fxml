@@ -83,7 +83,7 @@
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="Start Date:" textFill="WHITE"
                                AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0"/>
-                        <DatePicker fx:id="appointmentStartDatePicker" onAction="#ClearError"
+                        <DatePicker fx:id="appointmentStartDatePicker"
                                     AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0"
                                     AnchorPane.topAnchor="0.0"/>
                     </children>
@@ -104,13 +104,13 @@
                                         <Insets right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentStartHourComboBox" onAction="#ClearError" prefWidth="75.0"/>
+                                <ComboBox fx:id="appointmentStartHourComboBox"  prefWidth="75.0"/>
                                 <Label text="Min:" textFill="WHITE">
                                     <padding>
                                         <Insets left="30.0" right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentStartMinuteComboBox" onAction="#ClearError"
+                                <ComboBox fx:id="appointmentStartMinuteComboBox"
                                           prefWidth="80.0"/>
                             </children>
                         </HBox>
@@ -123,7 +123,7 @@
                     <children>
                         <Label layoutX="14.0" layoutY="90.0" text="End Date:" textFill="WHITE"
                                AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0"/>
-                        <DatePicker fx:id="appointmentEndDatePicker" onAction="#ClearError"
+                        <DatePicker fx:id="appointmentEndDatePicker"
                                     AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0"
                                     AnchorPane.topAnchor="0.0"/>
                     </children>
@@ -144,13 +144,13 @@
                                         <Insets right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentEndHourComboBox" onAction="#ClearError" prefWidth="75.0"/>
+                                <ComboBox fx:id="appointmentEndHourComboBox"  prefWidth="75.0"/>
                                 <Label text="Min:" textFill="WHITE">
                                     <padding>
                                         <Insets left="30.0" right="5.0"/>
                                     </padding>
                                 </Label>
-                                <ComboBox fx:id="appointmentEndMinuteComboBox" onAction="#ClearError" prefWidth="80.0"/>
+                                <ComboBox fx:id="appointmentEndMinuteComboBox"  prefWidth="80.0"/>
                             </children>
                         </HBox>
                     </children>

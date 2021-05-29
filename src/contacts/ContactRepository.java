@@ -1,10 +1,8 @@
 package contacts;
 
 import database.DatabaseConnector;
-import reports.ReportsRepository;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -83,65 +81,6 @@ public class ContactRepository {
         }
 
         return contact;
-    }
-
-    /**
-     * Create or update contact.
-     *
-     * @param contact the contact
-     */
-    public void createOrUpdateContact(Contact contact) {
-        String sql =
-            "INSERT INTO contacts (" +
-                "Contact_ID, Contact_Name, Email) " +
-                "VALUES (?, ?, ?)" +
-                "ON DUPLICATE KEY UPDATE " +
-                "Contact_ID=VALUES(Contact_ID), " +
-                "Contact_Name=VALUES(Contact_Name), " +
-                "Email=VALUES(Email)";
-        try {
-            PreparedStatement ps = this.getDb().prepareStatement(sql);
-            ps.setObject(1, contact.getContactId());
-            ps.setString(2, contact.getContactName());
-            ps.setString(3, contact.getEmail());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error creating or updating contact " + contact.getContactName());
-            System.out.println(e.getMessage());
-        }
-
-        this.fetchAll();
-        var reportRepository = new ReportsRepository();
-        reportRepository.refreshAllReports();
-    }
-
-    /**
-     * Delete contact.
-     *
-     * @param contact the contact
-     */
-    public void deleteContact(Contact contact) {
-        // Clean up appointments
-        var appointmentSql = "DELETE FROM appointments WHERE Contact_ID = ?";
-
-        // Delete contact
-        var contactSql = "DELETE FROM contacts WHERE Contact_ID = ?";
-
-        try {
-            var ps1 = this.getDb().prepareStatement(appointmentSql);
-            var ps2 = this.getDb().prepareStatement(contactSql);
-
-            ps1.setObject(1, contact.getContactId());
-            ps2.setObject(1, contact.getContactId());
-
-            ps1.executeUpdate();
-            ps2.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error deleting contact: " + contact.getContactId());
-            System.out.println(e.getMessage());
-        }
-
-        this.fetchAll();
     }
 
     /**

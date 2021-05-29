@@ -25,19 +25,6 @@ public class UserRepository {
     }
 
     /**
-     * Fetch user by id user.
-     *
-     * @param id the id
-     * @return the user
-     * @throws SQLException the sql exception
-     */
-    public User fetchUserById(Integer id) throws SQLException {
-        var ps = this.getDb().prepareStatement("SELECT * FROM users WHERE User_ID = ?");
-        ps.setInt(1, id);
-        return getUser(ps);
-    }
-
-    /**
      * Fetch user by username user.
      *
      * @param username the username

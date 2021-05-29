@@ -27,25 +27,6 @@ public class CountryRepository {
     }
 
     /**
-     * Fetch country by id country.
-     *
-     * @param id the id
-     * @return the country
-     * @throws SQLException the sql exception
-     */
-    public Country fetchCountryById(Integer id) throws SQLException {
-        var ps = this.getDb().prepareStatement(
-            "SELECT * FROM countries WHERE Country_ID = ?"
-        );
-        ps.setInt(1, id);
-        ps.setMaxRows(1);
-
-        var rs = ps.executeQuery();
-
-        return this.fetchRsIntoCountry(rs);
-    }
-
-    /**
      * Fetch country by division id country.
      *
      * @param id the id
