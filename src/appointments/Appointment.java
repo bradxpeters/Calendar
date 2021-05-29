@@ -333,24 +333,6 @@ public class Appointment {
         return Timestamp.valueOf(this.end.toLocalDateTime());
     }
 
-    /**
-     * Gets utc start timestamp.
-     *
-     * @return the utc start timestamp
-     */
-    public Timestamp getUtcStartTimestamp() {
-        return Timestamp.valueOf(this.start.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime());
-    }
-
-    /**
-     * Gets utc end timestamp.
-     *
-     * @return the utc end timestamp
-     */
-    public Timestamp getUtcEndTimestamp() {
-        return Timestamp.valueOf(this.end.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime());
-    }
-
     public String getDisplayStart() {
         if (this.getStartSqlTimestamp() != null) {
             return  new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getStartSqlTimestamp());

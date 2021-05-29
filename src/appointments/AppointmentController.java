@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -122,28 +121,34 @@ public class AppointmentController implements Initializable {
     }
 
     /**
-     * Prefill.
+     * Prefill when updating customer.
      *
-     * @param app the app
+     * @param appointment the appointment
      */
-    public void prefill(Appointment app) {
+    public void prefill(Appointment appointment) {
         isUpdatingAppointment = true;
 
-        appointmentIdTextField.setText(String.valueOf(app.getAppointmentId()));
-        appointmentTitleTextField.setText(app.getTitle());
-        appointmentDescriptionTextField.setText(app.getDescription());
-        appointmentLocationTextField.setText(app.getLocation());
-        appointmentContactComboBox.setValue(this.contactRepository.fetchContactById(app.getContactId()));
-        appointmentTypeTextField.setText(app.getType());
-        appointmentStartDatePicker.setValue(app.getStart().toLocalDate());
-        appointmentStartHourComboBox.setValue(app.getStart().getHour());
-        appointmentStartMinuteComboBox.setValue(app.getStart().getMinute());
-        appointmentEndDatePicker.setValue(app.getEnd().toLocalDate());
-        appointmentEndHourComboBox.setValue(app.getEnd().getHour());
-        appointmentEndMinuteComboBox.setValue(app.getEnd().getMinute());
-        appointmentCustomerComboBox.setValue(this.customerRepository.fetchCustomerById(app.getCustomerId()));
+        appointmentIdTextField.setText(String.valueOf(appointment.getAppointmentId()));
+        appointmentTitleTextField.setText(appointment.getTitle());
+        appointmentDescriptionTextField.setText(appointment.getDescription());
+        appointmentLocationTextField.setText(appointment.getLocation());
+        appointmentContactComboBox.setValue(this.contactRepository.fetchContactById(appointment.getContactId()));
+        appointmentTypeTextField.setText(appointment.getType());
+        appointmentStartDatePicker.setValue(appointment.getStart().toLocalDate());
+        appointmentStartHourComboBox.setValue(appointment.getStart().getHour());
+        appointmentStartMinuteComboBox.setValue(appointment.getStart().getMinute());
+        appointmentEndDatePicker.setValue(appointment.getEnd().toLocalDate());
+        appointmentEndHourComboBox.setValue(appointment.getEnd().getHour());
+        appointmentEndMinuteComboBox.setValue(appointment.getEnd().getMinute());
+        appointmentCustomerComboBox.setValue(this.customerRepository.fetchCustomerById(appointment.getCustomerId()));
     }
 
+    /**
+     * Handle appointment submit button.
+     * Also performs validations on submission
+     *
+     * @param event the event
+     */
     @FXML
     private void handleAppointmentSubmitButton(ActionEvent event) {
 
@@ -168,12 +173,12 @@ public class AppointmentController implements Initializable {
         var startMin = appointmentStartMinuteComboBox.getValue().toString();
         var endMin = appointmentEndMinuteComboBox.getValue().toString();
 
-        var beginTime = LocalTime.of(Integer.parseInt(startHour), Integer.parseInt(startMin));
+        var startTime = LocalTime.of(Integer.parseInt(startHour), Integer.parseInt(startMin));
         var endTime = LocalTime.of(Integer.parseInt(endHour), Integer.parseInt(endMin));
 
         var begin = ZonedDateTime.of(
             startDate,
-            beginTime,
+            startTime,
             ZoneId.systemDefault()
         );
         var end = ZonedDateTime.of(
