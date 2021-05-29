@@ -2,6 +2,7 @@ package customers;
 
 import authorization.AuthorizedState;
 import database.DatabaseConnector;
+import reports.ReportsRepository;
 
 import java.sql.*;
 
@@ -121,6 +122,8 @@ public class CustomerRepository {
         }
 
         this.fetchAll();
+        var reportRepository = new ReportsRepository();
+        reportRepository.refreshAllReports();
     }
 
     public void deleteCustomer(Customer customer) {

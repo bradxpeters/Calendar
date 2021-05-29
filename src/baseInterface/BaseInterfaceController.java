@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import reports.AppointmentByContactReport;
 import reports.AppointmentSummaryReport;
+import reports.CustomerLocationReport;
 import reports.ReportLists;
 
 import java.io.IOException;
@@ -99,6 +100,12 @@ public class BaseInterfaceController implements Initializable {
     private TableColumn<AppointmentByContactReport, String> appointmentByContactReportEndColumn;
     @FXML
     private TableColumn<AppointmentByContactReport, String> appointmentByContactReportCustomerIdColumn;
+    @FXML
+    private TableView<CustomerLocationReport> customerLocationReportTableView ;
+    @FXML
+    private TableColumn<CustomerLocationReport, String> customerLocationPostalCodeColumn;
+    @FXML
+    private TableColumn<CustomerLocationReport, Integer> customerLocationCountColumn;
 
 
     @FXML
@@ -152,6 +159,7 @@ public class BaseInterfaceController implements Initializable {
         // Populate reports tables
         appointmentReportTableView.setItems(ReportLists.getInstance().getAppointmentSummaryReportsList());
         appointmentByContactReportTableView.setItems(ReportLists.getInstance().getAppointmentsByContactList());
+        customerLocationReportTableView.setItems(ReportLists.getInstance().getCustomersByLocationReport());
 
     }
 
@@ -189,6 +197,9 @@ public class BaseInterfaceController implements Initializable {
         appointmentByContactReportStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentByContactReportEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentByContactReportCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+
+        customerLocationPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        customerLocationCountColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
     }
 
     @FXML

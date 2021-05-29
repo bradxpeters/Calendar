@@ -108,7 +108,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="appointmentReportTableView" prefHeight="420.0" prefWidth="1058.0">
+                        <TableView fx:id="appointmentReportTableView" prefHeight="591.0" prefWidth="1312.0">
                           <columns>
                             <TableColumn fx:id="appointmentReportTypeColumn" prefWidth="75.0" text="Type" />
                             <TableColumn fx:id="appointmentReportMonthColumn" prefWidth="75.0" text="Month" />
@@ -123,19 +123,33 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="appointmentByContactReportTableView" prefHeight="427.0" prefWidth="1181.0">
+                        <TableView fx:id="appointmentByContactReportTableView" prefHeight="620.0" prefWidth="1220.0">
                           <columns>
-                            <TableColumn fx:id="appointmentByContactReportContactNameColumn" prefWidth="100.0" text="Contact" />
-                            <TableColumn fx:id="appointmentByContactReportIdColumn" prefWidth="99.0" text="Appointment Id" />
-                              <TableColumn fx:id="appointmentByContactReportTypeColumn" prefWidth="78.0" text="Type" />
-                              <TableColumn fx:id="appointmentByContactReportTitleColumn" prefWidth="100.0" text="Title" />
-                              <TableColumn fx:id="appointmentByContactReportDescColumn" prefWidth="94.0" text="Description" />
-                              <TableColumn fx:id="appointmentByContactReportStartColumn" prefWidth="100.0" text="Start" />
-                              <TableColumn fx:id="appointmentByContactReportEndColumn" minWidth="6.0" prefWidth="64.0" text="End" />
-                              <TableColumn fx:id="appointmentByContactReportCustomerIdColumn" minWidth="6.0" prefWidth="102.0" text="Customer Id" />
+                            <TableColumn fx:id="appointmentByContactReportContactNameColumn" prefWidth="130.0" text="Contact" />
+                            <TableColumn fx:id="appointmentByContactReportIdColumn" prefWidth="116.0" text="Appointment Id" />
+                              <TableColumn fx:id="appointmentByContactReportTypeColumn" prefWidth="98.0" text="Type" />
+                              <TableColumn fx:id="appointmentByContactReportTitleColumn" prefWidth="105.0" text="Title" />
+                              <TableColumn fx:id="appointmentByContactReportDescColumn" prefWidth="142.0" text="Description" />
+                              <TableColumn fx:id="appointmentByContactReportStartColumn" prefWidth="143.0" text="Start" />
+                              <TableColumn fx:id="appointmentByContactReportEndColumn" minWidth="0.0" prefWidth="128.0" text="End" />
+                              <TableColumn fx:id="appointmentByContactReportCustomerIdColumn" minWidth="6.0" prefWidth="144.0" text="Customer Id" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Customer Location Summary">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="customerLocationReportTableView" prefHeight="520.0" prefWidth="1145.0">
+                          <columns>
+                            <TableColumn fx:id="customerLocationPostalCodeColumn" prefWidth="113.0" text="Postal Code" />
+                            <TableColumn fx:id="customerLocationCountColumn" minWidth="8.0" prefWidth="132.0" text="Count" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
             </tabs>

@@ -2,6 +2,7 @@ package appointments;
 
 import authorization.AuthorizedState;
 import database.DatabaseConnector;
+import reports.ReportsRepository;
 
 import java.sql.*;
 import java.time.ZonedDateTime;
@@ -147,6 +148,8 @@ public class AppointmentRepository {
         }
 
         this.fetchAll();
+        var reportRepository = new ReportsRepository();
+        reportRepository.refreshAllReports();
     }
 
     public void deleteAppointment(Appointment appointment) {

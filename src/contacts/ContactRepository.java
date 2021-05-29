@@ -1,6 +1,7 @@
 package contacts;
 
 import database.DatabaseConnector;
+import reports.ReportsRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,6 +91,8 @@ public class ContactRepository {
         }
 
         this.fetchAll();
+        var reportRepository = new ReportsRepository();
+        reportRepository.refreshAllReports();
     }
 
     public void deleteContact(Contact contact) {

@@ -4,11 +4,14 @@ import appointments.Appointment;
 import appointments.AppointmentList;
 import contacts.Contact;
 import contacts.ContactList;
+import customers.CustomerList;
 import database.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class ReportsRepository {
@@ -69,9 +72,30 @@ public class ReportsRepository {
 
                 return report;
             })
+            .sorted(Comparator.comparing(AppointmentByContactReport::getContactName))
             .collect(Collectors.toList());
 
         ReportLists.getInstance().getAppointmentsByContactList().addAll(appointmentsByContact);
+    }
+
+    public void fetchCustomersByLocation() {
+        ReportLists.getInstance().getCustomersByLocationReport().clear();
+
+        try {
+            var ps = this.getDb().prepareStatement(
+                "SELECT customers.Postal_Code AS postalCode, COUNT(*) AS count " +
+                    "FROM customers " +
+                    "GROUP BY customers.Postal_Code"
+            );
+
+            var rs = ps.executeQuery();
+            while (rs.next()) {
+                ReportLists.getInstance().getCustomersByLocationReport().add(this.fetchRsIntoCustomerLocationReport(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching customers by location report");
+            System.out.println(e.getMessage());
+        }
     }
 
     private AppointmentSummaryReport fetchRsIntoSummaryReport(ResultSet rs) throws SQLException {
@@ -83,6 +107,21 @@ public class ReportsRepository {
         report.setCount(rs.getInt("count"));
 
         return report;
+    }
+
+    private CustomerLocationReport fetchRsIntoCustomerLocationReport(ResultSet rs) throws SQLException {
+        var report = new CustomerLocationReport();
+
+        report.setPostalCode(rs.getString("postalCode"));
+        report.setCount(rs.getInt("count"));
+
+        return report;
+    }
+
+    public void refreshAllReports(){
+        this.fetchAppointmentSummaryReport();
+        this.fetchAppointmentsByContactReport();
+        this.fetchCustomersByLocation();
     }
 
     public Connection getDb() {

@@ -10,6 +10,7 @@ public class ReportLists {
     private static ReportLists INSTANCE;
     private static ObservableList<AppointmentSummaryReport> appointmentSummaryReportsList;
     private static ObservableList<AppointmentByContactReport> appointmentByContactReportList;
+    private static ObservableList<CustomerLocationReport> customerLocationReportList;
 
     private ReportLists() {
     }
@@ -42,6 +43,17 @@ public class ReportLists {
         }
 
         return appointmentByContactReportList;
+    }
+
+    public ObservableList<CustomerLocationReport> getCustomersByLocationReport() {
+        if (customerLocationReportList == null) {
+            customerLocationReportList = FXCollections.observableList(new ArrayList<>());
+
+            var reportRepository = new ReportsRepository();
+            reportRepository.fetchCustomersByLocation();
+        }
+
+        return customerLocationReportList;
     }
 
 }
