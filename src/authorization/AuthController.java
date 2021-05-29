@@ -17,7 +17,11 @@ import users.UserRepository;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
@@ -74,20 +78,44 @@ public class AuthController implements Initializable {
         var userRepo = new UserRepository();
         var user = userRepo.fetchUserByUsername(username);
 
+        var loginAttempt = new LoginAttempt();
+        loginAttempt.setAttemptedUsername(username);
+        loginAttempt.setAttemptedPassword(password);
+        loginAttempt.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
         if (user != null) {
             if (!user.getPassword().equals(password)) {
                 var alert = new Alert(Alert.AlertType.ERROR, this.bundle.getString("PassError"));
                 alert.showAndWait();
+                loginAttempt.setSuccess(0);
+                this.handleRecordedLoginAttempt(loginAttempt);
                 return false;
             } else {
                 // Successful login
                 AuthorizedState.getInstance().setAuthorizedUser(user);
+                loginAttempt.setSuccess(1);
+                this.handleRecordedLoginAttempt(loginAttempt);
                 return true;
             }
         } else {
             var alert = new Alert(Alert.AlertType.ERROR, this.bundle.getString("UserError"));
             alert.showAndWait();
+            loginAttempt.setSuccess(0);
+            this.handleRecordedLoginAttempt(loginAttempt);
             return false;
+        }
+    }
+
+    private void handleRecordedLoginAttempt(LoginAttempt loginAttempt) {
+        try {
+            var appendText = loginAttempt.getAttemptedUsername()
+                + "\t" + loginAttempt.getAttemptedPassword()
+                + "\t" + loginAttempt.getTimestamp()
+                + "\t" + loginAttempt.getSuccess() + "\n";
+
+            Files.write(Paths.get("login_activity.txt"), appendText.getBytes(), StandardOpenOption.APPEND);
+        }catch (IOException e) {
+            System.out.println("Error recording login attempt");
         }
     }
 
