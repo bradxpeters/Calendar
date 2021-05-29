@@ -19,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import reports.AppointmentSummaryReport;
+import reports.ReportLists;
 
 import java.io.IOException;
 import java.net.URL;
@@ -69,6 +71,16 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private TableColumn<Appointment, Customer> appointmentCustomerColumn;
     @FXML
+    private TableView<AppointmentSummaryReport> appointmentReportTableView;
+    @FXML
+    private TableColumn<Appointment, Contact> appointmentReportTypeColumn;
+    @FXML
+    private TableColumn<Appointment, String> appointmentReportMonthColumn;
+    @FXML
+    private TableColumn<Appointment, String> appointmentReportYearColumn;
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentReportCountColumn;
+    @FXML
     private ToggleGroup selectedPeriodToggleGroup;
     @FXML
     private RadioButton weekRadioButton;
@@ -90,7 +102,7 @@ public class BaseInterfaceController implements Initializable {
     }
 
     private void handleReports() {
-
+       // Setup table columns/cells
     }
 
     private void handleUpcomingAppointmentCheck() {
@@ -119,8 +131,11 @@ public class BaseInterfaceController implements Initializable {
         customerTableView.getSortOrder().add(customerIdColumn);
 
         // Populate appointment table
-        var appointmentRepository = new AppointmentRepository();
         appointmentTableView.setItems(AppointmentList.getInstance().getAppointmentList());
+
+        // Populate reports tables
+        appointmentReportTableView.setItems(ReportLists.getInstance().getAppointmentSummaryReportsList());
+
     }
 
     private void setUpTableColumns() {
@@ -143,9 +158,13 @@ public class BaseInterfaceController implements Initializable {
         appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        appointmentReportTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentReportMonthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
+        appointmentReportYearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        appointmentReportCountColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
     }
 
-    //When add customer button is presssed cutomer menu opens to add new customer to database
     @FXML
     private void handleAddOrUpdateCustomerButton(ActionEvent event) {
         var selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
@@ -165,6 +184,7 @@ public class BaseInterfaceController implements Initializable {
                 controller.prefill(selectedCustomer);
             }
         } catch (IOException e) {
+            System.out.println("Error during launching add customer form.");
             System.out.println(e.getMessage());
         }
     }

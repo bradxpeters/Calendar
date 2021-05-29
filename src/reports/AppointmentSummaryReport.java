@@ -43,4 +43,14 @@ public class AppointmentSummaryReport {
     public void setYear(String year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return "AppointmentSummaryReport{" +
+            "type='" + type + '\'' +
+            ", month='" + month + '\'' +
+            ", year='" + year + '\'' +
+            ", count=" + count +
+            '}';
+    }
 }
