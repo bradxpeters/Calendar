@@ -24,9 +24,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class BaseInterfaceController implements Initializable {
 
+    public static ZonedDateTime startView;
+    public static ZonedDateTime endView;
     @FXML
     private TableView<Customer> customerTableView;
     @FXML
@@ -76,7 +79,7 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private Label viewLabel;
     @FXML
-    private Label NextAppointment;
+    private Label nextAppointmentLabel;
     @FXML
     private Button AppointmentAddButton;
     @FXML
@@ -94,9 +97,6 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private Button customerDeleteButton;
 
-    public static ZonedDateTime startView;
-    public static ZonedDateTime endView;
-
     /**
      * Initializes the controller class.
      */
@@ -105,34 +105,27 @@ public class BaseInterfaceController implements Initializable {
 
         this.setUpTableColumns();
         this.populateInitialData();
+        this.handleUpcomingAppointmentCheck();
+    }
 
-        //Update all lists
-//            System.out.println("Updating Country List...");
-//            mysql.database.updateCountriesList();
-//            System.out.println("Done!\nUpdating Division List...");
-//            mysql.database.updateDivisionsList();//Requires Countries
-//            System.out.println("Done!\nUpdating Contact List...");
-//            mysql.database.updateContactsList();
-//            System.out.println("Done!\nUpdating Customer List...");
-//            mysql.database.updateCustomerList();//Requires Divisions
-//            System.out.println("Done!\nUpdating Appointment List...");
-//            mysql.database.updateAppointmentList();// Requires Contacts and Customers
-//            System.out.println("Done!");
-//
-//            System.out.println("Checking for appointments within 15 minutes... ");
-//            startView = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-//            //startView.minusDays(0);
-//            endView = startView.plusMinutes(15);
-//            String begin = startView.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//            String end = endView.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//            mysql.database.updateAppointmentListByStart(begin, end);
-//            System.out.println("Done! Found " + Appointments.appointmentList.size() + " Appointments");
+    private void handleUpcomingAppointmentCheck() {
+        nextAppointmentLabel.setText("No appointments within the next 15 minutes.");
+        var upcomingAppointment = AppointmentList.getInstance().getAppointmentList()
+            .stream()
+            .filter(a -> a.getStart().isBefore(ZonedDateTime.now().plusMinutes(15)))
+            .limit(1)
+            .collect(Collectors.toList()).get(0);
 
-//        if(Appointments.appointmentList.size() > 0) NextAppointment.setText("Id: "+ Appointments.appointmentList.get(0).getApointmentID() + " Appointment: " + Appointments.appointmentList.get(0).getTitle() + " Starts at: " + Appointments.appointmentList.get(0).getStartTime());
-//        else NextAppointment.setText("There are no appointments soon.");
-//
-//        //Fire teh week filter to prefil the appointments list and preselect filter
-//        weekRadioButton.fire();
+        if (upcomingAppointment != null) {
+            var alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment soon! ID: "
+                + upcomingAppointment.getAppointmentId() + " " + upcomingAppointment.getStart().toString());
+            alert.setHeaderText("Confirmation");
+            alert.showAndWait();
+            nextAppointmentLabel.setText("Upcoming appointment: " +
+                upcomingAppointment.getAppointmentId() + " " +
+                upcomingAppointment.getStart().toString()
+            );
+        }
     }
 
     private void populateInitialData() {

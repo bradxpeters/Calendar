@@ -140,7 +140,7 @@
                   <Font name="Courier" size="29.0" />
                </font>
             </Label>
-                  <Label fx:id="NextAppointment" alignment="CENTER" text="No Appointments" textFill="WHITE">
+                  <Label fx:id="nextAppointmentLabel" alignment="CENTER" text="No Appointments" textFill="WHITE">
                       <font>
                           <Font name="System Bold" size="16.0" />
                       </font>
