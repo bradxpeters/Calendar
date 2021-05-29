@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import reports.AppointmentByContactReport;
 import reports.AppointmentSummaryReport;
 import reports.ReportLists;
 
@@ -73,13 +74,33 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private TableView<AppointmentSummaryReport> appointmentReportTableView;
     @FXML
-    private TableColumn<Appointment, Contact> appointmentReportTypeColumn;
+    private TableColumn<Appointment, String> appointmentReportTypeColumn;
     @FXML
     private TableColumn<Appointment, String> appointmentReportMonthColumn;
     @FXML
     private TableColumn<Appointment, String> appointmentReportYearColumn;
     @FXML
     private TableColumn<Appointment, Integer> appointmentReportCountColumn;
+    @FXML
+    private TableView<AppointmentByContactReport> appointmentByContactReportTableView;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportContactNameColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportIdColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportTitleColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportTypeColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportDescColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportStartColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportEndColumn;
+    @FXML
+    private TableColumn<AppointmentByContactReport, String> appointmentByContactReportCustomerIdColumn;
+
+
     @FXML
     private ToggleGroup selectedPeriodToggleGroup;
     @FXML
@@ -98,11 +119,6 @@ public class BaseInterfaceController implements Initializable {
         this.setUpTableColumns();
         this.populateInitialData();
         this.handleUpcomingAppointmentCheck();
-        this.handleReports();
-    }
-
-    private void handleReports() {
-       // Setup table columns/cells
     }
 
     private void handleUpcomingAppointmentCheck() {
@@ -135,6 +151,7 @@ public class BaseInterfaceController implements Initializable {
 
         // Populate reports tables
         appointmentReportTableView.setItems(ReportLists.getInstance().getAppointmentSummaryReportsList());
+        appointmentByContactReportTableView.setItems(ReportLists.getInstance().getAppointmentsByContactList());
 
     }
 
@@ -163,6 +180,15 @@ public class BaseInterfaceController implements Initializable {
         appointmentReportMonthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
         appointmentReportYearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
         appointmentReportCountColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        appointmentByContactReportContactNameColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));;
+        appointmentByContactReportIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        appointmentByContactReportTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentByContactReportTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentByContactReportDescColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentByContactReportStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentByContactReportEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentByContactReportCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
     }
 
     @FXML

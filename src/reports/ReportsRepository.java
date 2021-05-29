@@ -1,10 +1,15 @@
 package reports;
 
+import appointments.Appointment;
+import appointments.AppointmentList;
+import contacts.Contact;
+import contacts.ContactList;
 import database.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 public class ReportsRepository {
     private Connection db;
@@ -31,9 +36,42 @@ public class ReportsRepository {
                 ReportLists.getInstance().getAppointmentSummaryReportsList().add(this.fetchRsIntoSummaryReport(rs));
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching all customers");
+            System.out.println("Error fetching appointment summary report");
             System.out.println(e.getMessage());
         }
+    }
+
+    // TODO: LAMBDA COMMENT
+    public void fetchAppointmentsByContactReport() {
+        ReportLists.getInstance().getAppointmentsByContactList().clear();
+
+        var appointmentsByContact = AppointmentList
+            .getInstance()
+            .getAppointmentList()
+            .stream()
+            .map(a -> {
+                var report = new AppointmentByContactReport();
+                var contact = ContactList.getInstance()
+                    .getContactList()
+                    .stream()
+                    .filter(p -> p.getContactId().equals(a.getContactId()))
+                    .findFirst()
+                    .orElse(new Contact());
+
+                report.setContactName(contact.getContactName());
+                report.setAppointmentId(a.getAppointmentId());
+                report.setType(a.getType());
+                report.setTitle(a.getTitle());
+                report.setDescription(a.getDescription());
+                report.setStart(a.getStartSqlTimestamp());
+                report.setEnd(a.getEndSqlTimestamp());
+                report.setCustomerId(a.getCustomerId());
+
+                return report;
+            })
+            .collect(Collectors.toList());
+
+        ReportLists.getInstance().getAppointmentsByContactList().addAll(appointmentsByContact);
     }
 
     private AppointmentSummaryReport fetchRsIntoSummaryReport(ResultSet rs) throws SQLException {

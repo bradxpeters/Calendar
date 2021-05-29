@@ -119,6 +119,25 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
+            <Tab text="Contact Summary">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="appointmentByContactReportTableView" prefHeight="427.0" prefWidth="1181.0">
+                          <columns>
+                            <TableColumn fx:id="appointmentByContactReportContactNameColumn" prefWidth="100.0" text="Contact" />
+                            <TableColumn fx:id="appointmentByContactReportIdColumn" prefWidth="99.0" text="Appointment Id" />
+                              <TableColumn fx:id="appointmentByContactReportTypeColumn" prefWidth="78.0" text="Type" />
+                              <TableColumn fx:id="appointmentByContactReportTitleColumn" prefWidth="100.0" text="Title" />
+                              <TableColumn fx:id="appointmentByContactReportDescColumn" prefWidth="94.0" text="Description" />
+                              <TableColumn fx:id="appointmentByContactReportStartColumn" prefWidth="100.0" text="Start" />
+                              <TableColumn fx:id="appointmentByContactReportEndColumn" minWidth="6.0" prefWidth="64.0" text="End" />
+                              <TableColumn fx:id="appointmentByContactReportCustomerIdColumn" minWidth="6.0" prefWidth="102.0" text="Customer Id" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
             </tabs>
         </TabPane>
     </center>
