@@ -57,14 +57,14 @@
                                         <HBox alignment="CENTER" layoutX="387.0" maxHeight="50.0" minHeight="50.0"
                                               prefHeight="50.0" prefWidth="266.0">
                                             <children>
-                                                <Button fx:id="leftButton" mnemonicParsing="false" onAction="#ViewMinus"
+                                                <Button fx:id="leftButton" mnemonicParsing="false"
                                                         prefHeight="27.0" prefWidth="37.0" text="&lt;"/>
                                                 <Label fx:id="viewLabel" text="View Label" textFill="WHITE">
                                                     <padding>
                                                         <Insets left="20.0" right="20.0"/>
                                                     </padding>
                                                 </Label>
-                                                <Button fx:id="rightButton" mnemonicParsing="false" onAction="#ViewPlus"
+                                                <Button fx:id="rightButton" mnemonicParsing="false"
                                                         text="&gt;"/>
                                             </children>
                                         </HBox>

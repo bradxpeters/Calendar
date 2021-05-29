@@ -76,36 +76,21 @@ public class BaseInterfaceController implements Initializable {
     private RadioButton monthRadioButton;
     @FXML
     private RadioButton allRadioButton;
-    @FXML
-    private Label viewLabel;
+
     @FXML
     private Label nextAppointmentLabel;
-    @FXML
-    private Button AppointmentAddButton;
-    @FXML
-    private Button AppointmentUpdateButton;
-    @FXML
-    private Button AppointmentDeleteButton;
-    @FXML
-    private Button leftButton;
-    @FXML
-    private Button rightButton;
-    @FXML
-    private Button customerAddButton;
-    @FXML
-    private Button customerUpdateButton;
-    @FXML
-    private Button customerDeleteButton;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         this.setUpTableColumns();
         this.populateInitialData();
         this.handleUpcomingAppointmentCheck();
+        this.handleReports();
+    }
+
+    private void handleReports() {
+
     }
 
     private void handleUpcomingAppointmentCheck() {
@@ -260,78 +245,5 @@ public class BaseInterfaceController implements Initializable {
     private void updateSelectedPeriodView() {
         var appointmentRepository = new AppointmentRepository();
         appointmentRepository.fetchAppointmentsByRange(startView, endView);
-    }
-
-    @FXML
-    private void ViewMinus(ActionEvent event) {
-//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(weekRadioButton)){
-//            startView = startView.minusWeeks(1);
-//            endView = startView.plusWeeks(1);
-//        }
-//
-//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(monthRadioButton)){
-//            startView = startView.minusMonths(1);
-//            endView = startView.plusMonths(1);
-//        }
-//        updateView();
-    }
-
-    //when the view plus button is pressed add a week or month based on radio button
-    @FXML
-    private void ViewPlus(ActionEvent event) {
-//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(weekRadioButton)){
-//            startView = startView.plusWeeks(1);
-//            endView = startView.plusWeeks(1);
-//        }
-//
-//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(monthRadioButton)){
-//            startView = startView.plusMonths(1);
-//            endView = startView.plusMonths(1);
-//        }
-//        updateView();
-    }
-
-    /**
-     * used by the cusDeleteRun class to confirm deletion with a popup
-     *
-     * @param selected the customer object to be deleted
-     * @return true if popup was confirmed
-     */
-    private boolean ConfirmCustomerDelete(Customer selected) {
-//        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selected.getName() + "?", "Delete Customer?", JOptionPane.YES_NO_OPTION);
-//
-//        return i == 0;
-        return true;
-    }
-
-    /**
-     * used by the appDeleteRun class to confirm deletion with a popup
-     *
-     * @param selected the customer object to be deleted
-     * @return true if popup was confirmed
-     */
-    private boolean ConfirmAppointmentDelete(Appointment selected) {
-//        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selected.getApointmentID() + ": " + selected.getType() + "?", "Delete Appointment?", JOptionPane.YES_NO_OPTION);
-//
-//        return i == 0;
-        return true;
-    }
-
-    // run the first report action button
-    @FXML
-    private void RunReport1(ActionEvent event) {
-//        new Reports().Report(1);
-    }
-
-    // run the second report action button
-    @FXML
-    private void RunReport2(ActionEvent event) {
-//        new Reports().Report(2);
-    }
-
-    //runt he third report action button
-    @FXML
-    private void RunReport3(ActionEvent event) {
-//        new Reports().Report(3);
     }
 }
