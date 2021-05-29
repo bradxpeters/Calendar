@@ -16,13 +16,13 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 public class AppointmentController implements Initializable {
     @FXML
@@ -202,14 +202,15 @@ public class AppointmentController implements Initializable {
             ZoneId.systemDefault()
         );
 
-        //.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         tempAppointment.setStart(begin);
         tempAppointment.setEnd(end);
 
-//        if(!isBussinessHours(app)){
-//            errorMessageLabel.setText("Selected Times are outside businness hours");
-//            return;
-//        }
+        if(!isAppointmentDuringBusinessHours(tempAppointment)){
+            var alert = new Alert(Alert.AlertType.ERROR, "Appointment outside of business hours");
+            alert.setHeaderText("Error!");
+            alert.showAndWait();
+            return;
+        }
 //
 //        //We need to check if the new appointment will overlap any existing appointment
 //        if(isOverlapping(app)){
@@ -221,33 +222,33 @@ public class AppointmentController implements Initializable {
         ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
-    //Runs when the cancel button is pressed and closed the window
     @FXML
-    private void AppCancel(ActionEvent event) {
+    private void handleCancelButton(ActionEvent event) {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
-    /**
-     * Used to check if a new appointment is in business hours in the appointment menu
-     * before sending it to the database
-     * @param app the appointment to be checked
-     * @return true if it is in business hours
-     */
-    private boolean isBussinessHours(Appointment app){
-//        ZonedDateTime start = app.getStartTimeObj().withZoneSameInstant(ZoneId.of("America/New_York"));
-//        ZonedDateTime end = app.getEndTimeObj().withZoneSameInstant(ZoneId.of("America/New_York"));
-//
-//        ZonedDateTime startLimit1 = ZonedDateTime.of(start.toLocalDate(), LocalTime.of(7, 59), ZoneId.of("America/New_York"));
-//        ZonedDateTime stopLimit1 = ZonedDateTime.of(start.toLocalDate(), LocalTime.of(22, 1), ZoneId.of("America/New_York"));
-//        ZonedDateTime startLimit2 = ZonedDateTime.of(end.toLocalDate(), LocalTime.of(7, 59), ZoneId.of("America/New_York"));
-//        ZonedDateTime stopLimit2 = ZonedDateTime.of(end.toLocalDate(), LocalTime.of(22, 1), ZoneId.of("America/New_York"));
-//
-//        if(start.getDayOfWeek() == DayOfWeek.SATURDAY) return false;
-//        if(start.getDayOfWeek() == DayOfWeek.SUNDAY) return false;
-//        if(end.getDayOfWeek() == DayOfWeek.SATURDAY) return false;
-//        if(start.getDayOfWeek() == DayOfWeek.SUNDAY) return false;
-//        return startLimit1.isBefore(start) && stopLimit1.isAfter(start) && startLimit2.isBefore(end) && stopLimit2.isAfter(end);
-        return true;
+    private boolean isAppointmentDuringBusinessHours(Appointment appointment){
+        var start = appointment.getStart().withZoneSameInstant(ZoneId.of("America/New_York"));
+        var end = appointment.getEnd().withZoneSameInstant(ZoneId.of("America/New_York"));
+
+        var startLimit1 = ZonedDateTime.of(
+            start.toLocalDate(), LocalTime.of(7, 59), ZoneId.of("America/New_York"));
+        var stopLimit1 = ZonedDateTime.of(
+            start.toLocalDate(), LocalTime.of(22, 1), ZoneId.of("America/New_York"));
+        var startLimit2 = ZonedDateTime.of(
+            end.toLocalDate(), LocalTime.of(7, 59), ZoneId.of("America/New_York"));
+        var stopLimit2 = ZonedDateTime.of(
+            end.toLocalDate(), LocalTime.of(22, 1), ZoneId.of("America/New_York"));
+
+        var isWeekend = Stream.of(DayOfWeek.SATURDAY, DayOfWeek.SATURDAY)
+            .anyMatch(dayOfWeek -> Arrays.asList(start.getDayOfWeek(), end.getDayOfWeek()).contains(dayOfWeek));
+
+        var isValidTime = startLimit1.isBefore(start)
+            && stopLimit1.isAfter(start)
+            && startLimit2.isBefore(end)
+            && stopLimit2.isAfter(end);
+
+        return !isWeekend && isValidTime;
     }
 
     boolean overlapCheck = false;
