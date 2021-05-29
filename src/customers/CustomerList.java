@@ -10,10 +10,11 @@ public class CustomerList {
     private static CustomerList INSTANCE;
     private static ObservableList<Customer> allCustomers;
 
-    private CustomerList() {}
+    private CustomerList() {
+    }
 
     public static CustomerList getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new CustomerList();
         }
 

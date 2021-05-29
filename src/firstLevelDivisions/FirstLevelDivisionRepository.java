@@ -1,6 +1,5 @@
 package firstLevelDivisions;
 
-import appointments.Appointment;
 import database.DatabaseConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +31,7 @@ public class FirstLevelDivisionRepository {
             ps.setMaxRows(1);
 
             var rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 firstLevelDivision = this.fetchRsIntoFirstLevelDivision(rs);
             }
 
@@ -55,7 +54,7 @@ public class FirstLevelDivisionRepository {
             ps.setInt(1, id);
 
             var rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 firstLevelDivisions.add(this.fetchRsIntoFirstLevelDivision(rs));
             }
 

@@ -9,10 +9,11 @@ public class AppointmentList {
     private static AppointmentList INSTANCE;
     private static ObservableList<Appointment> allAppointments;
 
-    private AppointmentList() {}
+    private AppointmentList() {
+    }
 
     public static AppointmentList getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new AppointmentList();
         }
 

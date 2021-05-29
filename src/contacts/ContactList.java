@@ -9,10 +9,11 @@ public class ContactList {
     private static ContactList INSTANCE;
     private static ObservableList<Contact> allContacts;
 
-    private ContactList() {}
+    private ContactList() {
+    }
 
     public static ContactList getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new ContactList();
         }
 

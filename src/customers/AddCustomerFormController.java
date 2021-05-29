@@ -13,7 +13,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
-import users.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -86,12 +85,12 @@ public class AddCustomerFormController implements Initializable {
         Callback<ListView<FirstLevelDivision>, ListCell<FirstLevelDivision>> factory =
             lv -> new ListCell<>() {
 
-            @Override
-            protected void updateItem(FirstLevelDivision item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? "" : item.getDivision());
-            }
-        };
+                @Override
+                protected void updateItem(FirstLevelDivision item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? "" : item.getDivision());
+                }
+            };
 
         firstLevelDivisionComboBox.setItems(this.firstLevelDivisionRepository.fetchAll());
         firstLevelDivisionComboBox.setCellFactory(factory);
@@ -99,7 +98,7 @@ public class AddCustomerFormController implements Initializable {
 
     }
 
-    public void prefill (Customer cus) {
+    public void prefill(Customer cus) {
         isUpdatingCustomer = true;
 
         customerIdTextField.setText(String.valueOf(cus.getCustomerId()));
@@ -131,7 +130,7 @@ public class AddCustomerFormController implements Initializable {
 
         this.customerRepository.createOrUpdateCustomer(tempCustomer);
 
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
     //function that runs when cancel button is hit

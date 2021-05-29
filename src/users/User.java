@@ -1,4 +1,5 @@
 package users;
+
 import java.sql.Timestamp;
 
 /**
@@ -21,8 +22,7 @@ public class User {
     private String lastUpdatedBy;
 
     public User(Integer userId, String userName, String password, Timestamp createDate,
-        String createdBy, Timestamp lastUpdate, String lastUpdatedBy)
-    {
+                String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -32,7 +32,8 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public User() {}
+    public User() {
+    }
 
     /**
      * Gets user id.

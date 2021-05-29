@@ -31,7 +31,8 @@ public class Customer {
 
     private String countryName;
 
-    public Customer() {}
+    public Customer() {
+    }
 
     public Customer(Integer customerId, String customerName, String address, String postalCode, String phone, Integer divisionId) {
         this.customerId = customerId;

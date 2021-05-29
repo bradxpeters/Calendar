@@ -6,10 +6,11 @@ public class AuthorizedState {
     private static AuthorizedState INSTANCE;
     private static User authorizedUser;
 
-    private AuthorizedState() {}
+    private AuthorizedState() {
+    }
 
     public static AuthorizedState getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new AuthorizedState();
         }
 

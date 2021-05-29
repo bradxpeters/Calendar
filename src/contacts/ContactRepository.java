@@ -1,9 +1,11 @@
 package contacts;
 
 import database.DatabaseConnector;
-import users.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ContactRepository {
     private Connection db;
@@ -71,14 +73,14 @@ public class ContactRepository {
         String sql =
             "INSERT INTO contacts (" +
                 "Contact_ID, Contact_Name, Email) " +
-            "VALUES (?, ?, ?)" +
-            "ON DUPLICATE KEY UPDATE " +
+                "VALUES (?, ?, ?)" +
+                "ON DUPLICATE KEY UPDATE " +
                 "Contact_ID=VALUES(Contact_ID), " +
                 "Contact_Name=VALUES(Contact_Name), " +
                 "Email=VALUES(Email)";
         try {
             PreparedStatement ps = this.getDb().prepareStatement(sql);
-            ps.setObject(1,contact.getContactId());
+            ps.setObject(1, contact.getContactId());
             ps.setString(2, contact.getContactName());
             ps.setString(3, contact.getEmail());
             ps.executeUpdate();
@@ -101,8 +103,8 @@ public class ContactRepository {
             var ps1 = this.getDb().prepareStatement(appointmentSql);
             var ps2 = this.getDb().prepareStatement(contactSql);
 
-            ps1.setObject(1,contact.getContactId());
-            ps2.setObject(1,contact.getContactId());
+            ps1.setObject(1, contact.getContactId());
+            ps2.setObject(1, contact.getContactId());
 
             ps1.executeUpdate();
             ps2.executeUpdate();

@@ -1,6 +1,8 @@
 package database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * The type Database connector.
@@ -17,7 +19,7 @@ public class DatabaseConnector {
 
     /**
      * Gets instance.
-     *
+     * <p>
      * Improvement: Extract the password to a config file outside of the code.
      *
      * @return the instance

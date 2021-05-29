@@ -94,8 +94,8 @@ public class CustomerRepository {
         String sql =
             "INSERT INTO customers (" +
                 "Customer_ID, Customer_Name, Address, Postal_Code, Phone, Last_Update, Last_Updated_By, Division_ID) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
-            "ON DUPLICATE KEY UPDATE " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
+                "ON DUPLICATE KEY UPDATE " +
                 "Customer_ID=VALUES(Customer_ID), " +
                 "Customer_Name=VALUES(Customer_Name), " +
                 "Address=VALUES(Address)," +
@@ -106,7 +106,7 @@ public class CustomerRepository {
                 "Division_ID=VALUES(Division_ID)";
         try {
             PreparedStatement ps = this.getDb().prepareStatement(sql);
-            ps.setObject(1,customer.getCustomerId());
+            ps.setObject(1, customer.getCustomerId());
             ps.setString(2, customer.getCustomerName());
             ps.setString(3, customer.getAddress());
             ps.setString(4, customer.getPostalCode());
@@ -134,8 +134,8 @@ public class CustomerRepository {
             var ps1 = this.getDb().prepareStatement(appointmentSql);
             var ps2 = this.getDb().prepareStatement(customerSQL);
 
-            ps1.setObject(1,customer.getCustomerId());
-            ps2.setObject(1,customer.getCustomerId());
+            ps1.setObject(1, customer.getCustomerId());
+            ps2.setObject(1, customer.getCustomerId());
 
             ps1.executeUpdate();
             ps2.executeUpdate();

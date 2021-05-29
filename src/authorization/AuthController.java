@@ -1,7 +1,6 @@
 package authorization;
 
 import baseInterface.BaseInterfaceController;
-import calendar.CalendarController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +18,6 @@ import users.UserRepository;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-
 import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
@@ -113,7 +111,7 @@ public class AuthController implements Initializable {
         this.languageLabel.setText(Locale.getDefault().getDisplayLanguage());
         this.usernameLabel.setText(this.bundle.getString("Username"));
         this.passwordLabel.setText(this.bundle.getString("Password"));
-        this.loginButton.setText(this.bundle.getString("Login"));;
+        this.loginButton.setText(this.bundle.getString("Login"));
     }
 
     public void handleAddListeners() {

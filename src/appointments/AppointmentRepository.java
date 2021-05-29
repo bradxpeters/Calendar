@@ -32,7 +32,7 @@ public class AppointmentRepository {
             ps.setMaxRows(1);
             var rs = ps.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 appointment = this.fetchRsIntoAppointment(rs);
             }
 
@@ -99,8 +99,8 @@ public class AppointmentRepository {
             "INSERT INTO appointments (" +
                 "Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, " +
                 "Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
-            "ON DUPLICATE KEY UPDATE " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
+                "ON DUPLICATE KEY UPDATE " +
                 "Appointment_ID=VALUES(Appointment_ID), " +
                 "Title=VALUES(Title), " +
                 "Description=VALUES(Description), " +
@@ -115,15 +115,15 @@ public class AppointmentRepository {
                 "Customer_ID=VALUES(Customer_ID)," +
                 "User_ID=VALUES(User_ID)," +
                 "Contact_ID=VALUES(Contact_ID)";
-            try {
+        try {
             PreparedStatement ps = this.getDb().prepareStatement(sql);
-            ps.setObject(1,appointment.getAppointmentId());
-            ps.setString(2,appointment.getTitle());
-            ps.setString(3,appointment.getDescription());
-            ps.setString(4,appointment.getLocation());
-            ps.setString(5,appointment.getType());
-            ps.setTimestamp(6,appointment.getUtcStartTimestamp());
-            ps.setTimestamp(7,appointment.getUtcEndTimestamp());
+            ps.setObject(1, appointment.getAppointmentId());
+            ps.setString(2, appointment.getTitle());
+            ps.setString(3, appointment.getDescription());
+            ps.setString(4, appointment.getLocation());
+            ps.setString(5, appointment.getType());
+            ps.setTimestamp(6, appointment.getUtcStartTimestamp());
+            ps.setTimestamp(7, appointment.getUtcEndTimestamp());
             ps.setTimestamp(8, existingAppointment.getCreateDate() != null
                 ? existingAppointment.getCreateDate()
                 : new Timestamp(System.currentTimeMillis())
