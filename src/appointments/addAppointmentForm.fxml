@@ -3,7 +3,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity"
             prefHeight="493.0" prefWidth="400.0"
@@ -192,13 +191,6 @@
     </bottom>
     <top>
         <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="400.0" BorderPane.alignment="CENTER">
-            <children>
-                <Label fx:id="errorMessageLabel" text="BLANK" textAlignment="CENTER" textFill="RED">
-                    <font>
-                        <Font size="15.0"/>
-                    </font>
-                </Label>
-            </children>
         </HBox>
     </top>
 </BorderPane>

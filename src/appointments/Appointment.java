@@ -1,6 +1,7 @@
 package appointments;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -37,6 +38,10 @@ public class Appointment {
     private Integer userId;
 
     private Integer contactId;
+
+    private String displayStart;
+
+    private String displayEnd;
 
     /**
      * Gets appointment id.
@@ -344,6 +349,20 @@ public class Appointment {
      */
     public Timestamp getUtcEndTimestamp() {
         return Timestamp.valueOf(this.end.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime());
+    }
+
+    public String getDisplayStart() {
+        if (this.getStartSqlTimestamp() != null) {
+            return  new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getStartSqlTimestamp());
+        };
+        return this.getStart().toString();
+    }
+
+    public String getDisplayEnd() {
+        if (this.getEndSqlTimestamp() != null) {
+            return  new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(this.getEndSqlTimestamp());
+        };
+        return this.getEnd().toString();
     }
 
     @Override

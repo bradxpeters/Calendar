@@ -147,13 +147,13 @@ public class BaseInterfaceController implements Initializable {
             .collect(Collectors.toList()).get(0);
 
         if (upcomingAppointment != null) {
-            var alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment soon! ID: "
-                + upcomingAppointment.getAppointmentId() + " " + upcomingAppointment.getStart().toString());
+            var alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment soon! \nID: "
+                + upcomingAppointment.getAppointmentId() + " " + upcomingAppointment.getDisplayStart());
             alert.setHeaderText("Confirmation");
             alert.showAndWait();
-            nextAppointmentLabel.setText("Upcoming appointment: " +
-                upcomingAppointment.getAppointmentId() + " " +
-                upcomingAppointment.getStart().toString()
+            nextAppointmentLabel.setText("Upcoming appointment: ID: " +
+                upcomingAppointment.getAppointmentId() + "   " +
+                upcomingAppointment.getDisplayStart()
             );
         }
     }
@@ -191,8 +191,8 @@ public class BaseInterfaceController implements Initializable {
         appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("displayStart"));
+        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("displayEnd"));
 
         appointmentReportTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentReportMonthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
