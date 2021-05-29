@@ -148,7 +148,7 @@ public class BaseInterfaceController implements Initializable {
      * appointment from a list of appointments. This is much cleaner and more elegant than
      * a for loop.
      */
-    public void handleUpcomingAppointmentCheck() {
+    private void handleUpcomingAppointmentCheck() {
         nextAppointmentLabel.setText("No appointments within the next 15 minutes.");
 
         var upcomingAppointment = AppointmentList.getInstance().getAppointmentList()
@@ -187,6 +187,9 @@ public class BaseInterfaceController implements Initializable {
 
     }
 
+    /**
+     * Sets up all table columns.
+     */
     private void setUpTableColumns() {
         customerIdColumn.setSortType(TableColumn.SortType.ASCENDING);
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
