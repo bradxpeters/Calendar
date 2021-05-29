@@ -46,12 +46,13 @@
                             <bottom>
                                 <AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0">
                                     <children>
-                                        <RadioButton fx:id="weekRadio" layoutX="860.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Week" textFill="WHITE">
+                                        <RadioButton fx:id="weekRadioButton" layoutX="805.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Week" textFill="WHITE">
                                             <toggleGroup>
-                                                <ToggleGroup fx:id="ViewPeriod" />
+                                                <ToggleGroup fx:id="selectedPeriodToggleGroup" />
                                             </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton fx:id="monthRadio" layoutX="941.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Month" textFill="WHITE" toggleGroup="$ViewPeriod" />
+                                        <RadioButton fx:id="monthRadioButton" layoutX="874.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="Month" textFill="WHITE" toggleGroup="$selectedPeriodToggleGroup" />
+                              <RadioButton fx:id="allRadioButton" layoutX="951.0" layoutY="16.0" mnemonicParsing="false" onAction="#viewRadioChange" text="All" textFill="WHITE" toggleGroup="$selectedPeriodToggleGroup" />
                                         <Separator layoutX="344.0" orientation="VERTICAL" prefHeight="157.0" prefWidth="32.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                         <HBox alignment="CENTER" layoutX="387.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="266.0">
                                             <children>

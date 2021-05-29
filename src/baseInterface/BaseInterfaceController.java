@@ -4,14 +4,12 @@ import appointments.Appointment;
 import appointments.AppointmentController;
 import appointments.AppointmentList;
 import appointments.AppointmentRepository;
-import authorization.AuthorizedState;
 import contacts.Contact;
 import countries.Country;
 import customers.AddCustomerFormController;
 import customers.Customer;
 import customers.CustomerList;
 import customers.CustomerRepository;
-import firstLevelDivisions.FirstLevelDivision;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,102 +29,72 @@ public class BaseInterfaceController implements Initializable {
 
     @FXML
     private TableView<Customer> customerTableView;
-
     @FXML
     private TableColumn<Customer, Integer> customerIdColumn;
-
     @FXML
     private TableColumn<Customer, String> customerNameColumn;
-
     @FXML
     private TableColumn<Customer, String> customerAddressColumn;
-
     @FXML
     private TableColumn<Customer, Customer> customerDivisionIdColumn;
-
     @FXML
     private TableColumn<Customer, Customer> customerDivisionNameColumn;
-
     @FXML
     private TableColumn<Customer, Country> customerCountryColumn;
-
     @FXML
     private TableColumn<Customer, String> customerPostalCodeColumn;
-
     @FXML
     private TableColumn<Customer, String> customerPhoneColumn;
-
     @FXML
     private TableView<Appointment> appointmentTableView;
-
     @FXML
     private TableColumn<Appointment, Integer> appointmentIdColumn;
-
     @FXML
     private TableColumn<Appointment, String> appointmentTitleColumn;
-
     @FXML
     private TableColumn<Appointment, String> appointmentDescColumn;
-
     @FXML
     private TableColumn<Appointment, String> appointmentLocationColumn;
-
     @FXML
     private TableColumn<Appointment, Contact> appointmentContactColumn;
-
     @FXML
     private TableColumn<Appointment, String> appointmentTypeColumn;
-
     @FXML
     private TableColumn<Appointment, String> appointmentStartColumn;
-
     @FXML
     private TableColumn<Appointment, String> appointmentEndColumn;
-
     @FXML
     private TableColumn<Appointment, Customer> appointmentCustomerColumn;
-
     @FXML
-    private ToggleGroup ViewPeriod;
-
+    private ToggleGroup selectedPeriodToggleGroup;
     @FXML
-    private RadioButton weekRadio;
-
+    private RadioButton weekRadioButton;
     @FXML
-    private RadioButton monthRadio;
-
+    private RadioButton monthRadioButton;
+    @FXML
+    private RadioButton allRadioButton;
     @FXML
     private Label viewLabel;
-
     @FXML
     private Label NextAppointment;
-
     @FXML
     private Button AppointmentAddButton;
-
     @FXML
     private Button AppointmentUpdateButton;
-
     @FXML
     private Button AppointmentDeleteButton;
-
     @FXML
     private Button leftButton;
-
     @FXML
     private Button rightButton;
-
     @FXML
     private Button customerAddButton;
-
     @FXML
     private Button customerUpdateButton;
-
     @FXML
     private Button customerDeleteButton;
 
     public static ZonedDateTime startView;
-
     public static ZonedDateTime endView;
 
     /**
@@ -164,7 +132,7 @@ public class BaseInterfaceController implements Initializable {
 //        else NextAppointment.setText("There are no appointments soon.");
 //
 //        //Fire teh week filter to prefil the appointments list and preselect filter
-//        weekRadio.fire();
+//        weekRadioButton.fire();
     }
 
     private void populateInitialData() {
@@ -218,8 +186,7 @@ public class BaseInterfaceController implements Initializable {
             if (selectedCustomer != null && selectedButtonText.equals("Update")) {
                 controller.prefill(selectedCustomer);
             }
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -228,7 +195,7 @@ public class BaseInterfaceController implements Initializable {
     private void handleCustomerDeleteButton(ActionEvent event) {
         var selected = customerTableView.getSelectionModel().getSelectedItem();
         var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "
-                + selected.getCustomerName() + "?");
+            + selected.getCustomerName() + "?");
         alert.setHeaderText("Confirmation");
         alert.showAndWait();
 
@@ -255,8 +222,7 @@ public class BaseInterfaceController implements Initializable {
             if (selectedAppointment != null && selectedButtonText.equals("Update")) {
                 controller.prefill(selectedAppointment);
             }
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -264,10 +230,10 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private void handleDeleteButton(ActionEvent event) {
         var selected = appointmentTableView.getSelectionModel().getSelectedItem();
-        if( selected == null) return;
+        if (selected == null) return;
 
-        var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "
-            + selected.getTitle() + "?");
+        var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete appointment "
+            + selected.getAppointmentId() + " - " + selected.getType() + "?");
         alert.setHeaderText("Confirmation");
         alert.showAndWait();
 
@@ -277,50 +243,40 @@ public class BaseInterfaceController implements Initializable {
         }
     }
 
-    //On radio button change update the timeline
     @FXML
     private void viewRadioChange(ActionEvent event) {
-//        //If week radio button
-//        if(ViewPeriod.getSelectedToggle().equals(weekRadio)){
-//            System.out.println("Week is selected");
-//            startView = ZonedDateTime.now().withHour(0).withMinute(0);
-//            endView = startView.plusWeeks(1).withHour(23).withMinute(59);
-//        }
-//        //if month radio button
-//        if(ViewPeriod.getSelectedToggle().equals(monthRadio)){
-//            System.out.println("Month is selected");
-//            startView = ZonedDateTime.now().withHour(0).withMinute(0);
-//            endView = startView.plusMonths(1).withHour(23).withMinute(59);
-//        }
-//        updateView();
+        if (selectedPeriodToggleGroup.getSelectedToggle().equals(weekRadioButton)) {
+            System.out.println("Switching to week view");
+            startView = ZonedDateTime.now().withHour(0).withMinute(0);
+            endView = startView.plusWeeks(1).withHour(23).withMinute(59);
+        }
+        if (selectedPeriodToggleGroup.getSelectedToggle().equals(monthRadioButton)) {
+            System.out.println("Switching to month view");
+            startView = ZonedDateTime.now().withHour(0).withMinute(0);
+            endView = startView.plusMonths(1).withHour(23).withMinute(59);
+        }
+        if (selectedPeriodToggleGroup.getSelectedToggle().equals(allRadioButton)) {
+            System.out.println("Switching to view all");
+            startView = ZonedDateTime.now().withHour(0).withMinute(0);
+            endView = startView.plusYears(99).withHour(23).withMinute(59);
+        }
+
+        this.updateSelectedPeriodView();
     }
 
-    //get a new list to diplay base on the begin and end dates
-    private void updateView() {
-//        String begin = startView.format(DateTimeFormatter.ISO_LOCAL_DATE);
-//        String end = endView.format(DateTimeFormatter.ISO_LOCAL_DATE);
-//        viewLabel.setText(begin + " :: " + end);
-//
-//        begin = startView.withZoneSameInstant(ZoneId.of("UTC+0")).format(DateTimeFormatter.ISO_LOCAL_DATE);
-//        end = endView.withZoneSameInstant(ZoneId.of("UTC+0")).format(DateTimeFormatter.ISO_LOCAL_DATE);
-//
-//        try {
-//            mysql.database.updateAppointmentList(begin, end);
-//        }
-//        catch(SQLException e) {
-//            System.out.println("SQL Error!!! " + e);
-//        }
+    private void updateSelectedPeriodView() {
+        var appointmentRepository = new AppointmentRepository();
+        appointmentRepository.fetchAppointmentsByRange(startView, endView);
     }
 
-    //when the view minus button is pressed subtract a week or month based on radio buttons
     @FXML
     private void ViewMinus(ActionEvent event) {
-//        if(ViewPeriod.getSelectedToggle().equals(weekRadio)){
+//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(weekRadioButton)){
 //            startView = startView.minusWeeks(1);
 //            endView = startView.plusWeeks(1);
 //        }
 //
-//        if(ViewPeriod.getSelectedToggle().equals(monthRadio)){
+//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(monthRadioButton)){
 //            startView = startView.minusMonths(1);
 //            endView = startView.plusMonths(1);
 //        }
@@ -330,12 +286,12 @@ public class BaseInterfaceController implements Initializable {
     //when the view plus button is pressed add a week or month based on radio button
     @FXML
     private void ViewPlus(ActionEvent event) {
-//        if(ViewPeriod.getSelectedToggle().equals(weekRadio)){
+//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(weekRadioButton)){
 //            startView = startView.plusWeeks(1);
 //            endView = startView.plusWeeks(1);
 //        }
 //
-//        if(ViewPeriod.getSelectedToggle().equals(monthRadio)){
+//        if(selectedPeriodToggleGroup.getSelectedToggle().equals(monthRadioButton)){
 //            startView = startView.plusMonths(1);
 //            endView = startView.plusMonths(1);
 //        }
@@ -344,6 +300,7 @@ public class BaseInterfaceController implements Initializable {
 
     /**
      * used by the cusDeleteRun class to confirm deletion with a popup
+     *
      * @param selected the customer object to be deleted
      * @return true if popup was confirmed
      */
@@ -356,10 +313,11 @@ public class BaseInterfaceController implements Initializable {
 
     /**
      * used by the appDeleteRun class to confirm deletion with a popup
+     *
      * @param selected the customer object to be deleted
      * @return true if popup was confirmed
      */
-    private boolean ConfirmAppointmentDelete(Appointment selected){
+    private boolean ConfirmAppointmentDelete(Appointment selected) {
 //        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selected.getApointmentID() + ": " + selected.getType() + "?", "Delete Appointment?", JOptionPane.YES_NO_OPTION);
 //
 //        return i == 0;

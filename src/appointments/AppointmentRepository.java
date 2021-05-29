@@ -4,6 +4,7 @@ import authorization.AuthorizedState;
 import database.DatabaseConnector;
 
 import java.sql.*;
+import java.time.ZonedDateTime;
 
 public class AppointmentRepository {
     private Connection db;
@@ -160,6 +161,33 @@ public class AppointmentRepository {
             this.fetchAll();
         } catch (SQLException e) {
             System.out.println("Error deleting appointment by id: " + appointment.getAppointmentId());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void fetchAppointmentsByRange(ZonedDateTime startView, ZonedDateTime endView) {
+        var startTimestamp = Timestamp.valueOf(startView.toLocalDateTime());
+        var endTimestamp = Timestamp.valueOf(endView.toLocalDateTime());
+
+        AppointmentList.getInstance().getAppointmentList().clear();
+
+        System.out.println("Grabbing appointments from " + startTimestamp.toString()
+            + " - " + endTimestamp.toString());
+
+        try {
+            var ps = this.getDb().prepareStatement(
+                "SELECT * FROM appointments " +
+                    "WHERE Start >= ? AND End <= ?"
+            );
+            ps.setTimestamp(1, startTimestamp);
+            ps.setTimestamp(2, endTimestamp);
+
+            var rs = ps.executeQuery();
+            while (rs.next()) {
+                AppointmentList.getInstance().getAppointmentList().add(this.fetchRsIntoAppointment(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching all appointments");
             System.out.println(e.getMessage());
         }
     }
