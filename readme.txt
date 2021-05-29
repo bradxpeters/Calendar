@@ -28,3 +28,10 @@ How To:
         -Appointments Summary: Appointments grouped by Type, Month, and Year
         -Contact Summary: This shows all appointments listed out by contacts
         -Customer Locations(Customer Report): This report shows a list of customers by location.
+
+- Lambdas
+ReportRepository.fetchAppointmentsByContactReport
+AppointmentController.initialize
+AppointmentController.isOverlappingAppointment
+
+-JavaDocs File: /docs/index.html

@@ -62,6 +62,13 @@ public class AppointmentController implements Initializable {
     private ContactRepository contactRepository;
     private CustomerRepository customerRepository;
 
+    /**
+     * Initialize the Appointment Controller
+     * Public for JavaDocs
+     *
+     * I used a Lambda here to generate a list of integers from 0 - 24 in a concise
+     * and elegant way. Originally I had a regular for loop which was ugly and overkill for this need.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -227,7 +234,16 @@ public class AppointmentController implements Initializable {
         return !isWeekend && isValidTime;
     }
 
-    private boolean isOverlappingAppointment(Appointment appointment) {
+    /**
+     * Check for overlapping appointments
+     * Public for JavaDocs
+     *
+     * I use a Lambda here to easily accomplish several tasks to check if an appointment
+     * overlaps with any existing appointment. First it filters out out the appointment that
+     * is passed into the function. Then it loops through each appointment to see if the times
+     * overlap.
+     */
+    public boolean isOverlappingAppointment(Appointment appointment) {
         var isOverlapping = new AtomicBoolean(false);
 
         AppointmentList.getInstance()

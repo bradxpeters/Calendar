@@ -58,7 +58,7 @@ public class AppointmentRepository {
     }
 
     /**
-     * Fetch all.
+     * Fetches all appointments from the database
      */
     public void fetchAll() {
         AppointmentList.getInstance().getAppointmentList().clear();
@@ -113,7 +113,7 @@ public class AppointmentRepository {
     }
 
     /**
-     * Create or update appointment.
+     * Create or update appointment. Updates based off of unique appointment ID key
      *
      * @param appointment the appointment
      */

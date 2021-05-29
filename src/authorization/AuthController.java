@@ -84,6 +84,15 @@ public class AuthController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Is valid login attempt boolean.
+     * Checks the users table to validate username and password.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the boolean
+     * @throws SQLException the sql exception
+     */
     private boolean isValidLoginAttempt(String username, String password) throws SQLException {
         var userRepo = new UserRepository();
         var user = userRepo.fetchUserByUsername(username);
@@ -116,6 +125,12 @@ public class AuthController implements Initializable {
         }
     }
 
+    /**
+     * Handle recorded login attempt.
+     * This writes to a text file in the root directory called "login_activity.txt"
+     *
+     * @param loginAttempt the login attempt
+     */
     private void handleRecordedLoginAttempt(LoginAttempt loginAttempt) {
         try {
             var appendText = loginAttempt.getAttemptedUsername()
@@ -142,8 +157,11 @@ public class AuthController implements Initializable {
 
     /**
      * Handle localization.
+     * This handles updating the language on the login page. An override can be passed for
+     * testing locally without changing machine language.
      *
      * @param localOverride the local override
+
      */
     public void handleLocalization(Locale localOverride) {
         if (localOverride != null) {

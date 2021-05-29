@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * The type Base interface controller.
+ * This is the main shell of the user inteface.
  */
 public class BaseInterfaceController implements Initializable {
 

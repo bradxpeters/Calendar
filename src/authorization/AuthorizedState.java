@@ -3,7 +3,7 @@ package authorization;
 import users.User;
 
 /**
- * The type Authorized state.
+ * The type Authorized state. Holds the currently logged in user.
  */
 public class AuthorizedState {
     private static AuthorizedState INSTANCE;
