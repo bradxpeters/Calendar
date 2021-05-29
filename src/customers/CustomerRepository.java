@@ -1,5 +1,6 @@
 package customers;
 
+import appointments.AppointmentRepository;
 import authorization.AuthorizedState;
 import database.DatabaseConnector;
 import reports.ReportsRepository;
@@ -173,6 +174,10 @@ public class CustomerRepository {
         }
 
         this.fetchAll();
+        var appointmentRepository = new AppointmentRepository();
+        appointmentRepository.fetchAll();
+        var reportRepository = new ReportsRepository();
+        reportRepository.refreshAllReports();
     }
 
     /**

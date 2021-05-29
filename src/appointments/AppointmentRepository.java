@@ -196,6 +196,10 @@ public class AppointmentRepository {
             System.out.println("Error deleting appointment by id: " + appointment.getAppointmentId());
             System.out.println(e.getMessage());
         }
+
+        this.fetchAll();
+        var reportRepository = new ReportsRepository();
+        reportRepository.refreshAllReports();
     }
 
     /**
