@@ -234,6 +234,11 @@ public class BaseInterfaceController implements Initializable {
         var selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         var selectedButtonText = ((Button) event.getSource()).getText();
 
+        if (selectedCustomer == null && selectedButtonText.equals("Update")) {
+            this.showNothingSelectedError();
+            return;
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(Customer.class.getResource("addCustomerForm.fxml"));
             Parent root = loader.load();
@@ -253,9 +258,21 @@ public class BaseInterfaceController implements Initializable {
         }
     }
 
+    public void showNothingSelectedError() {
+        var alert = new Alert(Alert.AlertType.ERROR, "Please make a selection first. ");
+        alert.setHeaderText("Error");
+        alert.showAndWait();
+    }
+
     @FXML
     private void handleCustomerDeleteButton(ActionEvent event) {
         var selected = customerTableView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            this.showNothingSelectedError();
+            return;
+        }
+
         var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "
             + selected.getCustomerName() + "?");
         alert.setHeaderText("Confirmation");
@@ -271,6 +288,12 @@ public class BaseInterfaceController implements Initializable {
     private void handleAddOrUpdateAppointmentButton(ActionEvent event) {
         var selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
         var selectedButtonText = ((Button) event.getSource()).getText();
+
+        if (selectedAppointment == null && selectedButtonText.equals("Update")) {
+            this.showNothingSelectedError();
+            return;
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(Appointment.class.getResource("addAppointmentForm.fxml"));
             Parent root = loader.load();
@@ -292,7 +315,11 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private void handleDeleteButton(ActionEvent event) {
         var selected = appointmentTableView.getSelectionModel().getSelectedItem();
-        if (selected == null) return;
+
+        if (selected == null) {
+            this.showNothingSelectedError();
+            return;
+        }
 
         var alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete appointment "
             + selected.getAppointmentId() + " - " + selected.getType() + "?");
