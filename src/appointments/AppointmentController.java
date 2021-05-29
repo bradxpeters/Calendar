@@ -15,14 +15,12 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -210,26 +208,47 @@ public class AppointmentController implements Initializable {
         ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
-    private boolean isAppointmentDuringBusinessHours(Appointment appointment) {
-        var start = appointment.getStart().withZoneSameInstant(ZoneId.of("America/New_York"));
-        var end = appointment.getEnd().withZoneSameInstant(ZoneId.of("America/New_York"));
+    /**
+     * Is appointment during business hours.
+     *
+     * @param appointment the appointment
+     * @return the boolean
+     */
+    public Boolean isAppointmentDuringBusinessHours(Appointment appointment) {
+        var appointmentStartEastern = appointment
+            .getStart()
+            .withZoneSameInstant(ZoneId.of("America/New_York"));
 
-        var startLimit1 = ZonedDateTime.of(
-            start.toLocalDate(), LocalTime.of(7, 59), ZoneId.of("America/New_York"));
-        var stopLimit1 = ZonedDateTime.of(
-            start.toLocalDate(), LocalTime.of(22, 1), ZoneId.of("America/New_York"));
-        var startLimit2 = ZonedDateTime.of(
-            end.toLocalDate(), LocalTime.of(7, 59), ZoneId.of("America/New_York"));
-        var stopLimit2 = ZonedDateTime.of(
-            end.toLocalDate(), LocalTime.of(22, 1), ZoneId.of("America/New_York"));
+        var appointmentEndEastern = appointment
+            .getEnd()
+            .withZoneSameInstant(ZoneId.of("America/New_York"));
+
+        var businessHoursStart = ZonedDateTime
+            .of(LocalDate.now().atTime(8,0), ZoneId.of("America/New_York"));
+
+        var businessHoursEnd = ZonedDateTime
+            .of(LocalDate.now().atTime(22,0), ZoneId.of("America/New_York"));
+
+        var daysToCheck = Arrays.asList(
+            appointmentStartEastern.getDayOfWeek(),
+            appointmentEndEastern.getDayOfWeek()
+        );
 
         var isWeekend = Stream.of(DayOfWeek.SATURDAY, DayOfWeek.SATURDAY)
-            .anyMatch(dayOfWeek -> Arrays.asList(start.getDayOfWeek(), end.getDayOfWeek()).contains(dayOfWeek));
+            .anyMatch(daysToCheck::contains);
 
-        var isValidTime = startLimit1.isBefore(start)
-            && stopLimit1.isAfter(start)
-            && startLimit2.isBefore(end)
-            && stopLimit2.isAfter(end);
+        var isValidTime = businessHoursStart.getHour() <= appointmentStartEastern.getHour()
+            && businessHoursEnd.getHour() >= appointmentEndEastern.getHour();
+
+        if (isWeekend) {
+            System.out.println("Weekend check failed");
+        }
+
+        if (!isValidTime) {
+            System.out.println("Valid Time Check Failed");
+            System.out.println("businessHoursStart.getHour() " + businessHoursStart.getHour());
+            System.out.println("appointmentStartEastern.getHour() " + appointmentStartEastern.getHour());
+        }
 
         return !isWeekend && isValidTime;
     }
