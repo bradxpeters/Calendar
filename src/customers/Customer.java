@@ -28,7 +28,8 @@ public class Customer {
 
     private String countryName;
 
-    public Customer() { }
+    public Customer() {
+    }
 
     public Integer getCustomerId() {
         return customerId;

@@ -114,7 +114,7 @@ public class AuthController implements Initializable {
                 + "\t" + loginAttempt.getSuccess() + "\n";
 
             Files.write(Paths.get("login_activity.txt"), appendText.getBytes(), StandardOpenOption.APPEND);
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error recording login attempt");
         }
     }

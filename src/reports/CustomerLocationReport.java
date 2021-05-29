@@ -1,7 +1,5 @@
 package reports;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class CustomerLocationReport {
     private String postalCode;
 

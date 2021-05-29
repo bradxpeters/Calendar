@@ -101,7 +101,7 @@ public class BaseInterfaceController implements Initializable {
     @FXML
     private TableColumn<AppointmentByContactReport, String> appointmentByContactReportCustomerIdColumn;
     @FXML
-    private TableView<CustomerLocationReport> customerLocationReportTableView ;
+    private TableView<CustomerLocationReport> customerLocationReportTableView;
     @FXML
     private TableColumn<CustomerLocationReport, String> customerLocationPostalCodeColumn;
     @FXML
@@ -189,7 +189,7 @@ public class BaseInterfaceController implements Initializable {
         appointmentReportYearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
         appointmentReportCountColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
-        appointmentByContactReportContactNameColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));;
+        appointmentByContactReportContactNameColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         appointmentByContactReportIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentByContactReportTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentByContactReportTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));

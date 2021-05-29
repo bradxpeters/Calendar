@@ -3,7 +3,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="356.0" minWidth="-Infinity"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="356.0"
+            minWidth="-Infinity"
             prefWidth="400.0" style="-fx-background-color: #2d2d2d#2d2d2d #2d2d2d#2d2d2d;"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="customers.AddCustomerFormController">
     <center>

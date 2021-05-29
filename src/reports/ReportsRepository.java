@@ -1,16 +1,13 @@
 package reports;
 
-import appointments.Appointment;
 import appointments.AppointmentList;
 import contacts.Contact;
 import contacts.ContactList;
-import customers.CustomerList;
 import database.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -118,7 +115,7 @@ public class ReportsRepository {
         return report;
     }
 
-    public void refreshAllReports(){
+    public void refreshAllReports() {
         this.fetchAppointmentSummaryReport();
         this.fetchAppointmentsByContactReport();
         this.fetchCustomersByLocation();
