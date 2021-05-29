@@ -7,7 +7,6 @@ import customers.Customer;
 import customers.CustomerList;
 import customers.CustomerRepository;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,12 +19,14 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class AppointmentController implements Initializable {
-    boolean isOverlapping = false;
     @FXML
     private TextField appointmentIdTextField;
     @FXML
@@ -52,12 +53,7 @@ public class AppointmentController implements Initializable {
     private ComboBox<Integer> appointmentEndMinuteComboBox;
     @FXML
     private ComboBox<Customer> appointmentCustomerComboBox;
-    @FXML
-    private Label errorMessageLabel;
-    @FXML
-    private Button submitButton;
-    @FXML
-    private Button cancelButton;
+
     private boolean isUpdatingAppointment = false;
     private AppointmentRepository appointmentRepository;
     private ContactRepository contactRepository;
@@ -66,27 +62,16 @@ public class AppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //Make an observable list with 0-23 hour options
-        ObservableList<Integer> hr = FXCollections.observableArrayList();
-        int i = 0;
-        while (i < 24) {
-            hr.add(i);
-            i++;
-        }
+        var hoursList = FXCollections.observableArrayList(new ArrayList<Integer>());
+        IntStream.rangeClosed(0, 24)
+            .forEach(hoursList::add);
+        var minuteList = FXCollections.observableArrayList(0, 15, 30, 45);
 
-        //fill hour combo boxes with hr list
-        appointmentStartHourComboBox.setItems(hr);
-        appointmentEndHourComboBox.setItems(hr);
+        appointmentStartHourComboBox.setItems(hoursList);
+        appointmentEndHourComboBox.setItems(hoursList);
 
-        //make list with 0, 15, 30, 45
-        ObservableList<Integer> min = FXCollections.observableArrayList(0, 15, 30, 45);
-
-        //fill min combo boxes with min list
-        appointmentStartMinuteComboBox.setItems(min);
-        appointmentEndMinuteComboBox.setItems(min);
-
-        //Clear the error at top of screen
-        ClearError(new ActionEvent());
+        appointmentStartMinuteComboBox.setItems(minuteList);
+        appointmentEndMinuteComboBox.setItems(minuteList);
 
         this.setAppointmentRepository(new AppointmentRepository());
         this.setContactRepository(new ContactRepository());
@@ -235,7 +220,7 @@ public class AppointmentController implements Initializable {
     }
 
     private boolean isOverlappingAppointment(Appointment appointment) {
-        isOverlapping = false;
+        var isOverlapping = new AtomicBoolean(false);
 
         AppointmentList.getInstance()
             .getAppointmentList()
@@ -246,22 +231,17 @@ public class AppointmentController implements Initializable {
             .forEach(a -> {
                     if (a.getStart().isBefore(appointment.getStart())) {
                         if (a.getEnd().isAfter(appointment.getStart())) {
-                            isOverlapping = true;
+                            isOverlapping.set(true);
                         }
                     } else {
                         if (appointment.getEnd().isAfter(a.getStart())) {
-                            isOverlapping = true;
+                            isOverlapping.set(true);
                         }
                     }
                 }
             );
 
-        return isOverlapping;
-    }
-
-    @FXML
-    private void ClearError(ActionEvent event) {
-        errorMessageLabel.setText("");
+        return isOverlapping.get();
     }
 
     public void setAppointmentRepository(AppointmentRepository appointmentRepository) {

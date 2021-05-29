@@ -19,8 +19,5 @@ public class Main extends Application {
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 420, 315));
         primaryStage.show();
-
-//        var tests = new Tests();
-//        tests.runAll();
     }
 }

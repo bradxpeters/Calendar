@@ -48,9 +48,6 @@ public class AddCustomerFormController implements Initializable {
 
     private CustomerRepository customerRepository;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         firstLevelDivisionComboBox.setDisable(true);
@@ -114,9 +111,6 @@ public class AddCustomerFormController implements Initializable {
         );
     }
 
-    /**
-     * Compiles all the menu information when the submit button is hit
-     */
     @FXML
     private void handleSubmitButton(ActionEvent event) {
         System.out.print("Customer creation/updating started");
